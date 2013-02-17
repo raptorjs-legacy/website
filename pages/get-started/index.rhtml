@@ -1,0 +1,180 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/footers/FooterDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/editors/CodeEditor"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: Get Started</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body data-spy="scroll">
+            <docs:top-nav activeItem="get-started"/>
+            <div class="container">
+                <docs:docs heading="Get Started with RaptorJS" disqus-id="get-started">
+        
+                    <docs:section heading="Overview">
+                        <p>
+                            This guide will help you quickly get started with using
+                            RaptorJS in an environment with <a href="http://nodejs.org/">Node</a> installed. While RaptorJS works 
+                            in other JavaScript environments, many of the features of RaptorJS
+                            are best experienced with Node.
+                        </p>
+                        <p>
+                            This guide will help you quickly start using RaptorJS in
+                            a Node application. For more details on building a real-world web
+                            application you will want to go through the <a href="${url('/tutorial')}">tutorial</a>.
+                        </p>
+                    </docs:section>
+                        
+                    <docs:section heading="Installing Node">
+                        
+                        The easiest way to start using RaptorJS is to install
+                        the "raptor" module using <a href="https://npmjs.org/">npm</a>,
+                        the package manager for Node. npm is installed as part of Node so if you
+                        have not yet installed node then head over to the 
+                        <a href="http://nodejs.org/">Node website</a> and download and install the appropriate
+                        version of Node.  
+                    </docs:section>
+                    
+                    <docs:section heading="Creating a Node Project">
+                        npm makes it easy to create a Node project that includes the module for RaptorJS.
+                        Follow the steps below to start using RaptorJS in a Node application:
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ mkdir hello-world              
+                        </pre>
+                        In the newly created directory, you will need to create a <code>package.json</code> file. This file
+                        will be used describe dependencies and additional metadata. To initialize
+                        a new package.json file use the following command and follow the prompts (use <code>index.js</code> as the main script):
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ npm init
+                        </pre>
+
+                        Now the <code>raptor</code> module can be added as a project dependency using the following command:
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ npm install raptor --save
+                        </pre>
+                        <p>
+                            Now create a simple <code>index.js</code> file with the following contents:    
+                        </p>
+                        <docs:code-editor
+                            readOnly="true"
+                            mode="javascript">
+                        <![CDATA[
+                        require("raptor"); // Initialize RaptorJS on the server and enable AMD
+                                           // so that other AMD modules can be discovered and
+                                           // loaded on the server
+                                           
+                        require("raptor/logging").configure({ //Configure the loggers to control the logging output
+                                'ROOT': {level: 'WARN'},
+                                'hello': {level: 'DEBUG'}
+                            });
+                        
+                        /*
+                         * Tell RaptorJS where it can find modules
+                         * and other resources by adding the current
+                         * directory to the resource search path.
+                         */
+                        require('raptor/resources').addSearchPathDir(__dirname);
+
+                        require("hello").greet("World"); //Load the RaptorJS "hello" module
+                                                         //and invoke the "greet" method
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            Now create the <code>hello.js</code> file which will contain the definition for the <code>hello</code> module:            
+                        </p>
+                        <docs:code-editor
+                            readOnly="true"
+                            mode="javascript">
+                        <![CDATA[
+                        define(
+                            "hello",
+                            function(require, module, exports) { //This function will be invoked only once
+                                         //when the module is first required
+                                
+                                var logger = module.logger(); //Obtaining a logger for the module being defined
+                                
+                                return { //The return value of the factory function will be
+                                         //registered as the implementation for the module
+                                          
+                                    greet: function(name) {
+                                        logger.debug("Hello " + name + "!");
+                                    }
+                                }
+                            });
+                        ]]>
+                        </docs:code-editor>
+                        Test out the application!:
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ node index.js
+                        </pre>
+                        
+                        You should see the following in the console:
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        DEBUG hello: Hello World!
+                        </pre>
+
+                        Not very exciting, but at least we know that RaptorJS is
+                        working in a Node environment.
+                    </docs:section>
+                    <docs:section heading="More Reading">
+                        <p>
+                            Now that you have Node configured and RaptorJS running in server-side environment,
+                            you are now more ready to start learning about the other libraries and tools
+                            provided by RaptorJS. To continue learning about RaptorJS, please
+                            use the following links:
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="${url('/modules-classes')}">Modules &amp; Classes</a>
+                            </li>
+                            <li>
+                                <a href="${url('/packaging')}">Packaging &amp; Extensions</a>
+                            </li>
+                            <li>
+                                <a href="${url('/module-loader')}">Module Loader</a>
+                            </li>
+                            <li>
+                                <a href="${url('/optimizer')}">Optimizer</a>
+                            </li>
+                            <li>
+                                <a href="${url('/raptor-templates')}">Raptor Templates</a>
+                            </li>
+                            <li>
+                                <a href="${url('/widgets')}">Widget Framework</a>
+                            </li>
+                        </ul>
+                        
+                    </docs:section>
+                    
+                </docs:docs>
+            </div>
+            <docs:footer/>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

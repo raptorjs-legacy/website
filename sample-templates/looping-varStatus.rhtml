@@ -1,0 +1,11 @@
+<c:template xmlns:c="core" params="colors">
+    
+    <ul>
+        <li c:for="color in colors; status-var=loop">
+            ${loop.getIndex()+1}) $color
+            <c:if test="loop.isFirst()"> - FIRST</c:if>
+            <c:if test="loop.isLast()"> - LAST</c:if>
+        </li>
+    </ul>
+
+</c:template>

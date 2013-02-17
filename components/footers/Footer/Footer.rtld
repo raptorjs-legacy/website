@@ -1,0 +1,7 @@
+<raptor-taglib>
+
+    <tag name="footer" handler-class="components.footers.Footer.FooterTag">
+        <attribute name="type" type="string"/>
+    </tag>
+    
+</raptor-taglib>

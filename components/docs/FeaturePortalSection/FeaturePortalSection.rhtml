@@ -1,0 +1,18 @@
+<c:template
+    xmlns:c="core"
+    params="url,title,size,className,body,float">
+    
+    <div class="feature-portal-section {?size;feature-portal-section-$size} {?className;$className}" style="{?float;float: $float}">
+        <div class="content">
+            <h3 c:if="title">
+                <a href="$url">$title</a>
+            </h3>
+            <div class="bd">
+                <p>
+                    $!body
+                </p>
+            </div>
+        </div>
+    </div>
+    
+</c:template>

@@ -1,0 +1,152 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS Optimizer: Configuration</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav/>
+            <div class="container">
+                <docs:docs heading="RaptorJS Optmizer: Configuration" disqus-id="optimizer-configuration">
+                    <docs:message type="warning">
+                        Documentation In-Progress
+                    </docs:message>
+                        
+                    <docs:section heading="Overview">
+                        <p>
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="Profiles">
+                            <p>
+                                The RaptorJS Optimizer configuration
+                                file supports profiles using the <code>&lt;profile></code> and <code>&lt;enable-profile></code>
+                                tags as shown in the following example:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+
+                            <optimizer-config>
+
+                                <params>
+                                    <!-- Default to the "development" profile -->
+                                    <profile>development</profile>
+                                </params>
+
+                                <!-- Enable the profile with the specified name -->
+                                <enable-profile>${profile}</enable-profile>
+                                
+                                <profile name="development">
+                                    ...
+                                    <!-- Disable minification in development -->
+                                    <minify-js>false</minify-js>
+                                    ...
+                                </profile>
+                                
+                                <profile name="production">
+                                    ...
+                                    <!-- Enable minification in production -->
+                                    <minify-js>false</minify-js>
+                                    ...
+                                </profile>
+                                
+                                ...
+                                
+                            </optimizer-config>
+                            ]]>
+                            </docs:code-editor>
+                            <docs:message type="info">
+                                <p>
+                                    Parameters can be loaded from a JSON file, passed in as command line arguments or provided
+                                    to the optimizer when using the JavaScript API. For more information on 
+                                    parameters please see the following sections:
+                                </p>
+                                <ul>
+                                    <li><a href="#JSONParams">Configuration ${entity:raquo} Configuration Params from JSON File</a></li>
+                                    <li><a href="#CLIParams">Command Line Interface ${entity:raquo} Configuration Params</a></li>
+                                    <li><a href="#JavaScriptAPIParams">JavaScript API ${entity:raquo} Configuration Params</a></li>
+                                </ul>
+                            </docs:message>
+                            
+                            
+                        </docs:section>
+                        
+                        <docs:section heading="Bundling">
+                            <p>
+                                The optimizer will combine resources based on a bundle configuration
+                                to reduce the number of HTTP round-trips required to deliver a
+                                web page. A resource can only belong to one bundle and the first
+                                bundle that a resource is added to becomes the resource's bundle.
+                                If bundling is enabled and a particular page dependency is not part
+                                of a configured bundle then the dependency is added to a default
+                                page bundle.
+                            </p>
+                        </docs:section>
+                        
+                        <docs:section heading="Minification and Filters">
+                            <p>
+                                The RaptorJS Optimizer supports custom filters. 
+                            </p>
+                        </docs:section>
+                        
+                        <docs:section heading="Output Directories">
+                            <p>
+                                The optimizer will combine resources based on a bundle configuration
+                                to reduce the number of HTTP round-trips required to deliver a
+                                web page. The Rapt
+                            </p>
+                        </docs:section>
+                        
+                        <docs:section heading="Configuration Params from JSON File" anchor-name="JSONParams">
+                            <p>
+                                
+                            </p>
+                        </docs:section>
+                        
+                        <docs:section heading="Sample Configuration Files">
+                            Sample Configuration Files:
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/raptorjs/raptorjs.github.com/blob/master/optimizer/sample-configuration-files/optimizer-config-profiles.xml" target="blank">
+                                        Sample Configuration File with Profiles
+                                    </a>
+                                </li>
+                            </ul>
+                            
+                        </docs:section>
+                    
+                </docs:docs>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

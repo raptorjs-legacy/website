@@ -1,0 +1,247 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+
+    <docs:section heading="Configuring the Optimizer">
+        <p>
+            In most cases, you will want to configure the RaptorJS Optimizer
+            based on how the optimized web application will be deployed. The RaptorJS Optmizer
+            is extremely configurable and even supports multiple profiles so that
+            you can easily switch between different configurations for
+            development, production, etc. The RaptorJS Optimizer supports
+            an XML configuration file that makes it easy to enable
+            or disable minification, to control how modules are bundled,
+            to control how resource URLs are generated, etc.
+        </p>
+        <docs:section heading="Loading a Configuration">
+            <p>
+                An optimizer configuration file can be loaded in a number of ways.
+            </p>
+            <ul>
+                <li>
+                    <b>From the command line</b>: The optimizer CLI supports a <code>--config</code> option
+                    that can be used to load an optimizer configuration file.
+                    <pre class="sh" xml:space="preserve" c:trim-body-indent="true" style="clear: both;">
+                    $ raptor-optimizer --config path/to/optimizer-config.xml profile=production...
+                    </pre>
+                    <docs:message type="info">
+                        <p>
+                            NOTE: Any options that are not prefixed with <code>-</code> or <code>--</code>
+                                  are treated as variables in the XML configuration file (see <a href="#variables">XML Configuration Variables</a> below).
+                            
+                        </p>
+                    </docs:message>
+                </li>
+                <li>
+                    <b>In JavaScript</b>: The default optimizer can be configured using the following 
+                    JavaScript code:
+                    <docs:code-editor 
+                        mode="javascript"
+                        readOnly="true" 
+                        c:parse-body-text="false">
+                    <![CDATA[
+
+                    require('raptor/optimizer').configure('path/to/optimizer-config.xml', {
+                        profile: "production"
+                    })
+
+                    ]]>
+                    </docs:code-editor>
+                    <docs:message type="info">
+                        <p>
+                            NOTE: The properties of the second argument can be used as variables in the 
+                            XML configuration file (see <a href="#variables">XML Configuration Variables</a> below).
+                        </p>
+                    </docs:message>
+                    
+                </li>
+            </ul>
+        </docs:section>
+        <docs:section heading="XML Configuration File">
+            <p>
+                A simple configuration file is shown below:
+            </p>
+            <docs:code-editor 
+                mode="xml"
+                readOnly="true" 
+                c:parse-body-text="false">
+            <![CDATA[
+            <optimizer-config>
+
+                <minify-js>${minify}</minify-js>
+                <output-dir>static</output-dir>
+                <url-prefix>http://my-cdn/static/</url-prefix>
+
+                <bundles name="default">
+
+                    <bundle name="jquery">
+                        <module name="jQuery" recursive="true"/>
+                    </bundle>
+
+                    <bundle name="core">
+                        <module name="raptor" recursive="true"/>
+                        <module name="raptor/listeners" recursive="true"/>
+                        <module name="raptor/widgets" recursive="true"/>
+                    </bundle>
+                    
+                    <bundle name="templating">
+                        <module name="raptor/templating" recursive="true"/>
+                    </bundle>
+
+                </bundles>
+                
+            </optimizer-config>
+            ]]>
+            </docs:code-editor>
+            <p>
+                A slightly more complex example with profiles and variables is shown below:
+            </p>
+            <docs:code-editor 
+                mode="xml"
+                readOnly="true" 
+                c:parse-body-text="false">
+            <![CDATA[
+            <optimizer-config>
+
+                <output-dir>static</output-dir>
+
+                <params>
+                    <!-- Default to the production profile -->
+                    <profile>production</profile>
+                </params>
+                
+                <enable-profile>${profile}</enable-profile>
+
+                <profile name="production">
+                    <minify>true</minify>
+                    <url-prefix>http://my-cdn/static/</url-prefix>
+                    <bundling-enabled>true</bundling-enabled>
+                    <in-place-deployment-enabled>false</in-place-deployment-enabled>
+                    <checksums-enabled>true</checksums-enabled>
+                </profile>
+                
+                <profile name="development">
+                    <minify>false</minify>
+                    <url-prefix>/static/</url-prefix>
+                    <bundling-enabled>false</bundling-enabled>
+                    <in-place-deployment-enabled>true</in-place-deployment-enabled>
+                    <checksums-enabled>false</checksums-enabled>
+                </profile>
+
+                <bundles name="default">
+
+                    <bundle name="jquery">
+                        <module name="jQuery" recursive="true"/>
+                    </bundle>
+
+                    <bundle name="core">
+                        <module name="raptor" recursive="true"/>
+                        <module name="raptor/listeners" recursive="true"/>
+                        <module name="raptor/widgets" recursive="true"/>
+                    </bundle>
+                    
+                    <bundle name="templating">
+                        <module name="raptor/templating" recursive="true"/>
+                    </bundle>
+
+                </bundles>
+                
+            </optimizer-config>
+            ]]>
+            </docs:code-editor>
+            <p>
+                An optimizer XML configuration file is very flexible
+                and gives application developers a lot of control over the optimization
+                process. Amongst other
+                things, the optimizer configuration file allows
+                developers to define resource bundles. If a page
+                depends on a resource that is part of a bundle then the entire
+                bundle will be included in the optimized page. By default,
+                any resource that is not part of a bundle is bundled with
+                all other resources that are not part of a bundle and are of the same content type 
+                and targeted for the same slot. If
+                resources are used across multiple pages, or if you would to enable
+                the web browser to downloaded multiple resource bundles in parallel then
+                it is important to define resource bundles for your application.
+            </p>
+            <p>
+                Below is a quick summary of the important configuration options that the optimizer
+                XML configuration file supports:
+            </p>
+            <ul>
+                <li>
+                    <b>Resource bundles</b>: Configure any number of bundles dependin on your application's needs
+                </li>
+                <li>
+                    <b>Enabling/disabling resource bundling</b>: If bundling is disabled then the resource bundles defined in the XML configuration file will be ignored
+                </li>
+                <li>
+                    <b>In-place deployment</b>: Have the optimizer generate URLs to the original resource on disk (the original resource will remain untouched)
+                </li>
+                <li>
+                    <b>URL prefix</b>: Configure a special URL prefix for all URLs to optimized bundles. This option is necessary for certain server configurations and for utilizing a CDN host name
+                </li>
+                <li>
+                    <b>Output directory</b>: Tell the optimizer where to write bundles to disk
+                </li>
+                <li>
+                    <b>Enabling/disabling minification</b>: If minification is enabled then resources will be processed to reduce their size
+                </li>
+            </ul>
+            <p>
+                For a full list of configuration options that are supported, please see the 
+                <a href="${url('/optimizer/developer-guide')}">
+                    RaptorJS Optimizer Developer Guide.    
+                </a>
+                
+            </p>
+        </docs:section>
+
+        <docs:section heading="XML Configuration Variables" anchor-name="variables">
+            <p>
+                Variables can be used insde the XML configuration file using
+                the \${&lt;variable-name>} syntax. Variables can be used in place
+                of hard coded values to make the configuration more dynamic.
+                For example:
+            </p>
+
+            <docs:code-editor 
+                mode="xml"
+                readOnly="true" 
+                c:parse-body-text="false">
+            <![CDATA[
+            
+            <optimizer-config>
+                ...
+                <enable-profile>${profile}</enable-profile>
+                <profile name="production">
+                    <!-- production settings go here -->
+                    <minify>true</minify>
+                    ...
+                </profile>
+                <profile name="development">
+                    <!-- development settings go here-->
+                    <minify>false</minify>
+                    ...
+                </profile>
+
+                ...
+            </optimizer-config>
+
+            ]]>
+            </docs:code-editor>
+            <p>
+                In the above example, a variable is used to control
+                which profile gets enabled.
+            </p>
+        </docs:section>
+
+    </docs:section>
+</c:template>
+

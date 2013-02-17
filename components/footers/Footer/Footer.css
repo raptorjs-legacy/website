@@ -1,0 +1,15 @@
+.footer {
+    border-top: 1px solid #C0C0C0;
+    margin-top: 20px;
+    background-color: #EEE;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.footer > .container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.footer > .container > .bd {
+}

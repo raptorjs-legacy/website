@@ -1,0 +1,7 @@
+{
+    "raptor": {
+        "dependencies": [
+            "google-plus.js"
+        ]
+    }
+}

@@ -1,0 +1,19 @@
+<raptor-taglib>
+
+    <tag name="popover" handler-class="components.overlays.Popover.PopoverTag" dynamic-attributes="true">
+        <attribute name="animation" type="boolean"/>
+        <attribute name="placement" type="string"/>
+        <attribute name="selector" type="string"/>
+        <attribute name="trigger" type="string"/>
+        <attribute name="title" type="string"/>
+        <attribute name="link-text" type="string"/>
+        <attribute name="content" type="string"/>
+        <attribute name="delay" type="int"/>
+        
+        <nested-tag name="popover-title" type="string" target-property="title"/>
+        <nested-tag name="popover-content" type="string" target-property="content"/>
+    </tag>
+    
+    
+    
+</raptor-taglib>

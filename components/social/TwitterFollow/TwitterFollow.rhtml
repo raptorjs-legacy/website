@@ -1,0 +1,15 @@
+<c:template
+    xmlns:c="core"
+    xmlns:w="widgets"
+    name="components/social/TwitterFollow"
+    params="username,showCount,rootAttrs">
+    
+    <a href="https://twitter.com/$username" 
+        class="twitter-follow-button" 
+        data-show-count="$showCount" 
+        data-lang="en" 
+        c:attrs="rootAttrs">
+        Follow @$username
+    </a>
+
+</c:template>

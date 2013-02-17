@@ -1,0 +1,55 @@
+<c:template name="components/nav/TopNavDefault"
+    xmlns:docs="docs"
+    xmlns:c="core"
+    docs:functions="url"
+    params="activeItem">
+    
+    <docs:nav-bar brand="RaptorJS" brandHref="${url('/')}" type="fixed-top">
+        <docs:nav activeItem="${activeItem}">
+            <docs:nav-divider/>
+            <docs:nav-item href="${url('/get-started')}" label="Get Started" itemId="get-started"/>
+            <docs:nav-divider/>
+            <docs:nav-item label="Learn" type="dropdown-menu" itemId="learn">
+                <docs:nav-item label="Overview" href="${url('/')}" itemId="home"/>
+                <docs:nav-item label="Get Started" href="${url('/get-started')}" itemId="get-started"/>
+                <docs:nav-item label="Tutorial" href="${url('/tutorial')}" itemId="tutorial"/>
+                <docs:nav-item label="API Reference" href="${url('/api')}" itemId="api"/>
+                <docs:nav-item label="FAQ" href="${url('/faq')}" itemId="faq"/>
+                <docs:nav-divider/>
+                <docs:nav-item label="Modules and Classes" href="${url('/modules-classes')}" itemId="modules"/>
+                <docs:nav-item label="Packaging and Extensions" href="${url('/packaging')}" itemId="packaging"/>
+                <docs:nav-item label="Module Loader" href="${url('/module-loader')}" itemId="module-loader"/>
+                <docs:nav-item label="Optimizer" href="${url('/optimizer')}" itemId="optimizer"/>
+                <docs:nav-item label="Raptor Templates" href="${url('/raptor-templates')}" itemId="raptor-templates"/>
+                <docs:nav-item label="Widget Framework" href="${url('/widgets')}" itemId="widgets"/>
+                <docs:nav-divider/>
+                <docs:nav-item label="UI Components" href="${url('/ui-components')}" itemId="ui-components"/>
+                <docs:nav-item label="Logging" href="${url('/logging')}" itemId="logging"/>
+                <docs:nav-item label="Resource Search Path" href="${url('/resource-search-path')}" itemId="resource-search-path"/>
+                <docs:nav-item label="Cross Environment Support" href="${url('/cross-environment')}" itemId="cross-environment"/>
+            </docs:nav-item>
+            <docs:nav-divider/>
+            <docs:nav-item label="Community" type="dropdown-menu" itemId="community">
+                <docs:nav-item label="Source code" href="https://github.com/raptorjs/raptorjs"/>
+                <docs:nav-item label="Issue Tracker" href="https://github.com/raptorjs/raptorjs/issues"/>
+                <docs:nav-item label="Contribute" href="${url('/contribute')}" active="contribute"/>
+                <docs:nav-item label="Contributors" href="${url('/contributors')}" active="contributors"/>
+                <docs:nav-divider/>
+                <docs:nav-item label="Discussion Forum" href="http://groups.google.com/group/raptorjs"/>
+                <docs:nav-divider/>
+                <docs:nav-item label="Twitter (@raptorjs)" href="http://twitter.com/raptorjs"/>
+                <docs:nav-item label="Google+" href="http://twitter.com/raptorjs"/>
+            </docs:nav-item>
+            <docs:nav-divider/>
+            <docs:nav-item label="About" type="dropdown-menu" itemId="about">
+                <docs:nav-item label="Release Notes" href="https://github.com/raptorjs/raptorjs/wiki/Release-Notes"/>
+                <docs:nav-item label="Design Philosophy" href="${url('/design-philosophy')}" itemId="design-philosophy"/>
+                <docs:nav-item label="License" href="${url('/license')}" itemId="license"/>
+                <docs:nav-item label="Credits" href="${url('/credits')}" itemId="credits"/>
+                <docs:nav-item label="Creators" href="${url('/creators')}" itemId="creators"/>
+            </docs:nav-item>
+            <docs:nav-divider/>
+        </docs:nav>
+    </docs:nav-bar>
+    
+</c:template>

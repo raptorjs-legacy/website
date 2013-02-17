@@ -1,0 +1,9 @@
+{
+    "type": "raptor-module",
+    "name": "CodeMirror/mode-xml",
+    "raptor": {
+        "dependencies": [
+            {"path": "CodeMirror-2.33/mode/xml/xml.js"}
+        ]
+    }
+}

@@ -1,0 +1,48 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+    
+    
+    <html html:doctype="html">
+        <head>
+            <title>Raptor Templates: Compilation</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body data-spy="scroll">
+            <docs:top-nav/>
+            <div class="container">
+                <docs:docs heading="Raptor Templates: Compilation" return-label="Raptor Templates" return-href="${url('/raptor-templates')}" disqus-id="raptor-templates-compilation">
+                    <docs:message type="warning">
+                        Documentation In-Progress
+                    </docs:message>
+                    
+                    <docs:section heading="Overview">
+                    </docs:section>
+                    
+                </docs:docs>
+            </div>
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

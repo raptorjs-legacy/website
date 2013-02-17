@@ -1,0 +1,51 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+    
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: Creators</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav activeItem="creators"/>
+            
+            
+            
+            <div class="container">
+                <docs:message type="warning">
+                    Documentation In-Progress
+                </docs:message>
+                
+                The RaptorJS toolset is being built by eBay's Presentation Platform group, and is actively managed on 
+                <a href="https://github.com">github</a>.
+                RaptorJS is released under <a href="${url('/license')}">Apache License, Version 2.0</a>.
+                See <a href="http://www.ebayopensource.org/">eBay Open Source</a> for other project contributed by eBay. 
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

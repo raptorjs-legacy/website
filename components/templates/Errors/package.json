@@ -1,0 +1,10 @@
+{
+    "raptor": {
+        "dependencies": [
+            {"module": "raptor/widgets"},
+            "ErrorsWidget.js",
+            "Errors.css",
+            "Errors-error.rhtml"
+        ]
+    }
+}

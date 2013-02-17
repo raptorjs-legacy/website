@@ -1,0 +1,181 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS Optimizer: Get Started using the Optimizer Taglib for Raptor Templates</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav/>
+            <div class="container">
+                <docs:docs heading="RaptorJS Optmizer: Get Started with the JS API" disqus-id="optimizer-get-started-javascript-api">
+                    <docs:message type="warning">
+                        Documentation In-Progress
+                    </docs:message>
+                        
+                    <c:include template="/pages/optimizer/shared-content/get-started-overview" />
+
+                    <docs:section heading="Sample Code">
+                        <p>
+                            The sample code for this guide can be downloaded using the following link:
+                            <a href="${url('/sample-projects/optimizer-get-started-javascript-api.zip')}">
+                                <nobr>
+                                    RaptorJS Optimizer: Get Started - Sample Code
+                                </nobr>
+                            </a>
+                        </p>
+                    </docs:section>
+
+                    <c:include template="/pages/optimizer/shared-content/creating-a-package" />
+
+                    <docs:section heading="Optimizing a Page using the JavaScript API">
+                        <p>
+                            <img src="${url('/images/optimized-delivery.png')}" width="128" height="128" class="section-icon"/>
+                            The RaptorJS Optimizer provides a simple JavaScript API that can be utitlized
+                            to generate optimized bundles and HTML markup. The default configuration will
+                            write all bundles to a "static" directory in the current working directory of the running process.
+                            In addition, the default configuration will use "/static/" as the URL prefix for all
+                            resource URLs. In addition, by default, no minification or other filters are applied
+                            to JavaScript and CSS code. Lastly, the default configuration configures no bundles so
+                            all resources of the same content type (i.e., either CSS or JavaScript) targeted
+                            for the same slot will be automically bundled together.
+                        </p>    
+                        <docs:section heading="Example Setup">
+                            For this guide, we will use the following directory structure:
+                            <docs:project-dir-structure dir="/sample-projects/optimizer/get-started-javascript-api"/>
+                        </docs:section>
+
+                        <docs:section heading="Using the JavaScript API">
+                            <p>
+                                If you are okay with the defaults, you can easily optimize the "test-page" from the example above using the
+                                following JavaScript code:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+
+                            require('raptor'); //Initialize RaptorJS on the server and enable AMD
+
+                            var files = require('raptor/files'),
+                                resources = require('raptor/resources'),
+                                optimizer = require('raptor/optimizer');
+
+                            resources.addSearchPathDir(files.joinPaths(__dirname, 'modules'));
+
+                            var optimizedPage = optimizer.optimizePage({
+                                name: 'test-page',
+                                packageFile: files.joinPaths(__dirname, 'pages/test-page/package.json')
+                            });
+                            
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                Assuming the above script is saved to a file name "run-optimizer.js", 
+                                the following commands should be used to execute the above program from the root directory of the application:
+                            </p>
+                            <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                            $ npm install raptor
+                            $ node run-optimizer.js
+                            </pre>
+                            <p>
+                                After running the above commands, the value of the <code>optimizedPage</code> variable will
+                                be the following (formatted as JSON):
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+
+                            <![CDATA[
+
+                            {
+                                'htmlBySlot': {
+                                    'body': '<script type="text/javascript" src="/static/test-page-body-f01892af.js"></script>',
+                                    'head': '<link rel="stylesheet" type="text/css" href="/static/test-page-head-bf4cf798.css">'
+                                },
+                                'loaderMetadata': {}
+                            }
+
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                In addition, the call to <code>optimizer.optimizePage(...)</code> in the above application will 
+                                cause the following
+                                files to be written to the <code>static</code> directory:
+                            </p>
+                            <ul>
+                                <li>
+                                    test-page-body-f01892af.js
+                                </li>
+                                <li>
+                                    test-page-head-bf4cf798.css
+                                </li>
+                            </ul>
+
+                            
+                        </docs:section>
+
+                        <docs:section heading="Injecting HTML Markup">
+                            <p>
+                                For the RaptorJS Optimizer to be helpful you will need
+                                to inject the resulting HTML into the appropriate locations
+                                in your HTML page. To do this, you will typically use your 
+                                favorite templating language. For illustration purposes only,
+                                if a templating language were not being used, the following
+                                crude JavaScript code could be used to inject
+                                the HTML for the resource slots:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+
+                            var pageHtml = 
+                                '<html><head><title>Test Page</title>' + 
+                                optimizedPage.getSlotHtml('head') + 
+                                '</head><body>Hello World' + 
+                                optimizedPage.getSlotHtml('body') + 
+                                '</body></html>';
+
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+
+                        <c:include template="/pages/optimizer/shared-content/configuring" />
+                
+                    </docs:section>
+
+                </docs:docs>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

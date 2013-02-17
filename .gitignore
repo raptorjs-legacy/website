@@ -1,0 +1,5 @@
+/dist
+/local-properties.json
+/node_modules
+/work
+*.sublime-workspace

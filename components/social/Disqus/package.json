@@ -1,0 +1,18 @@
+{
+    "raptor": {
+        "extensions": [
+            {
+                "name": "development",
+                "dependencies": [
+                    "DisqusWidget_dev.js"
+                ]
+            },
+            {
+                "name": "production",
+                "dependencies": [
+                    "DisqusWidget.js"
+                ]
+            }
+        ]
+    }
+}

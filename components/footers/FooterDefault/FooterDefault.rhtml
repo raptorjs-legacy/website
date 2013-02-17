@@ -1,0 +1,62 @@
+<c:template name="components/footers/FooterDefault"
+    xmlns:docs="docs"
+    xmlns:c="core"
+    docs:functions="url">
+    
+    <div style="clear: both"/>
+    <div class="footer">
+        <div class="container">
+            <div class="bd">
+                <p>
+                    <div class="powered-by">
+                        Powered by <a href="${url('/')}" class="raptorjs">RaptorJS</a> | 
+                        ©2011-2012 eBay Software Foundation
+                    </div>    
+                </p>
+                <p>
+                    Built at <a href="http://www.ebay.com/">
+                        eBay
+                    </a> by 
+                    <a href="http://www.linkedin.com/in/patrickidem">Patrick Steele-Idem</a> 
+                    (<a href="https://twitter.com/psteeleidem">
+                        @psteeleidem
+                    </a>) with  
+                    <a href="${url('/contributors')}">
+                        contributors
+                    </a>.
+                </p>
+                <p>
+                    Code licensed under the 
+                    <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. 
+                    Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
+                </p>
+                <p>
+                    <a href="https://github.com/raptorjs/raptorjs">
+                        View Project on Github
+                    </a>
+                    |
+                    <a href="https://github.com/raptorjs/raptorjs/issues">
+                        Submit an Issue
+                    </a>
+                    |
+                    <a href="${url('/contribute')}">
+                        Contribute
+                    </a>
+                    |
+                    <a href="http://groups.google.com/group/raptorjs">
+                        Discuss
+                    </a>
+                    |
+                    <a href="http://twitter.com/raptorjs">
+                        Follow RaptorJS on Twitter
+                    </a>
+                    |
+                    <a href="${url('/credits')}">
+                        Additional credits
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+</c:template>

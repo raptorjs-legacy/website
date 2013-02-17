@@ -1,0 +1,14 @@
+<c:template xmlns:c="core" params="name,count">
+
+    <!-- Simple variables: -->
+    <p>Hello $name! You have $count new messages.</p>
+    
+    <!-- JavaScript expressions: -->
+    <p>Hello ${name.toUpperCase()}! You have $count new messages.</p>
+    
+    <!-- Variables/expressions inside JavaScript strings: -->
+    <p>${"Hello $name".toUpperCase()}</p>
+    
+    <!-- Mind blown: -->
+    <p>${"Hello and ${'Welcome $name!'}".toUpperCase()}</p>
+</c:template>

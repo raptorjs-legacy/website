@@ -1,0 +1,6 @@
+{
+    name: "World"
+    ,colors: ["red", "green", "blue"]
+    // Try with no colors:
+    //,colors: []
+}

@@ -1,0 +1,105 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    docs:functions="url"
+    params="includes,samples">
+
+    <optimizer:page name="page-${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/icons/Icon"/>
+            <!-- <module name="components/editors/CodeEditor"/>
+            <module name="components/editors/CodeEditor/mode-javascript"/> -->
+            <css path="index.css"/>
+
+        </dependencies>
+    </optimizer:page>
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: Widget Framework</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body data-spy="scroll">
+            <docs:top-nav activeItem="widgets"/>
+            <div class="container">
+                <div class="feature-portal-top">
+
+                    <div class="feature-portal-desc">
+                        <h1>Widget Framework</h1>
+                        <p>
+                            The RaptorJS Widget Framework takes care of automatically
+                            initializing JavaScript widgets for rendered UI components—even for UI 
+                            components rendered on the server. Initialized JavaScript widgets 
+                            will be automatically bound to their associated DOM node and also be
+                            passed widget configuration data.
+                        </p>
+                        <p>
+                            The RaptorJS Widget framework provides all of this functionality without 
+                            requiring that the front-end developer utlizing a UI component write even 
+                            a single of JavaScript code.  RaptorJS UI components can be easily embedded 
+                            in HTML templates.
+                        </p>
+                        <p>
+                            The RaptorJS Widget Framework encourages best practices by allowing
+                            UI component developers to encapsulate presentation and logic, and
+                            developers have full control over how a widget is implemented. Lastly,
+                            for optimal performance, the RaptorJS Widget Framework does not rely on 
+                            querying the DOM to find widgets.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-portal-features">
+                        <h2>Features</h2>
+                        <ul>
+                            <li>Simple</li>
+                            <li>Lightweight JavaScript API</li>
+                            <li>UI Components are Encapsulated</li>
+                            <li>RaptorJS Automatically Initializes Widgets</li>
+                            <li>Template Bindings for Raptor Templates</li>
+                            <li>Utilize UI Components without Writing JavaScript</li>
+                            <li>Widget Configs Serialized as JSON</li>
+                            <li>Use with any Library such as jQuery o</li>
+                            <li>Encourages Best Practices for Building UI Components</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="feature-portal-sections">
+                    <docs:feature-portal-section 
+                        title="Get Started"
+                        url="${url('/widgets/get-started')}"
+                        size="small">
+                    
+                        Quickly learn the basics of the RaptorJS Widget Framework
+                    
+                    </docs:feature-portal-section>
+                    
+                    <docs:feature-portal-section 
+                        title="Developer Guide"
+                        url="${url('/widgets/developer-guide')}"
+                        size="small">
+                    
+                        An in-depth look at using the RaptorJS Widget Framework
+                        to build web applications.
+                    
+                    </docs:feature-portal-section>
+                </div>
+
+
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

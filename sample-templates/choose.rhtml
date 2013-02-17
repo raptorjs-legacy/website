@@ -1,0 +1,29 @@
+<c:template xmlns:c="core" params="age">
+
+    <!-- Directives as elements -->
+    <c:choose>
+        <c:when test="age === 50">
+            You are 50 years old
+        </c:when>
+        <c:when test="age === 51">
+            You are 51 years old
+        </c:when>
+        <c:otherwise>
+            You are not 50 or 51 years old.
+        </c:otherwise>
+    </c:choose>
+    
+    <!-- Directives as attributes -->
+    <c:choose>
+        <div c:when="age === 50">
+            You are 50 years old
+        </div>
+        <div c:when="age === 51">
+            You are 51 years old
+        </div>
+        <div c:otherwise="">
+            You are not 50 or 51 years old.
+        </div>
+    </c:choose>
+
+</c:template>

@@ -1,0 +1,117 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    docs:functions="url"
+    params="includes,samples">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: Raptor Templates</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body data-spy="scroll">
+            <docs:top-nav activeItem="raptor-templates"/>
+            <div class="container">
+                <div class="feature-portal-top">
+
+                    <div class="feature-portal-desc">
+                        <h1>Raptor Templates</h1>
+                        <p>
+                            Raptor Templates is an amazing new templating language
+                            that beautifully blends powerful templating directives 
+                            with HTML tags. Equally effective in both the browser
+                            and on the server, use Raptor Templates <i>wherever</i> you want to produce
+                            HTML.
+                        </p>
+                        <p>
+                            No other templating language makes
+                            it so effortless to produce easily readable templates
+                            that are blazingly fast with such a miniscule footprint.
+                        </p>
+                        <p>
+                            So say goodbye to the dogmatic and limiting templating languages 
+                            of old...and enjoy the freedom of this extremely extensible
+                            alternative that puts you in control!
+                        </p>
+                    </div>
+                    
+                    <div class="feature-portal-features">
+                        <h2>Features</h2>
+                        <ul>
+                            <li>Not Dogmatic</li>
+                            <li>Extensible</li>
+                            <li>XML-based</li>
+                            <li>JavaScript Runtime and Compiler</li>
+                            <li>Cross-Environment</li>
+                            <li>Static Validation</li>
+                            <li>Custom Taglibs</li>
+                            <li>Optimized Runtime</li>
+                            <li>Advanced Compiler</li>
+                            <li>Minimal Compiled Output</li>
+                            <li>Smart Whitespace Removal</li>
+                            <li>User Friendly Error Messages</li>
+                            <li>Easily Debuggable</li>
+                            <li>Safe and Secure</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="feature-portal-sections">
+                    <div class="start-here"/>
+                    
+                    <docs:feature-portal-section 
+                        class="section-try-online"
+                        title="Try Online"
+                        url="${url('/raptor-templates/try-online')}"
+                        size="small">
+
+                        Edit Raptor Templates in your browser with instant results!
+
+                    </docs:feature-portal-section>
+
+                    <docs:feature-portal-section 
+                        title="Get Started"
+                        url="${url('/raptor-templates/get-started')}"
+                        size="small">
+
+                        Learn how to quickly start using Raptor Templates in your application
+
+                    </docs:feature-portal-section>
+
+
+                    <docs:feature-portal-section 
+                        title="Developer Guide"
+                        url="${url('/raptor-templates/developer-guide')}"
+                        size="small">
+
+                        An in-depth look at utilizing and
+                        extending Raptor Templates.
+
+                    </docs:feature-portal-section>
+                </div>
+
+            </div>
+            
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

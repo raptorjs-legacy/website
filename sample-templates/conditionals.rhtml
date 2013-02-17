@@ -1,0 +1,39 @@
+<c:template xmlns:c="core" params="age">
+
+    <!--
+    Supported operators:
+    and/&&, or/||, lt/<, gt/>, eq/===, ne/!==, lt/<, gt/>, ge/>=, le/<= 
+    -->
+    <div c:if="age === 50">
+        You are 50 years old
+    </div>
+    
+    <c:if test="age === 50">
+        You are 50 years old
+    </c:if>
+    
+    <!-- Short-hand conditionals -->
+    <div class="{?age === 50;age-50}">Hello</div>
+    
+    <c:choose>
+        <c:when test="age lt 50">
+            You are less than 50 years old!
+        </c:when>
+        <c:when test="age eq 50">
+            You are 50 years old
+        </c:when>
+        <c:otherwise>
+            You are over 50!
+        </c:otherwise>
+    </c:choose>
+    
+    <c:choose>
+        <div c:when="age lt 50">
+            You are less than 50 years old!
+        </div>
+        <div c:otherwise="">
+            You are 50 years of age or older!
+        </div>
+    </c:choose>
+
+</c:template>

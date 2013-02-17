@@ -1,0 +1,9 @@
+<raptor-taglib>
+
+    <tag name="twitter-follow" handler-class="components.social.TwitterFollow.TwitterFollowTag">
+        <attribute name="username" type="string"/>
+        <attribute name="showCount" type="boolean"/>
+        <attribute name="size" type="string"/>
+    </tag>
+    
+</raptor-taglib>

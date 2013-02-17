@@ -1,0 +1,7 @@
+<raptor-taglib>
+
+    <tag name="urls" handler-class="components.config.Urls.UrlsTag">
+        <attribute name="basePath" type="string"/>
+    </tag>
+    
+</raptor-taglib>

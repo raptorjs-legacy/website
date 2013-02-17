@@ -1,0 +1,9 @@
+{
+    "raptor": {
+        "dependencies": [
+            { "module": "components/footers/FooterDefault" },
+            { "module": "components/footers/FooterSingleLine" },
+            "Footer.css"
+        ]
+    }
+}

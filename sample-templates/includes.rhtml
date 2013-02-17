@@ -1,0 +1,7 @@
+<c:template xmlns:c="core" params="greetingData">
+
+    <c:include template="greeting" name="Frank" count="30"/><br/>
+    <c:include template="greeting" name="John" count="${10}"/><br/>
+    <c:include template="greeting" template-data="greetingData"/>
+    
+</c:template>

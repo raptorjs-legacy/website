@@ -1,0 +1,229 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS Optimizer: Get Started using the Command Line Interface</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav/>
+            <div class="container">
+                <docs:docs heading="RaptorJS Optmizer: Get Started using the Command Line Interface" disqus-id="optimizer-get-started-cli">
+                    <docs:message type="warning">
+                        Documentation In-Progress
+                    </docs:message>
+                    
+                    <c:include template="/pages/optimizer/shared-content/get-started-overview" />
+
+                    <docs:section heading="Sample Code">
+                        <p>
+                            The sample code for this guide can be downloaded using the following link:
+                            <a href="${url('/sample-projects/optimizer-get-started-cli.zip')}">
+                                <nobr>
+                                    RaptorJS Optimizer: Get Started using the Command Line Interface - Sample Code
+                                </nobr>
+                            </a>
+                        </p>
+                        <p>
+                            Alternatively, you can view the sample code for this guide on Github using the following link:
+                            <a href="https://github.com/raptorjs/raptorjs.github.com/tree/master/src/sample-projects/optimizer/get-started-cli">
+                                /src/sample-projects/optimizer/get-started-cli
+                            </a>
+                        </p>
+                    </docs:section>
+
+                    <c:include template="/pages/optimizer/shared-content/creating-a-package" />
+
+                    <docs:section heading="Optimizing a Page using the CLI">
+                        <p>
+                            <img src="${url('/images/optimized-delivery.png')}" width="128" height="128" class="section-icon"/>
+                            The RaptorJS Optimizer provides a simple command line interface (CLI) application
+                            that can be used to optimize a web application.
+                        </p> 
+
+                        <docs:section heading="Example Setup">
+                            For this guide, we will use the following directory structure:
+                            <docs:project-dir-structure dir="/sample-projects/optimizer/get-started-cli"/>
+                        </docs:section>
+
+
+
+                        <docs:section heading="Using the CLI">
+                            <p>
+                                The optimizer CLI is flexible and supports various use cases. Below is the usage information for the <code>raptor-optimizer</code> application:
+                            </p>
+                            <pre class="sh" xml:space="preserve" c:trim-body-indent="true" style="clear: both;">
+                            $ raptor-optimizer --help
+                            Usage: raptor-optimizer [dependency-1] [dependency-2] [dependency-n] [options]
+                            Examples:
+                              Optimize a set of dependencies:
+                               raptor-optimizer my-module /some-resource.js --name test-page --source=path/to/my-modules
+
+                              Optimize a package:
+                               raptor-optimizer --name test-page --package path/to/package.json --source=path/to/my-modules
+
+                              Optimize using a configuration file:
+                               raptor-optimizer --name test-page --package path/to/package.json --source=path/to/my-modules --config path/to/optimizer-config.xml
+
+                              Optimize all of the pages defined in a configuration file:
+                               raptor-optimizer --config path/to/optimizer-config.xml
+
+                            NOTE: Modules to download asynchronously should be suffixed with a question mark. For example:
+                              Optimize a page with an asynchronous dependency:
+                               raptor-optimizer my-module my-async-module? --name test-page
+
+
+                            Options:
+                              -n, --name     The name of the page being optimized (e.g. "my-page")                           
+                              -p, --package  A package manifest describing page dependencies                                 
+                              -o, --out      The output directory for static bundles and optimized page JSON files           
+                              -s, --source   A comma-separated list of source directories to search for modules and resources
+                              -c, --config   Path to an optimizer XML configuration file                                     
+                              -m, --minify   Enable JavaScript and CSS minification (disabled by default)                      [boolean]
+                              -h, --help     Display this usage information
+                            </pre>
+                            <p>
+                                For this guide, we will be using the following example usage:
+                            </p>
+                            <pre class="sh" xml:space="preserve" c:trim-body-indent="true" style="clear: both;">
+                            $ raptor-optimizer raptor /css/global.css ./pages/test-page/package.json module-c \
+                                --name my-bundle \
+                                --source modules \
+                                --out static \
+                                --minify
+                            </pre>
+                            <p>
+                                The above command does the following:
+                                <ul>
+                                    <li>
+                                        Optimizes a bundle named "my-bundle" (<code>--name my-bundle</code>) with the following
+                                        <i>top-level</i> dependencies:
+                                        <ol>
+                                            <li>
+                                                raptor (the RaptorJS AMD implementation)
+                                            </li>
+                                            <li>
+                                                /css/global.css (a CSS file)
+                                            </li>
+                                            <li>
+                                                ./pages/test-page/package.json (a RaptorJS package with additional dependencies)
+                                            </li>
+                                            <li>
+                                                module-c (a RaptorJS module with additional dependencies...resolves to a package.json file)
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li>
+                                        Adds the "modules" directory to the resource search path (<code>--source modules</code>)
+                                    </li>
+                                    <li>
+                                        Declares that the output directory for all optimized resource bundles and slot JSON files to be the "static" directory (<code>--out static</code>)
+                                    </li>
+                                    <li>
+                                        Enables JavaScript and CSS minification (<code>--minify</code>)
+                                    </li>
+                                </ul>
+                            </p>
+                            <p>
+                                After running the above command you will see output similar to the following:
+                            </p>
+                            <pre class="sh" xml:space="preserve" c:trim-body-indent="true" style="clear: both;">
+                            INFO optimizer.cli: Enabled JavaScript and CSS minification
+                            INFO optimizer.cli: Optimizing bundle with name "my-bundle"...
+                            INFO optimizer.BundlesFileWriter: Writing bundle file to "static/my-bundle.css"...
+                            INFO optimizer.BundlesFileWriter: Writing bundle file to "static/my-bundle.js"...
+                            INFO optimizer.cli: Writing JSON data for optimized page to "static/my-bundle-optimized.json"...
+                            Optimization successfully completed!
+                            </pre>
+                            <p>
+                                In addition, after running the above command, the following files will be written to disk:
+                                <ul>
+                                    <li>
+                                        static/my-bundle.css (optimized CSS code)
+                                    </li>
+                                    <li>
+                                        static/my-bundle.js (optimized JavaScript code)
+                                    </li>
+                                    <li>
+                                        static/my-bundle-optimized.json (HTML slot information for optimized code)
+                                    </li>
+                                </ul>
+                            </p>
+                            <p>
+                                For this guide, the contents of "static/my-bundle-optimized.json" will be similar to the following:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+
+                            <![CDATA[
+                            {
+                                "head": '<link rel="stylesheet" type="text/css" href="/static/my-bundle.css">',
+                                "body": '<script type="text/javascript" src="/static/my-bundle.js"></script>'
+                            }
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+
+                        <docs:section heading="Injecting HTML Markup">
+                            <p>
+                                For the RaptorJS Optimizer to be helpful you will need
+                                to inject the resulting HTML into the appropriate locations
+                                in your HTML page. To do this, you will typically use your 
+                                favorite templating language to inject slot HTML at runtime.
+                            </p>
+
+                            <p>
+                                When using the RaptorJS Optimizer CLI, you are responsible for writing the code that injects
+                                the HTML slot markup into your pages using a templating language of your choice or whatever approach
+                                you prefer.
+                            </p>
+                            <p>
+                                For this guide, we will be using a JavaScript program to inject the slot HTML into a static HTML file. Please see
+                                <a href="https://github.com/raptorjs/raptorjs.github.com/blob/master/src/sample-projects/optimizer/get-started-cli/update-html.js">
+                                    update-html.js
+                                </a>
+                                for the source code for the injection script. The above script operates on 
+                                <a href="https://github.com/raptorjs/raptorjs.github.com/blob/master/src/sample-projects/optimizer/get-started-cli/pages/test-page/test-page.html">
+                                    test-page.html
+                                </a>, a static HTML file.
+                            </p>      
+                        </docs:section>                  
+                    </docs:section>
+
+                    <c:include template="/pages/optimizer/shared-content/configuring" />
+
+                    
+
+                </docs:docs>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

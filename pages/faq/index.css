@@ -1,0 +1,23 @@
+.faq {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 60px;
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.qa {
+    margin-bottom: 15px;
+}
+
+.qa > .question {
+    font-weight: bold;
+}
+
+@media (max-width: 979px) {
+    .faq {
+        margin-top: 8px;
+        width: auto;
+    }
+}

@@ -1,0 +1,1294 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <module name="demo/ColorChangeWidget"/>
+            <module name="demo/JQueryWidget"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>    
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: Widget Framework Developer Guide</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav/>
+            
+            
+            <div class="container">
+                
+                <docs:docs heading="RaptorJS Widget Framework Developer Guide" disqus-id="widgets-developer-guide">
+                    <docs:message type="warning">
+                        Documentation In-Progress.
+                    </docs:message>
+
+                    <docs:section heading="Overview">
+                        <p>
+                            The RaptorJS Widget Framework is a lightweight framework that 
+                            simplifies the creation of web applications built using UI components. 
+                            The RaptorJS Widget Framework provides a mechanism for automatically attaching
+                            behavior to DOM sub-trees associated with rendered UI components—regardless 
+                            of whether or not the UI components were rendered on the server
+                            or in the web browser. Examples of UI components with attached behavior include
+                            overlays, tab panels, accordion containers, buttons, etc.
+                            The RaptorJS Widget Framework simplifies the initialization
+                            of JavaScript applications by managing the lifecycle of widgets rendered to the page.
+                            In addition, the Widget Framework provides
+                            support for inter-widget communication via custom events and Pub/Sub messaging and
+                            it allows for widgets to directly reference nested named widgets.
+                        </p>
+                        <p>
+                            The RaptorJS Widget Framework does not dictate how a client-side
+                            widget be implemented and there is no complex class inheritance
+                            hierarchy (only a few mixins that get applied to all initialized widgets).
+                        </p>
+                        <p>
+                            UI components that use <a href="${url('/raptor-templates')}">Raptor Templates</a> to render their view
+                            will benefit from the bindings that allow widgets to be attached to rendered HTML elements. 
+                            During the rendering of an HTML template,
+                            the Widget Framework keeps track of which widgets have been rendered and which HTML element
+                            each widget is bound to. This allows all of the widgets to be automatically and efficiently be initialized 
+                            without having to rely the CPU intensive task of scanning the final DOM tree to discover rendered widgets.
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="Features">
+                        <ul>
+                            <li>Automatic initialization of widgets bound to rendered DOM nodes
+                                <ul>
+                                    <li><b>For widgets rendered on the server:</b><br/>
+                                        JavaScript code to automatically initialize widgets is automatically inserted into the initial page HTML
+                                    </li>
+                                    <li><b>For widgets rendered on the client:</b><br/>
+                                        Widgets are initialized immediately have the rendered HTML is inserted into the DOM
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>No complicated class hierarchy—only a small set of mixins that are applied to all widgets</li>
+                            <li>Widget constructors can be provided arbitrary configuration data generated at render time</li>
+                            <li>All widget instances are made observable</li>
+                            <li>Widgets can directly reference nested named widgets</li>
+                            <li>Bindings for multiple templating languages</li>
+                            <li>Assignment of unique IDs to nested HTML elements and mechanism for accessing nested DOM elements by ID</li>
+                            <li>Optional extensions to provide improved ease-of-use with jQuery</li>
+                            <li>Support for destroying widgets and automatically unsubscribing all listeners</li>
+                        </ul>
+                    </docs:section>
+
+                    <docs:section heading="Simple Example">
+                        <p>
+                            A widget is just a JavaScript "class" that provides the client-side behavior for
+                            a rendered UI component. A 
+                            <a href="http://raptorjs.org/api/raptor/widgets/Widget/">small collection of mixins</a> 
+                            are automatically applied to each widget class
+                            to provide common functionality across all widgets and each widget instance is bound to a rendered DOM node. 
+                            A typical widget implementation includes code to subscribe to DOM events, manipulate its DOM nodes 
+                            and communicate with other widgets on the page via custom events or Pub/Sub messaging. The following
+                            code shows the sample code for a very simple widget:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            title="/demo/ColorChangeWidget.js"
+                            resource="/demo/ColorChangeWidget.js"/>
+                        <p>
+                            The following example Raptor template uses the custom <code>w:widget</code> attribute
+                            to bind an instance of <code>demo/ColorChangeWidget</code> to a DOM element:
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <c:template
+                            xmlns:c="core"
+                            xmlns:w="widgets">
+                            
+                            <c:var name="widgetConfig" value="{colors: ['red', 'green', 'blue']}"/>
+
+                            <button type="button" 
+                                w:widget="demo/ColorChangeWidget; config=widgetConfig">
+                                Click Me!
+                            </button>
+
+                        </c:template>
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            <h4>Demo</h4>
+                            <c:var name="widgetConfig" value="{colors: ['red', 'green', 'blue']}"/> 
+                            <button type="button" 
+                                w:widget="demo/ColorChangeWidget; config=widgetConfig">
+                                Click Me!
+                            </button>
+                        </p>
+                        <p>
+                            When the above template is rendered and added to the DOM, a new instance
+                            of <code>demo/ColorChangeWidget</code> will be created, and it will be bound to corresponding DOM element
+                            that was rendered. Since an <code>id</code> attribute was not assigned to the <code>&lt;button></code> element, a unique
+                            ID will be generated automatically and assigned to the root DOM element, and the same DOM element
+                            ID will be provided to the newly created widget instance so that the two are bound together. 
+                            For example, the output HTML for the previous template would be similar to the following:
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <button type="button" id="w123">
+                            Click Me!
+                        </button>
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            When the method, <code>this.getEl()</code>, is invoked on the instantiated widget it would return the "raw" DOM node
+                            that the widget is bound to. For clarity:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        // The following will output "w123" for the above widget:
+                        console.log(this.getEl().id); 
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            How widgets are initialized and bound to DOM nodes is described later in this guide. In addition,
+                            the full collection of mixins that are applied to all widgets is described in
+                            the <a href="#WidgetMixins"> Widget Mixins</a> section below.
+                        </p>
+                        
+                    </docs:section>
+
+                    <docs:section heading="Client-side Dependencies">
+                        <p>
+                            In order to use the RaptorJS Widget Framework, the 
+                            <a href="http://raptorjs.org/api/raptor/widgets/">raptor/widgets</a> module must be included on the page.
+                        </p>
+                        <p>
+                            To render UI components in the browser, two additional modules must be included:
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="http://raptorjs.org/api/raptor/component-renderer/"><nobr><b>raptor/component-renderer</b></nobr></a>:
+                                Required for rendering UI components in the browser, inserting the resulting HTML into the DOM and initializing
+                                the widgets associated with the rendered UI components
+                            </li>
+                            <li>
+                                <a href="http://raptorjs.org/api/source/raptor/templating/taglibs/widgets/package.json/"><nobr><b>raptor/templating/taglibs/widgets</b></nobr></a>:
+                                Required to use custom tag handlers that are part of the <a href="#Taglib">Widgets Taglib</a>
+                            </li>
+                        </ul>
+                        <p>
+                            These dependencies can be included as part of a 
+                            <a href="${url('/packaging')}">RaptorJS package.json</a>
+                            file or by using the <a href="${url('/optimizer/get-started-raptor-templates')}">RaptorJS Optimizer Taglib</a>
+                            as shown in the following samples:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            title="Sample package.json"
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        {
+                            "raptor": [
+                                { "module": "raptor/widgets" },
+                                { "module": "raptor/component-renderer" },
+                                { "module": "raptor/templating/taglibs/widgets" },
+                                ...
+                            ]
+                        }
+                        ]]>
+                        </docs:code-editor>
+
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            title="Optimizer Taglib"
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <c:template
+                            xmlns:c="core"
+                            xmlns:optimizer="optimizer">
+
+                            <optimizer:page name="demo-page">
+                                <dependencies>
+                                    <module name="raptor"/>
+                                    <module name="raptor/widgets"/>
+                                    <module name="raptor/component-renderer"/>
+                                    <module name="raptor/templating/taglibs/widgets"/>
+                                    <!-- Additional Dependencies... -->
+                                </dependencies>
+                            </optimizer:page>
+
+                            <html>
+                                <head>
+                                    ...
+                                </head>
+                                <body>
+                                    ...
+                                </body>
+                            </html>
+
+                        </c:template>
+                        ]]>
+                        </docs:code-editor>
+                    </docs:section>
+
+                    <docs:section heading="Widget Initialization">
+                        <p>
+                            The RaptorJS Widget Framework provides the ability to automatically initialize widgets associated
+                            with rendered UI components—regardless of whether or not the UI components were rendered
+                            on the server or in the web browser. A widget is not initialized until all of its nested
+                            widgets have first been initialized. By default, widgets are not initialized until
+                            the "ondomready" event. Widget initialization is described in more detail in the following sections.
+                        </p>
+                        <docs:section heading="Widget Constructor">
+                            <p>
+                                Every widget class is expected to be a constructor function that accepts
+                                a single "widget config" argument. The widget config argument is arbitrary
+                                data provided to the widget at render time. For more details on
+                                how to provide widget config data when using    
+                                <a href="http://raptorjs.org/raptor-templates">Raptor Templates</a> please see the
+                                <a href="#WidgetConfig">Raptor Templates » WidgetConfig</a> section below.
+                            </p>
+                            <p>
+                                A sample widget constructor is shown below:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            define(
+                                "demo/MyWidget",
+                                function(require) {
+                                    var MyWidget = function(widgetConfig) {
+
+                                    };
+
+                                    MyWidget.prototype = {
+
+                                    };
+
+                                    return MyWidget;
+                                });
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                RaptorJS also supports the equivalent shorter syntax shown below:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            define.Class(
+                                "demo/MyWidget",
+                                function(require) {
+                                    return {
+                                        init: function(widgetConfig) {
+                                            // ...
+                                        }
+                                    }
+                                });
+                            ]]>
+                            </docs:code-editor>
+
+                        </docs:section>
+
+                        <docs:section heading="Initialization Sequence">
+                            <p>
+                                Nested widgets are always initialized before their ancestors. For example, given
+                                the following template:
+
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                title="Sample Raptor Template"
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <div w:widget="WidgetA">
+                                <div w:widget="WidgetB"/>
+                            </div>
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                In the above template, the widget of type <code>WidgetB</code> will be initialized before the
+                                widget of type <code>WidgetA</code> is initialized.
+                            </p>
+                            <docs:message type="info">
+                                <p>
+                                    By default, all widgets will not be initialized until the "ondomready" event
+                                    has fired. However, a widget can be configured to initialize immediately
+                                    instead of waiting until the "ondomready" event by setting a property
+                                    on the widget class named "initBeforeOnDomReady" with a value
+                                    of <code>true</code> as shown in the following example code:
+                                </p>
+                                <docs:code-editor 
+                                    mode="javascript"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                define.Class(
+                                    "demo/MyWidget",
+                                    function(require) {
+                                        return {
+                                            initBeforeOnDomReady: true,
+
+                                            init: function(widgetConfig) {
+                                                // ...
+                                            }
+                                        }
+                                    });
+                                ]]>
+                                </docs:code-editor>
+                            </docs:message>
+                        </docs:section>
+
+                        <docs:section heading="Initializing Server-rendered Widgets" anchor-name="ServerInit">
+                            <p>
+                                Initializing widgets associated with UI components rendered on the server is accomplished
+                                by generating JavaScript code on the server that, when invoked in the browser, will
+                                initialize all of the widgets rendered on the server. When using <a href="http://raptorjs.org/raptor-templates">Raptor Templates</a>, the
+                                <a href="#InitWidgetsTag"><nobr>&lt;w:init-widgets></nobr></a> tag should be used to generate the required JavaScript code
+                                to initialize widgets associated with UI components rendered on the server. Internally, the <code><nobr>&lt;w:init-widgets></nobr></code> tag uses
+                                the <a href="http://raptorjs.org/api/raptor/widgets_Server/#writeInitWidgetsCode">widgets.writeInitWidgetsCode(...)</a> method
+                                to generate the required JavaScript code. The sample code
+                                below shows what the generated initialization code looks like:
+                            </p>
+                            <docs:code-editor 
+                                mode="htmlmixed"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <script type="text/javascript">
+                            $rwidgets(
+                                ["demo/ColorChangeWidget","w32",{"colors":["red","green","blue"]}],
+                                ["components/editors/CodeEditor/CodeEditorWidget","w30",{"mode":"javascript","autoResize":true,"readOnly":true}],
+                                ["components/editors/CodeEditor/CodeEditorWidget","w31",{"mode":"xml","autoResize":true,"readOnly":true}],
+                                ...);
+                            </script>
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                Please see the documentation for the <a href="#InitWidgetsTag"><nobr>&lt;w:init-widgets></nobr></a> tag for more details.
+                            </p>
+                        </docs:section>
+                        <docs:section heading="Initializing Client-rendered Widgets">
+                            <p>
+                                Initializing widgets associated with UI components rendered on the client is accomplished
+                                by tracking rendered widgets in a custom data attribute of the render <a href="http://raptorjs.org/api/raptor/render-context/Context/">context</a>
+                                object. When the rendered UI components are added to the DOM, the widgets registered in the <code>context</code> object are 
+                                then initialized. The <a href="http://raptorjs.org/api/raptor/component-renderer/"><nobr>raptor/component-renderer</nobr></a>
+                                module should be used to render UI components and then add the rendered HTML to the DOM since it handles
+                                the creation of the <code>context</code> object and provides methods for inserting the resulting HTML
+                                into the DOM. After the
+                                <a href="http://raptorjs.org/api/raptor/component-renderer/"><nobr>raptor/component-renderer</nobr></a> module is used
+                                to insert rendered UI components into the DOM, a Pub/Sub message named <code><nobr>raptor/component-renderer/renderedToDOM</nobr></code>
+                                is published and the <a href="http://raptorjs.org/api/raptor/widgets/">raptor/widgets</a> module responds
+                                to this message by initializing all of the widgets associated with the <code>context</code> object used to render the UI components.
+                            </p>
+                            <p>
+                                The following sample code illustrates how to utilize the <a href="http://raptorjs.org/api/raptor/component-renderer/"><nobr>raptor/component-renderer</nobr></a>
+                                module to render a UI component in the browser:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            require('raptor/component-renderer').render(
+                                'some/namespace/MyRenderer',            // The renderer
+                                {                                       // The input data model
+                                    message: 'Hello World'
+                                })
+                                .appendTo(this.getEl('myTargetEl'));    // Invoke helper method for inserting 
+                                                                        // the HTML into the DOM
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                The <code><nobr>raptor/component-renderer</nobr></code> will first create a render <a href="http://raptorjs.org/api/raptor/render-context/Context/">context</a>
+                                object and then it will invoke the <code>render</code> method of the provided renderer. Two arguments will be passed to the <code>render</code>
+                                method:
+                            </p>
+                            <ol>
+                                <li>
+                                    <b>input</b>: The input data model for the renderer
+                                </li>
+                                <li>
+                                    <b>context</b>: The render <a href="http://raptorjs.org/api/raptor/render-context/Context/">context</a> object
+                                </li>
+                            </ol>
+                            <p>
+                                The job of the renderer is to write out its output based on its input to the provided context. For more details on building
+                                UI components and rendering them on the client, please see the following documentation: <a href="${url('/ui-components')}">RaptorJS Widget Framework: UI Components</a>
+                            </p>
+                        </docs:section>
+                        
+                    </docs:section>
+
+                    <docs:section heading="Widget Mixins" anchor-name="WidgetMixins">
+                        <p>
+                            Every widget instance that is instantiated is given common behavior
+                            by automatically applying a <a href="http://raptorjs.org/api/raptor/widgets/Widget/">small collection of mixins</a> to the prototype of
+                            each widget. These mixins provide support for the following:
+                        </p>
+                        <ul>
+                            <li>
+                                Obtaining references to the root DOM node and nested DOM elements
+                            </li>
+                            <li>
+                                Obtaining references to nested widgets
+                            </li>
+                            <li>
+                                Publishing and subscribing to custom widget events
+                            </li>
+                            <li>
+                                Mapping custom widget events to Pub/Sub events
+                            </li>
+                            <li>
+                                Destroying a widget (including removing the widget from the DOM)
+                            </li>
+                            <li>
+                                Better integration with jQuery (optional mixins)
+                            </li>
+                        </ul>
+                        <p>
+                            The behavior that these mixins provide is described in more detail in the following sections.
+                        </p>
+                        <docs:section heading="Accessing Widget DOM Nodes">
+                            <p>
+                                The following mixin methods provide access to a widget's DOM nodes:
+                            </p>
+                            <docs:section heading="getEl">
+                                <p>
+                                    <b><code>Node</code> getEl(?widgetElId)</b>: 
+                                    Returns a raw DOM element for the given widget element ID. If no widget element ID is provided then the root DOM node that the widget is bound to is returned.
+                                </p>
+                            </docs:section>
+                            <docs:section heading="getElId">
+                                <p>
+                                    <b><code>String</code> getElId(?widgetElId)</b>: 
+                                    Similar to <code>getEl</code> but returns the <code>String</code> ID of the DOM node instead.
+                                </p>
+                            </docs:section>
+                        </docs:section>
+
+                        <docs:section heading="Accessing Nested Widgets">
+                            <p>
+                                The following mixin methods provide access to nested named widgets:
+                            </p>
+                            <docs:section heading="getWidget">
+                                <p>
+                                    <b><code>Object</code> getWidget(nestedWidgetId)</b>: 
+                                    Returns a reference to a single nested with with the provided assigned ID.
+                                </p>
+                            </docs:section>
+                            <docs:section heading="getWidgets">
+                                <p>
+                                    <b><code>Array</code> getWidgets(nestedWidgetId)</b>: 
+                                    Similar to <code>getWidget</code>, but returns an <code>Array</code> containing
+                                    all widgets with the matching assigned ID.
+                                </p>
+                            </docs:section>
+                        </docs:section>
+
+                        <docs:section heading="Widget Lifecycle Methods">
+                            <p>
+                                The following mixin methods provide functionality to control the life of a widget
+                            </p>
+                            <docs:section heading="destroy">
+                                <p>
+                                    <b><code>void</code> destroy()</b>: 
+                                    Destroys a widget by detaching the widget from the DOM and also automatically
+                                    unsubscribing the widget instance from all other widgets and Pub/Sub topics.
+                                </p>
+                            </docs:section>
+                            <docs:section heading="rerender">
+                                <p>
+                                    <b><code><a href="http://raptorjs.org/api/raptor/component-renderer/RenderResult/">RenderResult</a></code> rerender(input, ?context)</b>: 
+                                    Re-renders a widget by first destroying the current widget and then re-rendering
+                                    the widget and replacing the original DOM node with the newly created DOM node.
+                                    The widget class must have a static <code>render(input, context)</code> method
+                                    can be invoked to produce the HTML output by writing to the provided context.
+                                    <docs:message type="info">
+                                        NOTE: A new widget instance is created that shares nothing with the destroyed widget.
+                                    </docs:message>
+                                </p>
+                            </docs:section>
+                        </docs:section>
+
+                        <docs:section heading="Widget Event Handling">
+                            <p>
+                                The following mixin methods provide functionality to publish and subscribe
+                                to <i>custom</i> widget events:
+                            </p>
+                            <docs:section heading="publish" anchor-name="publish">
+                                <p>
+                                    <b><code>void</code> publish(messageName, props)</b>: 
+                                    Publishes a custom widget event with the specified message name and properties. For example:
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    this.publish('tabChanged', {tabIndex: tabIndex});
+                                    ]]>
+                                    </docs:code-editor>
+                                    <docs:message type="info">
+                                        NOTE: In order for a message to be published, the custom event must be declared as part of the Widget class using
+                                        the <code>events</code> property as shown in the following code:
+                                        <docs:code-editor 
+                                            mode="javascript"
+                                            readOnly="true" 
+                                            c:parse-body-text="false">
+                                        <![CDATA[
+                                        define.Class(
+                                            "demo/TabWidget",
+                                            function(require) {
+                                                return {
+                                                    events: ['tabChanged', 'tabRemoved', 'tabAdded'],
+                                                    init: function(widgetConfig) {
+                                                        // ...
+                                                    }
+                                                }
+                                            });
+                                        ]]>
+                                        </docs:code-editor>
+
+                                        
+                                    </docs:message>
+                                </p>
+                            </docs:section>
+                            <docs:section heading="subscribe" anchor-name="subscribe">
+                                <p>
+                                    <b><code><a href="http://raptorjs.org/api/raptor/listeners/ListenerHandle/">ListenerHandle</a></code> subscribe(messageName, callback, thisObj)</b>: 
+                                    Publishs a custom widget event with the specified message name and properties. For example:
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    tabsWidget.subscribe('tabChange', function(eventArgs) {
+                                        var tabIndex = eventArgs.tabIndex;
+                                        // ...
+                                    });
+                                    ]]>
+                                    </docs:code-editor>
+                                </p>
+                            </docs:section>
+                        </docs:section>
+
+                        <docs:section heading="Optional jQuery Extensions">
+                            <p>
+                                If the <code>jquery</code> extension is enabled when the <code>raptor/widgets</code>
+                                module is included then additional mixin methods are added to better integrate
+                                with jQuery.
+                            </p>
+                            <docs:section heading="$" anchor-name="jQuery">
+                                <p>
+                                    The <code>$</code> method (<a href="https://github.com/raptorjs/raptorjs/blob/master/lib/raptor/widgets/Widget_jquery.js">view source</a>) provides convenience methods for accessing a widget's DOM
+                                    elements when jQuery is available. This mixin method serves
+                                    as a proxy to jQuery to ease building queries based on widget element IDs.
+                                </p>
+                                <p>
+                                    Internally, this jQuery proxy method will resolve widget element IDs
+                                    to their actual DOM element ID by prefixing widget element IDs with the 
+                                    widget ID. For example, where <code>this</code> is a widget with an ID of <code>"w123"</code>:
+                                </p>
+                                <docs:code-editor 
+                                    mode="javascript"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                this.$() ➡ $("#w123")
+                                this.$("#myEl") ➡ $("#w123_myEl")
+                                ]]>
+                                </docs:code-editor>
+
+                                <p>
+                                    The usage of this mixin method is described below:
+                                </p>
+                                <docs:section heading="$()" anchor-name="jQueryProxyRoot">
+                                    <p>
+                                        Convenience usage to access the root widget DOM element wrapped as a jQuery object.
+                                        All of the following are equivalent:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    this.$()
+                                    $(this.getEl())
+                                    $("#" + this.getElId())
+                                    ]]>
+                                    </docs:code-editor>
+                                </docs:section>
+                                <docs:section heading="$('#&lt;widget-el-id>')" anchor-name="jQueryProxyWidgetEl">
+                                    <p>
+                                        Convenience usage to access a nested widget DOM element wrapped as a jQuery object.
+                                        All of the following are equivalent:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    this.$("#myEl)
+                                    $(this.getEl("myEl"))
+                                    $("#" + this.getElId("myEl"))
+                                    ]]>
+                                    </docs:code-editor>
+                                </docs:section>
+                                <docs:section heading="$('&lt;selector>')" anchor-name="jQueryProxyRootScopeSelector">
+                                    <p>
+                                        Convenience usage to query nested DOM elements scoped to the root widget DOM element.
+                                        All of the following are equivalent:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    this.$("ul > li")
+                                    $("ul > li", this.getEl())
+                                    $("#" + this.getElId() + " ul > li")
+                                    ]]>
+                                    </docs:code-editor>
+                                </docs:section>
+                                <docs:section heading="$('&lt;selector>', '&lt;widget-el-id>')" anchor-name="jQueryProxyWidgetElScopeSelector">
+                                    <p>
+                                        Convenience usage to query nested DOM elements scoped to a nested widget DOM element.
+                                        All of the following are equivalent:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    this.$("li.color", "colorsUL")
+                                    this.$("#colorsUL li.color")
+                                    $("li.color", this.getEl("colorsUL"))
+                                    $("#" + this.getElId("colorsUL") + " li.color")
+                                    ]]>
+                                    </docs:code-editor>
+                                </docs:section>
+                                <docs:section heading="$('#&lt;widget-el-id> &lt;selector>')" anchor-name="jQueryProxyWidgetElScopeSelector2">
+                                    <p>
+                                        Convenience usage to query nested DOM elements scoped to a nested widget DOM element.
+                                        All of the following are equivalent:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    this.$("#colorsUL li.color")
+                                    this.$("li.color", "colorsUL")
+                                    $("li.color", this.getEl("colorsUL"))
+                                    $("#" + this.getElId("colorsUL") + " li.color")
+                                    ]]>
+                                    </docs:code-editor>
+                                </docs:section>
+                                <docs:section heading="$(callbackFunction)" anchor-name="jQueryProxyOnDomReady">
+                                    <p>
+                                        Convenience usage to add a listener for the "on DOM ready" event and
+                                        have the <code>this</code> object for the provided callback function
+                                        be the current widget instance.
+                                        All of the following are equivalent:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    this.$(function() { /*...*/ });
+                                    $(function() { /*...*/ }.bind(this));      // Using Function.prototype.bind
+                                    $($.proxy(function() { /*...*/ }, this));
+                                    ]]>
+                                    </docs:code-editor>
+                                    <docs:message type="info">
+                                        NOTE: By default, each widget is not initialized until the "on DOM ready" event
+                                        has fired. Therefore, the only reason for using <code>$(callbackFunction)</code>
+                                        is if the "initBeforeOnDomReady" property is set to <code>true</code>.
+                                    </docs:message>
+                                </docs:section>
+                                <p>
+
+                                    <h4>Demo</h4>
+
+                                    <docs:code-editor 
+                                        mode="xml"
+                                        readOnly="true" 
+                                        title="Sample Raptor Template"
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    <div w:widget="demo/JQueryWidget">
+                                        <ul id="${widget.elId('colorsUL')}">
+                                            <li data-color="red">Click Me!</li>
+                                            <li data-color="green">Click Me!</li>
+                                            <li data-color="blue">Click Me!</li>
+                                        </ul>
+                                    </div>
+                                    ]]>
+                                    </docs:code-editor>
+
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        title="/demo/JQueryWidget.js"
+                                        resource="/demo/JQueryWidget.js"/>
+
+                                    <div w:widget="demo/JQueryWidget">
+                                        <ul id="${widget.elId('colorsUL')}">
+                                            <li data-color="red">Click Me!</li>
+                                            <li data-color="green">Click Me!</li>
+                                            <li data-color="blue">Click Me!</li>
+                                        </ul>
+                                    </div>
+                                </p>
+                            </docs:section>
+                        </docs:section>
+                    </docs:section>
+
+                    <docs:section heading="Pub/Sub Communication" anchor-name="PubSub">
+                        <p>
+                            The RaptorJS Widget Framework makes it easy for widgets to communicate directly with each other
+                            through the use of the <a href="#publish">publish</a> and <a href="#subscribe">subscribe</a>
+                            methods supported by all widgets. However, direct widget communication can be detrimental because it tends to
+                            more tightly couple an application since direct references are required. While communication via direct widget references
+                            may be ideal for certain situations, it is often better
+                            to utilize Pub/Sub messaging to achieve a more decoupled application.
+                        </p>
+                        <p>
+                            The RaptorJS Widget Framework allows custom widget events to be mapped automatically to Pub/Sub messages.
+                            With this approach, subscribers only need to subscribe to the Pub/Sub messages and not directly
+                            to other widgets. The Widget Framework includes bindings for <a href="http://raptorjs.org/raptor-templates/">Raptor Templates</a>
+                            that allows custom events to be declaratively mapped to Pub/Sub messages in a templates that embed
+                            other widgets. These mappings can be added through the use of the <a href="#EventAttributes">w:event-*</a>
+                            attributes described later in this guide. This is best illustrated by an example:
+                        </p>
+                        <p>
+                            A mapping of the custom "click" event is declaratively mapped to a Pub/Sub
+                            message named "sayHello" as shown in the sample template that embeds
+                            a Button widget. The <a href="#EventAttributes">w:event-*</a> allow additional
+                            properties to be added to the Pub/Sub message object through the use
+                            of sub-attributes.
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            title="Sample Raptor Template"
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <ui:button label="Say Hello" 
+                                   w:event-click="sayHello; message='Hello World'" />
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            The implementation for the Button widget includes code
+                            that publishes a custom "click" event as shown in the following
+                            sample code:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            title="Button Widget Implementation"
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        define.Class(
+                            "ui/ButtonWidget",
+                            function(require) {
+                                return {
+                                    events: ['click'],
+                                    init: function(widgetConfig) {
+                                        var _this = this;
+
+                                        // Publish a custom "click" event in response
+                                        // to a DOM "click" event.
+                                        this.$().click(function() {
+                                            _this.publish('click', {
+                                                button: _this
+                                            });
+                                        });
+                                    }
+                                }
+                            });
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            Internally, when a custom widget event is published, the framework
+                            will check to see if the custom widget event is mapped to a Pub/Sub
+                            event. If so, then in addition to publishing the custom event, the
+                            Pub/Sub message will be published as well. Other widgets that are
+                            interested in the published Pub/Sub message can subscribe
+                            to that message directly using the <code>raptor/pubsub</code>
+                            module.
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            title="Pub/Sub Subscriber"
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        require('raptor/pubsub').subscribe(
+                            'sayHello', 
+                            function(eventArgs) {
+                                var message = eventArgs.message;
+                                alert(message);
+                            });
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            For more details on using the <code>w:event-*</code> attributes please see the following
+                            section:
+                            <a href="#EventAttributes">Raptor Template Bindings » w:event-*</a>
+                        </p>
+
+                    </docs:section>
+
+                        
+
+                    <docs:section heading="Raptor Template Bindings" anchor-name="Taglib">
+                        <p>
+                            The Raptor Templating language includes custom tag and attribute handlers that
+                            allow developers to bind widgets to rendered DOM nodes. The long URI for the 
+                            
+                            <a href="https://github.com/raptorjs/raptorjs/blob/master/lib/raptor/templating/taglibs/widgets/widgets.rtld" target="_blank">widgets taglib</a>
+                            is <code>http://raptorjs.org/templates/widgets</code> and the short name is <code>widgets</code>.
+                        </p>
+
+                    
+
+                        <docs:section heading="w:widget/&lt;w:widget>">
+                            <p>
+                                The <code>w:widget</code> attribute and the <code>&lt;w:widget></code> tag can
+                                be used to initialize a widget and have it be bound to a rendered DOM element as shown
+                                in the following sample code:
+                            </p>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <code>w:widget</code> attribute
+                                        </th>
+                                        <th>
+                                            <code>&lt;w:widget></code> tag
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 50%">
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <div w:widget="demo/MyWidget">
+                                                My Widget
+                                            </div>
+                                            ]]>
+                                            </docs:code-editor>
+                                        </td>
+                                        <td style="width: 50%">
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <w:widget js-class="demo/MyWidget">
+                                                <div id="${widget.elId()}">
+                                                    My Widget
+                                                </div>
+                                            </w:widget>
+                                            ]]>
+                                            </docs:code-editor>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>
+                                The custom <code>w:widget</code> attribute can be applied to an HTML tag to bind
+                                a widget to a rendered HTML element. The value of the <code>w:widget</code> attribute
+                                should be the fully qualified class name of the widget that should be instantiated
+                                and bound to the corresponding rendered HTML element.
+                            </p>
+                            <docs:message type="info">
+                                <p>
+                                    If an <code>id</code> attribute
+                                    is not already provided for the HTML tag then an <code>id</code> attribute will automatically
+                                    be generated and its value will be a unique ID that can be used to bind the widget
+                                    to the rendered HTML element. If an <code>id</code> is provided then then the supplied
+                                    ID is used to bind the widget to the rendered HTML element. 
+                                </p>
+                            </docs:message>
+                            <p>
+                                Unlike when using the <code>w:widget</code> attribute, the
+                                <code>&lt;w:widget></code> tag does not automatically bind the widget
+                                to an HTML element. However the widget can still be bound to an HTML
+                                element by using the scoped <code>widget.elId()</code> expression as shown in the above example.
+                            </p>
+                            <p>
+                                The <code>w:widget</code> attribute and the <code>&lt;w:widget></code> tag both
+                                introduce a scoped variable named <code>widget</code>
+                                in the compiled template that is available to HTML template fragment associated with the widget.
+                                See <a href="#WidgetVar">Scoped &quot;widget&quot; variable</a> below for more details.
+                            </p>
+                        </docs:section>
+
+                        <docs:section heading="Scoped &quot;widget&quot; variable" anchor-name="WidgetVar">
+                            <p>
+                                The <code>w:widget</code> attribute and the <code>&lt;w:widget></code> tag both
+                                introduce a scoped variable named <code>widget</code>
+                                in the compiled template that is available to HTML template fragment associated with the widget.
+                                This object includes helper methods that can be used when the template is rendered as described
+                                below.
+                            </p>
+                            <docs:section heading="widget.elId(?id)">
+                                <p>
+                                    The scoped <code>widget</code> object includes a <code>elId(?id)</code> helper method 
+                                    that can be used to assign IDs to HTML elements. The <code>elId</code> method
+                                    supports one optional parameter named <code>id</code> that is of type <code>String</code>. 
+                                    If the <code>id</code> argument is not provided then the method will return the ID of the root HTML element
+                                    that the widget is bound to. 
+                                </p>
+                                <p>
+                                    The optional <code>id</code> argument should be used to assign unique HTML element IDs
+                                    to HTML elements nested in the root HTML element of the widget.
+                                    If the optional <code>id</code> argument is provided then the supplied <code>id</code> is 
+                                    prefixed with the ID of the root HTML element. This ensures that the nested HTML element
+                                    will be assigned is also unique and the reverse process can be used to look up a nested
+                                    widget element ID at runtime.
+                                </p>
+                                <p>
+                                    <h4>Example:</h4>
+                                </p>
+
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false"
+                                    title="Input Raptor Template">
+                                <![CDATA[
+                                <div w:widget="demo/MyWidget">
+                                    <button id="${widget.elId('btn1')}" type="button">
+                                        Button 1
+                                    </button>
+
+                                    <button id="${widget.elId('btn2')}" type="button">
+                                        Button 2
+                                    </button>
+                                </div>
+                                ]]>
+                                </docs:code-editor>
+                                <docs:code-editor 
+                                    mode="htmlmixed"
+                                    readOnly="true" 
+                                    c:parse-body-text="false"
+                                    title="Output HTML">
+                                <![CDATA[
+                                <div id="w0">
+                                    <button id="w0-btn1" type="button">
+                                        Button 1
+                                    </button>
+
+                                    <button id="w0-btn2" type="button">
+                                        Button 2
+                                    </button>
+                                </div>
+                                ]]>
+                                </docs:code-editor>
+                                <docs:code-editor 
+                                    mode="javascript"
+                                    readOnly="true" 
+                                    c:parse-body-text="false"
+                                    title="/demo/MyWidget.js">
+                                <![CDATA[
+                                define.Class(
+                                    'demo/MyWidget',
+                                    function(require) {
+                                        return {
+                                            init: function() {
+                                                var rootEl = this.getEl(),
+                                                    button1El = this.getEl('btn1'),
+                                                    button2El = this.getEl('btn2');
+                                                //...
+                                            }
+                                        }
+                                    })
+                                ]]>
+                                </docs:code-editor>
+                            </docs:section>
+                        </docs:section>
+
+                        <docs:section heading="Widget Config" anchor-name="WidgetConfig">
+                            <p>
+                                Arbitrary widget configuration data determined at render time can be provided to the constructor of a widget. 
+                                There are three options for attaching widget configuration data to a widget and those options are as follows:
+                            </p>
+                            <ol>
+                                <li>
+                                    <b>As part of <code>w:widget</code> attribute:</b>
+                                    <docs:code-editor 
+                                        mode="xml"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    <div w:widget="demo/MyWidget; config={message: 'Hello World'}" 
+                                         class="my-widget">
+                                        ...
+                                    </div>
+                                    ]]>
+                                    </docs:code-editor>
+                                </li>
+                                <li>
+                                    <b>As the value of the <code>config</code> attribute for the <code>&lt;w:widget></code> tag:</b>
+                                    <docs:code-editor 
+                                        mode="xml"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    <w:widget js-class="demo/MyWidget" config="{message: 'Hello World'}">
+                                        ...
+                                    </w:widget>
+                                    ]]>
+                                    </docs:code-editor>
+                                </li>
+                                <li>
+                                    <b>As a <code>widgetConfig</code> property of the input data model for a Raptor template:</b>
+                                    <docs:code-editor 
+                                        mode="javascript"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    require('raptor/templating').render(
+                                        'demo/MyTemplate',
+                                        {
+                                            widgetConfig: {
+                                                message: 'Hello World'
+                                            }
+                                        },
+                                        context);
+                                    ]]>
+                                    </docs:code-editor>
+                                    <docs:code-editor 
+                                        mode="xml"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    <c:template name="demo/MyTemplate" xmlns:c="core" xmlns:w="widgets">
+
+                                        <div w:widget="demo/MyWidget" 
+                                             class="my-widget">
+                                            ...
+                                        </div>
+
+                                    </c:template>
+                                    ]]>
+                                    </docs:code-editor>
+                                    <docs:message type="info">
+                                        <p>
+                                            NOTE: Using this final approach will only work as expected if there is only a 
+                                            single <code>w:widget</code> defined in the templates.
+                                        </p>
+                                    </docs:message>
+                                </li>
+                            </ol>
+
+                        </docs:section>
+
+                        <docs:section heading="&lt;w:init-widgets>" anchor-name="InitWidgetsTag">
+                            <p>
+                                The <code><nobr>&lt;w:init-widgets></nobr></code> tag should be used to render
+                                the JavaScript code that is used to initialized widgets rendered
+                                on the server. The <code><nobr>&lt;w:init-widgets></nobr></code> tag uses
+                                information stored in the rendering <code>context</code> object
+                                to determine which widgets have been rendered. 
+                            </p>
+                            <p>
+                                By default, the <code><nobr>&lt;w:init-widgets></nobr></code> tag
+                                will write out the surrounding <code>&lt;script></code> tags
+                                to enclose the generated JavaScript code but this can be controlled
+                                by setting the value of the <code>include-script-tag</code> attribute to <code>false</code>.
+                            </p>
+                            <p>
+                                After the <code><nobr>&lt;w:init-widgets></nobr></code> tag is rendered, the
+                                widgets that have been rendered will be cleared out. This allows
+                                <code><nobr>&lt;w:init-widgets></nobr></code> tag to be used multiple times
+                                on the page if necessary. 
+                            </p>
+                            <p>
+                                The <code>function-name</code> attribute can be used to wrap
+                                the widget initialization code in a global function with the specified named.
+                            </p>
+                            <p>
+                                For more details on what the generated JavaScript code looks like please
+                                see the <a href="#ServerInit">Initializing Server-rendered Widgets</a> section above.
+                            </p>
+                        </docs:section>
+
+                        <docs:section heading="w:id" anchor-name="WidgetId">
+                            <p>
+                                The <code>w:id</code> attribute can be used to assign a widget ID
+                                to a nested widget. The containing ancestor widget can use the assigned
+                                widget ID to get a reference to the instance of nested widget. For example:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <c:template name="demo/MyTemplate" xmlns:c="core" xmlns:w="widgets">
+
+                                <div w:widget="demo/MyWidget">
+                                    <ui:button w:id="resetButton" label="Reset" />
+                                    <ui:button w:id="submitButton" label="Submit" />
+                                </div>
+
+                            </c:template>
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                Assigning a widget ID to a nested widget will result in a property with the same
+                                being added to the containing widget and the value of that property will be a reference to the nested 
+                                widget. This is illustrated in the sample widget implementation:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="/demo/MyWidget.js">
+                            <![CDATA[
+                            define.Class(
+                                'demo/MyWidget',
+                                function(require) {
+                                    return {
+                                        init: function() {
+                                            var resetButtonWidget = this.resetButton,
+                                                submitButtonWidget = this.submitButton;
+                                            //...
+                                        }
+                                    }
+                                })
+                            ]]>
+                            </docs:code-editor>
+                            <docs:message type="info">
+                                <p>
+                                    NOTE: If multiple widgets are assigned the same ID or if there
+                                    already exists a property that is an <code>Array</code> then the value of
+                                    the added property will be an <code>Array</code> that contains
+                                    the widgets with matching IDs. This is demonstrated by the following sample code:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    title="Template With Duplicate Widget IDs"
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <c:template name="demo/MyTemplate" xmlns:c="core" xmlns:w="widgets">
+
+                                    <div w:widget="demo/MyWidget">
+
+                                        <ui:button w:id="buttons" 
+                                            label="item.label" 
+                                            c:for="item in items"/>
+                                    </div>
+
+                                </c:template>
+                                ]]>
+                                </docs:code-editor>
+                                <docs:code-editor 
+                                    mode="javascript"
+                                    readOnly="true" 
+                                    c:parse-body-text="false"
+                                    title="/demo/MyWidget.js">
+                                <![CDATA[
+                                var buttonWidgets = this.buttons;
+                                buttonWidgets.forEach(function() { ... });
+                                ]]>
+                                </docs:code-editor>
+                            </docs:message>
+                            <docs:message type="info">
+                                <p>
+                                    NOTE: The ID assigned using the <code>w:id</code> attribute is scoped
+                                    within the <code>w:widget</code> tag/attribute in the same template.
+                                </p>
+                            </docs:message>
+                        </docs:section>
+
+                        <docs:section heading="w:event-*" anchor-name="EventAttributes">
+                            <p>
+                                The <code>w:event-*</code> attributes can be used to declaratively map
+                                custom widget events to Pub/Sub messages. 
+                                In addition, the <code>w:event-*</code> attributes allow additional properties 
+                                to be added to the published Pub/Sub message object through the use of sub-attributes.
+                                This is illustrated in the following code:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <ui:button label="Say Hello" 
+                                       w:event-click="sayHello; name='John'; age=50" />
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                When the widget associated with the <code>&lt;ui:button</code> tag
+                                publishes the custom "click" event, a Pub/Sub message named
+                                "sayHello" will also be published with the following message object:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            {
+                                name: 'John',
+                                age: 50
+                            }
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                Please see the <a href="#PubSub">Pub/Sub Communication</a> section above for more details
+                                on utilizing Pub/Sub communication.
+                            </p>
+                        </docs:section>
+                        
+                    </docs:section>
+
+
+
+                </docs:docs>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

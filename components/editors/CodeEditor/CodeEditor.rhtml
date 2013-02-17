@@ -1,0 +1,12 @@
+<c:template
+    xmlns:c="core"
+    xmlns:w="widgets"
+    name="components/editors/CodeEditor"
+    params="tag,textareaAttrs,title,bodyText">
+    
+    <div w:widget="components/editors/CodeEditor/CodeEditorWidget" class="code-editor">
+        <h2 class="code-editor-title" c:if="title">$title</h2>        
+        <textarea id="${widget.elId('textarea')}" c:attrs="textareaAttrs" style="display: none;">${xml:bodyText}</textarea>
+    </div>
+    
+</c:template>

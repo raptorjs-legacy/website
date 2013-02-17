@@ -1,0 +1,118 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+    
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/footers/FooterDefault"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+    
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: FAQ</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav activeItem="faq"/>
+            
+            
+            <div class="container">
+                <div class="faq">
+                    <h1>Frequently Asked Questions</h1>
+                    <div class="qa">
+                        <div class="question">
+                            Why can't I just downloaded the JavaScript code for RaptorJS?
+                        </div>
+                        <div class="answer">
+                            Downloading pre-optimized and bundled builds of RaptorJS goes against the modularity
+                            philosophy of RaptorJS. The 
+                            <a href="${url('/optimizer')}">
+                                RaptorJS Optimizer    
+                            </a>
+                            makes it easy to pull in <i>only</i> the dependencies
+                            that your web page needs and that tool should be used to pull in
+                            JavaScript and CSS code into your web application.
+                        </div>
+                    </div>
+                    <div class="qa">
+                        <div class="question">
+                            How do I install RaptorJS packages into my application?
+                        </div>
+                        <div class="answer">
+                            <p>
+                                RaptorJS does not currently include a package manager that handles
+                                the distribution of RaptorJS packages. Therefore, you will
+                                need to use your own scripts or tools into "install" a RaptorJS
+                                package into your application. RaptorJS allows developers
+                                to any directory to be added to the 
+                                <a href="${url('/resource-search-path')}">
+                                    resource search path    
+                                </a>
+                                so simply add directories that contain the installed RaptorJS
+                                packages to the RaptorJS resource search path.
+                            </p>
+                            <p>
+
+                                Node includes <a href="https://npmjs.org/">
+                                    npm
+                                </a> which is a package manager and that package
+                                manager can be used to install packages
+                                into the <code>node_modules</code> directory. You can use your
+                                own scripts to move RaptorJS modules into their own directory
+                                or simply add the <code>node_modules</code> directory
+                                to the RaptorJS resource search path.
+                            </p>
+                            <p>
+                                Another option is to use 
+                                <a href="https://github.com/twitter/bower">
+                                    Twitter Bower
+                                </a>
+                                which is an "unopinionated" package
+                                manager that allows you to install packages from Git repositories
+                                and URLs into your project.
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="qa">
+                        <div class="question">
+                            How do I share RaptorJS packages with others?
+                        </div>
+                        <div class="answer">
+                            <p>
+                                Since RaptorJS does not currently include a package manager,
+                                we recommend using either 
+                                <a href="https://github.com/twitter/bower">
+                                    Twitter Bower
+                                </a> 
+                                or 
+                                <a href="https://npmjs.org/">
+                                    npm
+                                </a>
+                                to share RaptorJS packages.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

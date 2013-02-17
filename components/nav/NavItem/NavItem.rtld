@@ -1,0 +1,18 @@
+<raptor-taglib>
+
+    <tag name="nav-item" handler-class="components.nav.NavItem.NavItemTag" dynamic-attributes="true">
+        <attribute name="type" type="string"/>
+        <attribute name="label" type="string"/>
+        <attribute name="itemId" type="string"/>
+        <attribute name="active" type="boolean"/>
+        <attribute name="toggle" type="string"/>
+        <attribute name="href" type="string"/>
+        
+        <attribute name="id" uri="widgets"/>
+        <attribute name="event-click" uri="widgets"/>
+        
+        <nested-variable name="nav"/>
+        <imported-variable target-property="nav" expression="nav"/>
+    </tag>
+    
+</raptor-taglib>

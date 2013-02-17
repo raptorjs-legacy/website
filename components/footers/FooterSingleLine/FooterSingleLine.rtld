@@ -1,0 +1,7 @@
+<raptor-taglib>
+
+    <tag name="footer-single-line" handler-class="components.footers.FooterSingleLine.FooterSingleLineTag">
+        
+    </tag>
+    
+</raptor-taglib>

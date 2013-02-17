@@ -1,0 +1,22 @@
+<c:template
+    xmlns:c="core"
+    params="rootNode">
+    
+    <c:def function="nodeLI(node)">
+        <li>
+            <b>
+                <a href="${node.getHref()}">
+                    ${node.getLabel()}
+                </a>
+            </b>
+            <ul c:if="notEmpty(node.children)">
+                <c:invoke function="nodeLI(childNode)" c:for="childNode in node.children"/>
+            </ul>
+        </li>
+    </c:def>
+
+    <ul>
+        <c:invoke function="nodeLI(rootNode)"/>
+    </ul>
+    
+</c:template>

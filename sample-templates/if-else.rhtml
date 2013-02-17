@@ -1,0 +1,36 @@
+<c:template xmlns:c="core" params="age">
+
+    <!-- Simple if (element directive) -->
+    <c:if test="age === 50">
+        <div>You are 50 years old</div>
+    </c:if>
+    
+    <!-- Simple if (attribute directive) -->
+    <div c:if="age === 50">
+        You are 50 years old
+    </div>
+    
+    <!-- Complex if (element directive) -->
+    <c:if test="age === 50">
+        <div>You are 50 years old</div>
+    </c:if>
+    <c:else-if test="age === 51">
+        <div>You are 51 years old</div>
+    </c:else-if>
+    <c:else>
+        <div>You are not 50 or 51 years old.</div>
+    </c:else>
+    
+    <!-- Complex if (attribute directive) -->
+    <div c:if="age === 50">
+        You are 50 years old
+    </div>
+    <div c:else-if="age === 51">
+        You are 51 years old
+    </div>
+    <div c:else="">
+        You are not 50 or 51 years old.
+    </div>
+    
+    
+</c:template>

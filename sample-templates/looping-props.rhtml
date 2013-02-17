@@ -1,0 +1,19 @@
+<c:template xmlns:c="core" params="settings">
+    
+    <ul>
+        <li c:for="(name,value) in settings">
+            <b>$name</b>:
+            $value
+        </li>
+    </ul>
+    
+    <ul>
+        <c:for each="(name,value) in settings">
+            <li>
+                <b>$name</b>:
+                $value
+            </li>
+        </c:for>
+    </ul>
+    
+</c:template>

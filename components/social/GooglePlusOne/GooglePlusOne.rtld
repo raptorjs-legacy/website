@@ -1,0 +1,7 @@
+<raptor-taglib>
+
+    <tag name="g-plusone" handler-class="components.social.GooglePlusOne.GooglePlusOneTag">
+        <attribute name="width" type="integer"/>
+    </tag>
+    
+</raptor-taglib>

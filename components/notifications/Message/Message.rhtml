@@ -1,0 +1,27 @@
+<c:template
+    xmlns:c="core"
+    xmlns:docs="docs"
+    name="components/notifications/Message"
+    params="tag,message,type">
+    
+    <div class="message message-$type">
+        <div class="icon">
+            <c:choose>
+                <docs:icon name="info-sign" c:when="type === 'info'" size="30px"/>
+                <docs:icon name="warning-sign" c:when="type === 'warning'" size="30px"/>
+                <docs:icon name="thumbs-up" c:when="type === 'success'" size="30px"/> 
+            </c:choose>
+        </div>
+        <div class="bd">
+            <c:choose>
+                <c:when c:test="message">
+                    ${message}
+                </c:when>
+                <c:when c:test="tag.invokeBody">
+                    <c:invoke function="tag.invokeBody"/>
+                </c:when>
+            </c:choose>
+        </div>
+    </div>
+
+</c:template>

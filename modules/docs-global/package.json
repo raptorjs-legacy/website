@@ -1,0 +1,26 @@
+{
+    "raptor": {
+        "dependencies": [
+            { "module": "raptor" },
+            { "module": "jQuery" },
+            { "module": "components/icons/Icon" },
+            { "module": "components/overlays/Popover" },
+            { "module": "Bootstrap/reset" },
+            { "module": "Bootstrap/dropdowns" },
+            { "module": "Bootstrap/buttons" },
+            { "module": "Bootstrap/button-groups" },
+            { "module": "Bootstrap/navbar" }, 
+            { "module": "Bootstrap/scaffolding" },
+            { "module": "Bootstrap/util" },
+            { "module": "Bootstrap/layouts" },
+            { "module": "Bootstrap/type" },
+            { "module": "Bootstrap/tables" },
+            { "module": "Bootstrap/responsive-all" },
+            { "module": "components/footers/Footer" },
+            { "module": "components/notifications/Message" },
+            { "module": "components/docs/FeaturePortalSection" },
+            { "module": "components/social/Disqus" },
+            "global.css"
+         ]
+     }
+}

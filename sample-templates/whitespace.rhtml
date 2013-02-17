@@ -1,0 +1,31 @@
+<c:template xmlns:c="core">
+
+<div>
+
+    The starting whitespace will be removed
+    extra whitespace    will be normalized 
+    <a href="#">
+        No whitespace!
+    </a>
+    Trailing whitespace will be removed
+
+</div>
+
+<div xml:space="preserve">
+This
+    whitespace will
+be preserved.
+</div>
+
+<pre>
+By default, pre tags have 
+their whitespace preserved 
+(see compiler options below)
+</pre>
+
+<textarea>
+Same for 
+text areas!
+</textarea>    
+
+</c:template>

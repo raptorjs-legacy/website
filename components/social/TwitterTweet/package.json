@@ -1,0 +1,9 @@
+{
+    "raptor": {
+        "dependencies": [
+            {"module": "raptor/widgets"},
+            {"module": "twitter-widgets"},
+            "TwitterTweet.css"
+        ]
+    }
+}

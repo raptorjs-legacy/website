@@ -1,0 +1,55 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/footers/FooterDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/editors/CodeEditor"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+    
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: Design Philosophy</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body data-spy="scroll">
+            <docs:top-nav activeItem="design-philosophy"/>
+            <div class="container">
+                <docs:docs heading="Design Philosophy" disqus-id="design-philosophy">
+
+                    <docs:section heading="Overview">
+                        <p>
+                            As an eBay project, RaptorJS has been designed to perform extremely well by keeping the code
+                            small and efficient, as well as supporting the industries best practices. 
+                            In addition, we believe that developers should have the freedom to use any JavaScript library
+                            and framework that they want so RaptorJS was designed to work alongside other technologies
+                            to simplify development further.
+                        </p>
+                    </docs:section>
+                    
+                </docs:docs>
+            </div>
+            
+            <docs:footer/>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

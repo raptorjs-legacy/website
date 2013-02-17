@@ -1,0 +1,158 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS Optimizer: Taglib</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav/>
+            <div class="container">
+                <docs:docs heading="RaptorJS Optmizer: Taglib" disqus-id="optimizer-taglib">
+                    <docs:message type="warning">
+                        Documentation In-Progress
+                    </docs:message>
+                        
+                    <docs:section heading="Overview">
+                        <p>
+                            A custom Raptor Templates Taglib is provided to make optimizing pages with the RaptorJS Optimizer
+                            almost effortless. Below is a sample page built using Raptor Templates:
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="Declaring Page Dependencies">
+                        <p>
+                            The <code>&lt;optimizer:page></code> tag can be used to associate
+                            a rendering context with a optimizer page. The only
+                            required attribute for the <code>&lt;optimizer:page></code> tag
+                            is the <code>package</code> attribute. The <code>package</code> attribute
+                            should be used to specify a relative path to a <code>package.json</code>
+                            file that describes the dependencies for a page as shown in the following example:
+                        </p>
+
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        
+                        <c:template
+                            xmlns:c="core"
+                            xmlns:optimizer="optimizer">
+                            
+                            <optimizer:page name="test-page">
+                                <dependencies>
+                                    <module name="module-a"/>
+                                    <module name="module-b"/>
+                                    <css path="test-page.css"/>
+                                    <css path="test-page.css"/>
+                                    <js path="test-page.js"/>
+                                </dependencies>
+                            </optimizer:page>
+                            
+                            <html>
+                                <head>
+                                    <title>Test Page</title>
+                                    <optimizer:slot name="head"/>
+                                </head>
+                                <body>
+                                    Hello World!
+                                    <optimizer:slot name="body"/>
+                                </body>
+                            </html>
+                        </c:template>
+
+                        ]]>
+                        </docs:code-editor>
+
+                        <p>
+                            the Optimizer Taglib
+                            will cache the results of a call to
+                            <code>optimizePage()</code> so that runtime
+                            performance is not impacted after the optimized page bundles
+                            are generated for the first time. The above example
+                            code illustrates declaring resource slots using 
+                            the <code>&lt;optimizer:slot></code> tag
+                            as described in the subsequent section.
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="Defining Slots" anchor-name="OptimizerTaglibDefiningSlots">
+                        <p>
+                            The <code>&lt;optimizer:slot></code> tag can be used
+                            to define a slot for a page. When rendered, the <code>&lt;optimizer:slot></code> tag
+                            will render the dependency HTML corresponding to the specified slot name. For example:
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+
+                        <optimizer:slot name="head"/>
+
+                        ]]>
+                        </docs:code-editor>
+                    </docs:section>
+                    <docs:section heading="Enabling Extensions" anchor-name="OptimizerTaglibEnablingExtensions">
+                        <p>
+                            The <code>&lt;optimizer:enable-extension></code> tag can be used
+                            to enable an extension for the current request. The only required
+                            attribute is the "name" attribute which defines the name of the example.
+                        </p>
+                        <p>
+                            The following code illustrates how to enable an extension:
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        
+                        <optimizer:enable-extension name="ipad"/>
+
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            In the above example, an extension named "ipad" is enabled.
+                            Any package that contains an extension named "ipad" will
+                            have the dependencies that are part of that extension
+                            included in the optimized page.
+                        </p>
+                        <docs:message type="warning">
+                            All extensions must be enabled <i>before</i> the 
+                            &lt;optimizer:page ...> tag is rendered.
+                        </docs:message>
+                    </docs:section>
+
+                </docs:docs>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

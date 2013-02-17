@@ -1,0 +1,9 @@
+<c:template xmlns:c="core" params="colors">
+    
+    <c:for each="color in colors" separator=", ">$color</c:for>
+    
+    <div>
+        <span c:for="color in colors; separator=', '" style="color: $color">$color</span>
+    </div>
+    
+</c:template>

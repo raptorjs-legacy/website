@@ -1,0 +1,10 @@
+{
+    "raptor": {
+        "dependencies": [
+            {"module": "raptor/widgets"},
+            {"module": "CodeMirror"},
+            "CodeEditorWidget.js",
+            "CodeEditor.css"
+        ]
+    }
+}

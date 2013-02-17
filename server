@@ -1,0 +1,1 @@
+(cd src && raptor-optimizer profile=production publish=true) && raptor-jsdoc src=node_modules/raptor/lib/raptor/raptor_modules/ output-dir=api profile=production publish=true props=node_modules/raptor/package.json,node_modules/raptor/jsdoc-props.json include-filename=false clean=api && npm start

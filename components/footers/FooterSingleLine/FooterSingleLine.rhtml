@@ -1,0 +1,25 @@
+<c:template name="components/footers/FooterSingleLine"
+    xmlns:docs="docs"
+    xmlns:c="core"
+    docs:functions="url">
+    
+    <div style="clear: both"/>
+    <div class="footer footer-single-line">
+        <div class="container">
+            <div class="bd">
+                
+                <span class="powered-by">
+                    Powered by <a href="${url('/')}" class="raptorjs">RaptorJS</a> 
+                </span>
+                ${entity:nbsp} | ${entity:nbsp}
+                <a href="${url('/license')}">License</a>${entity:nbsp} | ${entity:nbsp}
+                <a href="${url('/credits')}">Credits</a>
+                
+                <span class="back-to-top">
+                    <a href="#title">Back to Top</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    
+</c:template>

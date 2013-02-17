@@ -1,0 +1,14 @@
+<c:template
+    xmlns:c="core"
+    xmlns:w="widgets"
+    name="components/docs/Section"
+    params="heading,tag,level,anchorName">
+    
+    <div class="section section-level-$level">
+        <h2 id="$anchorName">$heading</h2>
+        <div class="bd">
+            <c:invoke function="tag.invokeBody()" c:if="tag.invokeBody"/>
+        </div>
+    </div>
+    
+</c:template>

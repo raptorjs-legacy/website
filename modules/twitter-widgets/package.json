@@ -1,0 +1,21 @@
+{
+    "raptor": {
+        "dependencies": [
+        ],
+        
+        "extensions": [
+            {
+                "name": "development",
+                "dependencies": [
+                    "twitter-widgets_dev.js"
+                ]
+            },
+            {
+                "name": "production",
+                "dependencies": [
+                    "twitter-widgets.js"
+                ]
+            }
+        ]
+    }
+}

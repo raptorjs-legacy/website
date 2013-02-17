@@ -1,0 +1,729 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS Optimizer: Developer Guide</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav/>
+            <div class="container">
+                <docs:docs heading="RaptorJS Optmizer: Developer Guide" disqus-id="optimizer-developer-guide">
+                    <docs:message type="warning">
+                        Documentation In-Progress
+                    </docs:message>
+                        
+                    <docs:section heading="Overview">
+                        <docs:section heading="Features at a Glance">
+                            <ul>
+                                <li>
+                                    <docs:popover title="Source code agnostic">
+                                        <docs:popover-content>
+                                            Write code however you prefer with no restriction on which third-party libraries you choose to use
+                                        </docs:popover-content>
+                                        Source code agnostic
+                                    </docs:popover> 
+                                </li>
+                                <li>Generates optimized resource bundles <i>and</i> the HTML markup to include them in web pages</li>
+                                <li>Improves performance by reducing the number of HTTP requests through resource bundling</li>
+                                <li>Supports content distribution networks (CDNs)
+                                    <ul>
+                                        <li>Custom URL prefixes</li>
+                                        <li>Resource checksums included in URLs for optimal caching</li>
+                                    </ul>
+                                </li>
+                                <li>Works at build time <i>or</i> at request time</li>
+                                <li>Driven by the <a href="${url('/packaging')}">RaptorJS Packaging</a> system
+                                    <ul>
+                                        <li>Package everything using simple <code>package.json</code> files</li>
+                                        <li>Supports package extensions for targeted optimizations (target code for specific browsers, devices, etc.)</li>
+                                        <li>Supports any type of resource (LESS, Raptor Templates, etc.) with automatic compilation</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    Supports
+                                    <docs:popover title="Optimized asynchronous module loading">
+                                        <docs:popover-content>
+                                            For modules that may be downloaded asynchronously,
+                                            the RaptorJS Optimizer generates the metadata containing
+                                            the URLs that are required by the module to function.
+                                            The asynchronous module loader uses this information
+                                            to optimally download modules.
+                                        </docs:popover-content>
+                                        optimized asynchronous module loading
+                                    </docs:popover> 
+                                </li>
+                                <li>Supports
+                                    <docs:popover title="In-place Deployment">
+                                        <docs:popover-content>
+                                            With in-place deployment enabled, URLs are generated such that they
+                                            point to the original file on disk. Therefore, changes to files
+                                            are reflected instantly without having to monitor
+                                            the file system for changes.
+                                        </docs:popover-content>
+                                        in-place deployment
+                                    </docs:popover> 
+                                    for improved developer productivity
+                                </li>
+                                <li>Easily configurable
+                                    <ul>
+                                        <li>Supports profiles for targeting development, production, etc.</li>
+                                        <li>Configurable resource bundling</li>        
+                                    </ul>
+                                </li>
+                                <li>Supports custom filters for minification, pre/post-processing, etc.</li>
+                                <li>Simple JavaScript API</li>
+                                <li>Custom <a href="${url('/raptor-templates')}">Raptor Templates</a> taglib for the best usability</li>
+                            </ul>
+                        </docs:section>
+                        <docs:section heading="Benefits">
+                            <p>
+                                The RaptorJS Optimizer simplifies the development
+                                of web applications by relieving developers from
+                                worrying about and managing web page dependencies (i.e. CSS and JavaScript resources).
+                                RaptorJS provides structure around dependencies by allowing every module, page and UI component to
+                                declare its own dependencies as part of a package. Each package
+                                provides enough information for the RaptorJS Optimizer
+                                to optimize the delivery of web pages with little to no developer intervention.
+                                The web page developer only needs to tell the optimizer which
+                                top-level modules, UI components and resources are required for a page
+                                and the optimizer will take care of the rest—including generating
+                                the static resource bundles <i>and</i> the HTML markup to include
+                                the required resources in an HTML page.
+                            </p>
+                            <p>
+                                Unlike other optimizers, the RaptorJS Optimizer is source-code agnostic. As a developer, you
+                                can write your web application code however you prefer and still
+                                benefit from the RaptorJS Optimizer. 
+                                Third-party libraries can easily be utilized with no constraints, but you will most likely
+                                want to wrap the third-party library with one or more 
+                                
+                                <docs:popover title="Packages">
+                                     <c:attr name="content">
+                                        Only a package.json file needs to be created and added to your codebase. 
+                                        You will not need to change the code for the library.
+                                    </c:attr>
+                                     RaptorJS packages
+                                </docs:popover>
+                                
+                                to make dependencies explicit.
+                            </p>
+                            <p>
+                                RaptorJS is extensible and supports any type of resource as a dependency (in addition to raw JavaScript and CSS resources). 
+                                Out of the box, RaptorJS supports compiled resources such as <a href="${url('/raptor-templates')}">Raptor Templates</a> and 
+                                <a href="http://lesscss.org/">LESS</a> as dependencies (to name a few), but you can
+                                add support for your own compiled resources with just a few lines of code.
+                            </p>
+                            <p>
+                                Optimizing an application by changing how resources are bundled or minified
+                                does not require any changes to application code. The RaptorJS Optimizer
+                                is developer-friendly by supporting multiple profiles to easily enable
+                                and disable optimization features such minification and bundling.
+                            </p>
+                            <p>
+                                Lastly, the RaptorJS Optimizer is aware of
+                                
+                                <docs:popover title="Package Extensions">
+                                    <c:attr name="content">
+                                        Package extensions allow developers to define packages
+                                        that include dependencies that are only included
+                                        if a specified extension is enabled. Package
+                                        extensions allow for conditional dependencies.
+                                    </c:attr>
+                                     package extensions
+                                </docs:popover>
+                                which allow
+                                pages to be optimized differently based on the target environment.
+                                This allows developers to design web applications that adapt to the target
+                                client and only send the code that is required. For more
+                                information on package extensions please see
+                                <a href="${url('/packaging')}">Packaging and Extensions</a>.
+                            </p>
+                        </docs:section>
+                    </docs:section>
+                    
+                    <docs:section heading="Page Dependencies">
+                        <p>
+                            Complex pages will often depend on a lot of JavaScript and
+                            CSS resources and those dependencies often change over time.
+                            RaptorJS supports the concept of <i>package everything</i>.
+                            This includes creating a package for a page that describes
+                            all of the top-level dependencies for a page. The page package
+                            can add dependencies for other modules and UI components. The same package.json
+                            file is used to declare packages for pages, modules, UI components, etc.
+                        </p>
+                        
+                        <docs:section heading="Declaring Page Dependencies">
+                            <p>
+                                The modules and resources that a page depends on should be 
+                                declared in the page's <code>package.json</code> file. A
+                                sample <code>package.json</code> file is shown below:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            {
+                                "raptor": {
+                                    "dependencies": [
+                                        {"module": "widgets"},
+                                        {"module": "pubsub"},
+                                        {"module": "components/buttons/Button"},
+                                        "page.js",
+                                        "page.css"
+                                    ]
+                                }
+                            }
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                The above <code>package.json</code> file declares
+                                that a page depends on three modules (i.e., <i>widgets</i>, <i>pubsub</i> and <i>components/buttons/Button</i>).
+                                Each of those modules will have a <code>package.json</code>
+                                file that describe their dependencies. The above <code>package.json</code>
+                                file also declares that two resources should be sent to the browser 
+                                (i.e., "page.js" and page.css). A page's <code>package.json</code> file
+                                provides enough information for the RaptorJS Optimizer
+                                to be able to know how to generate the optimized resources that are
+                                required for the page to function in a browser. The next few
+                                sections describes how the required resources are injected into a web page.
+                                For more information on declaring RaptorJS packages, please
+                                see the documentation <a href="${url('/packaging')}">RaptorJS Packaging and Extensions</a>.
+                            </p>
+                            <docs:message type="info">
+                                NOTE: A page's package file does not need to be named "package.json". For example,
+                                a page's package file could be named "index-package.json", if desired.
+                            </docs:message>
+                        </docs:section>
+                        
+                        <docs:section heading="Resource Slots">
+                            <p>
+                                An HTML page that is sent to the browser will need to
+                                include <code>&lt;script></code> and <code>&lt;link></code>
+                                tags that link to the required resources for the page to function
+                                correctly.
+                                The RaptorJS Optimizer allows resources to be targeted for any location
+                                on a page through the use of "slots". Slot markers can be added
+                                to an HTML page and resources can be targeted for any available user-defined slot.   
+                            </p>
+                            
+                            <docs:section heading="Defining Slots">
+                                <p>
+                                    The RaptorJS Optimizer provides a JavaScript API that includes a method for retrieving
+                                    the HTML markup for the slots on the page. 
+                                    You can then use your favorite templating
+                                    language to inject the HTML content into your page.
+                                </p>
+                                <p>
+                                    For convenience, the RaptorJS Optimizer ships with an 
+                                    <a href="${url('/optimizer/taglib')}">
+                                        Optimizer Taglib    
+                                    </a>
+                                    that can be used to define page dependencies and slots inside
+                                    the HTML template. The basic structure
+                                    for a page to be optimized using Raptor Templates is the following:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+
+                                <![CDATA[
+
+                                <c:template
+                                    xmlns:c="core"
+                                    xmlns:optimizer="optimizer">
+                                 
+                                    <optimizer:page>
+                                        <dependencies>
+                                            <module name="module-a"/>
+                                            <module name="module-b"/>
+                                            <css path="test-page.css"/>
+                                            <css path="test-page.css"/>
+                                            <js path="test-page.js"/>
+                                        </dependencies>
+                                    </optimizer:page>
+                                    
+                                    <html>
+                                        <head>
+                                            <title>Hello World</title>
+                                            <optimizer:slot name="head"/>
+                                        </head>
+                                        <body>
+                                            ...
+                                            <optimizer:slot name="body"/>
+                                        </body>
+                                    </html>
+                                     
+                                </c:template>
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    For more information on the JavaScript API and Taglib please see the following sections:
+                                </p>
+                                <ul>
+                                    <li><a href="#JavaScriptAPI">JavaScript API</a></li>
+                                    <li><a href="#OptimizerTaglib">Optimizer Taglib</a></li>
+                                </ul>
+                            </docs:section>
+                            
+                            <docs:section heading="Targeting Slots">
+                                <p>
+                                    By default, CSS resources are targeted for a slot named "head" and JavaScript
+                                    resources are targeted for a slot named "body". Both of these defaults
+                                    can easily be overridden at the resource level by adding a "slot" 
+                                    property to the resource include. For example:
+                                </p>
+                                <docs:code-editor 
+                                    mode="javascript"
+                                    readOnly="true" 
+                                    c:parse-body-text="false"
+                                ><![CDATA[
+                                {
+                                    "raptor": {
+                                        "dependencies": [
+                                            ...
+                                            { "path": "my-library.js", "slot": "head" }
+                                        ]
+                                    }
+                                }
+
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    When optimizing the above package, the RaptorJS Optimizer will place
+                                    "my-library.js" into the "head" slot instead of the default "body" slot.
+                                </p>
+                            </docs:section>
+                            
+                        </docs:section>
+                        
+                        <docs:section heading="Optional Package Extensions">
+                            <p>
+                                When optimizing a page, the RaptorJS Optimizer
+                                allows a set of enabled extensions to be passed in.
+                                When the optimizer encounters a package with extensions
+                                it checks each extension to see if it is enabled.
+                                The JavaScript API allows a set of enabled extensions to
+                                be passed in as an argument when generating the
+                                optimized page. The Optimizer Taglib
+                                allows provides tags for enabling and disabling extensions.
+                            </p>
+                            <p>
+                                For more information on the JavaScript API and Taglib please see the following sections:
+                            </p>
+                            <ul>
+                                <li><a href="#JavaScriptAPI">JavaScript API</a></li>
+                                <li><a href="#OptimizerTaglib">Optimizer Taglib</a></li>
+                            </ul>
+                        </docs:section>
+                        
+                        <docs:section heading="Compiled Resources">
+                            <p>
+                                The RaptorJS Optimizer supports compiled resources such
+                                as LESS CSS files and Raptor Template files. The RaptorJS
+                                optimizer relies on the <a href="${url('/packaging')}">RaptorJS Packaging and Extensions</a>
+                                systeming for compiling resource dependencies.
+                            </p>
+                            <p>
+                                For more information on registering new types of compiled
+                                resources, please see <a href="${url('/packaging')}#RegisteringDependencyTypes">RaptorJS Packaging and Extensions</a>.
+                            </p>
+                        </docs:section>
+                        
+                    </docs:section>
+                
+                
+                    <docs:section heading="Configuration">
+                        <p>
+                            The configuration for the RaptorJS Optimizer is driven
+                            by a simple, but powerful XML
+                            file.
+                        </p>
+                        <p>
+                            The optimizer configuration file is typically placed
+                            in the root of the project and given a filename
+                            of "optimizer-config.xml". The default RaptorJS Optimizer
+                            instance can be configured using the the following 
+                            JavaScript code:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+
+                        require('raptor/optimizer').configure('path/to/optimizer-config.xml', params);
+
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+
+                            The optimizer configuration file supports profiles
+                            so that the page can be optimized differently
+                            based on which profile is enabled. For example,
+                            to improve developer productivity, bundling of resources
+                            and resource minification can be disabled.
+                        </p>
+                        <p>
+                            Below is a basic optimizer configuration file:
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <optimizer-config>
+
+                            <minify-js>${minify}</minify-js>
+                            <output-dir>static</output-dir>
+                            <url-prefix>/static/</url-prefix>
+
+                            <bundles name="default">
+
+                                <bundle name="jquery">
+                                    <module name="jQuery" recursive="true"/>
+                                </bundle>
+
+                                <bundle name="core">
+                                    <module name="raptor" recursive="true"/>
+                                    <module name="raptor/listeners" recursive="true"/>
+                                    <module name="raptor/widgets" recursive="true"/>
+                                </bundle>
+                                
+                                <bundle name="templating">
+                                    <module name="raptor/templating" recursive="true"/>
+                                </bundle>
+
+                            </bundles>
+                            
+                        </optimizer-config>
+
+                        ]]>
+                        </docs:code-editor>      
+                        <p>
+                            The above sample configuration file only illustrates a
+                            small portion of the supported configuration options. For
+                            a more detailed description of supported configuration
+                            options please see the 
+                            <a href="${url('/optimizer/configuration')}">
+                                <nobr>RaptorJS Optimizer: Configuration</nobr>
+                            </a>
+                            documentation.
+                        </p>
+                        
+                        
+                    </docs:section>
+                    
+                    <docs:section heading="Asynchronous Loading">
+                        <p>
+                            The RaptorJS Optimizer is compatible with the 
+                            asynchronous module loader provided by RaptorJS. RaptorJS
+                            allows modules to be loaded asynchronously using the following code:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        
+                        require("my-module", function(myModule) {
+                            //Do something with "my-module" now that it has loaded
+                        });
+
+                        ]]>
+                        </docs:code-editor>    
+                        <p>
+                            The RaptorJS asynchronous module loader relies on additional
+                            metadata being sent to the browser to determine how to download
+                            modules asynchronously. This metadata should include
+                            the resource URLs for each module, as well as any dependencies
+                            on other modules. The RaptorJS Optimizer will generate
+                            this information automatically for modules that are
+                            marked as "asynchronous". 
+                        </p>
+                        
+                        <p>
+                            When the RaptorJS Optimizer encounters a module
+                            include marked as asynchronous then it will not include
+                            the code for the module and, instead, the RaptorJS Optimizer
+                            will include the metadata code that is required to download
+                            the module asynchronously.
+                        </p>
+
+                        <docs:section heading="Async Module Dependencies">
+                            <p>
+                                A module include can be marked
+                                as asynchronous by setting an "async" property to "true"
+                                for an include. For example:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            {
+                                "raptor": {
+                                    "dependencies": [
+                                        ...
+                                        { "module": "my-module", "async": true }
+                                        ...
+                                    ]
+                                }
+                            }
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+
+                        <docs:section heading="Async Module Metadata">
+                            <p>
+                                For each module that is marked as asynchronous,
+                                the following information is included as part of
+                                the metadata that is serialized to JSON and sent to the client:
+                            </p>
+
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+
+                            {
+                                "js": ["<url-1>", "<url-2>", ...],
+                                "css": ["<url-1>", "<url-2>", ...],
+                                "requires": ["<module-1>", "<module-2>"]
+                            }
+                            
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                The following is example asynchronous module metadata:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            {
+                                "my-module": {
+                                    "js": ["/static/page1-async-body-d9103c2a.js"],
+                                    "css": ["/static/page1-async-head-1929e414.css", 
+                                            "/static/widgets-head-c17b7d9b.css"],
+                                    "requires": ["another-module"]
+                                },
+
+                                "another-module": {
+                                    "js": ["/static/util-body-f642f7bc.js"]
+                                }
+                            }
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                    </docs:section>
+                    
+                    <docs:section heading="CDN Integration">
+                        <p>
+                            Utilizing a Content Distribution Network (CDN) is very straightforward when using the
+                            RaptorJS Optimizer. Simply configure the URL prefix 
+                            to include the host name for the CDN.
+                        </p>
+                        <p>
+                            For example:
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <optimizer-config>
+                            ...
+                            <url-prefix>http://my-cdn/static/</url-prefix>
+                            ...
+                        </optimizer-config>
+                        ]]>
+                        </docs:code-editor>
+                    </docs:section>
+                    
+                    <docs:section heading="JavaScript API" anchor-name="JavaScriptAPI">
+                        <p>
+                            All of the code related to the RaptorJS Optimizer is part of the 
+                            <a href="http://raptorjs.org/api/optimizer/">
+                                optimizer
+                            </a>
+                            module. The two most commonly used API methods are the following:
+                        </p>
+                        <ul>
+                            <li>
+                                <b>configure</b>: The configure method is used to configure the default page optimizer instance.
+                            </li>
+                            <li>
+                                
+                            </li>
+                        </ul>
+                        
+                        <docs:section heading="Registering Pages">
+                            <p>
+                            </p>
+                        </docs:section>
+                        
+                        <docs:section heading="Generating Page HTML">
+                            <p>
+                                The <code>OptimizerEngine</code> object
+                                provides a <code>optimizer.getPageHtmlBySlot()</code> method
+                                that can be used to generate the HTML for
+                                a page that has been previously registered. The sample
+                                code below shows how to use the <code>optimizer.getPageHtmlBySlot</code>
+                                method:
+                            </p>
+
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+
+                            var optimizer = require('raptor/optimizer');
+
+                            var optimizedPage = optimizer.optimizePage({
+                                name: 'my-page',
+                                packageFile: "/path/to/my-page-package.json"
+                            });
+                            
+                            ]]>
+                            </docs:code-editor>
+
+                            <p>
+                                After executing the above code, 
+                                the value of <code>optimizedPage</code>
+                                would be similar the following JavaScript object (formatted as JSON):  
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            {
+                                'body': '<script type="text/javascript" src="/static/core-body-81a10a80.js"></script>\
+                                         <script type="text/javascript" src="/static/jquery-body-371da524.js"></script>\
+                                         <script type="text/javascript" src="/static/widgets-body-658fce85.js"></script>\
+                                         <script type="text/javascript" src="/static/my-page-body-27a3f194.js"></script>',
+                                'head': '<link rel="stylesheet" type="text/css" href="/static/my-page-head-c07b8669.css">\
+                                         <link rel="stylesheet" type="text/css" href="/static/bootstrap-head-700d799c.css">'
+                            }
+                            ]]>
+                            </docs:code-editor>
+
+                            <p>
+                                For the above example, the files written to disk
+                                would be the following:
+                            </p>
+                            <ul>
+                                <b>/path/to/my/webapp/static/</b>
+                                <ul>
+                                    <li>core-body-81a10a80.js</li>
+                                    <li>jquery-body-371da524.js</li>
+                                    <li>widgets-body-658fce85.js</li>
+                                    <li>my-page-body-27a3f194.js</li>
+                                    <li>my-page-head-c07b8669.css</li>
+                                    <li>bootstrap-head-700d799c.css</li>
+                                </ul>
+                            </ul>
+                        </docs:section>
+                        
+                        <docs:section heading="Dependency Caching">
+                            <p>
+                                The result of executing the <code>optimizer.optimizePage()</code> is <i>not</i>
+                                cached. Therefore, every time <code>optimizer.optimizePage()</code> is called,
+                                the optimized page bundles will be written to disk. If you plan on
+                                optimizing pages at runtime (instead of at build time), you will want to cache
+                                the result of the call to <code>optimizer.optimizePage()</code>. The 
+                                <a href="http://raptorjs.org/api/optimizer/">
+                                    optimizer
+                                </a>
+                                module provides a simple cache that you can use to cache the results.
+                                The cache is segregates optimized pages by the
+                                extensions that were enabled when a particular page
+                                was optimized. Therefore, to get an instance of a cache
+                                you will need to provide an <a href="http://raptorjs.org/api/packager.ExtensionCollection/">
+                                    ExtensionCollection
+                                </a>
+                                as the first argument. The complete sequence for caching an retrieving
+                                an optimized page from the cache is shown below:
+                                <docs:code-editor 
+                                    mode="javascript"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                
+                                var pageKey = ...; //Use a String value for the page that uniquely identifies it
+                                var cache = pageOptimizer.getCache(enabledExtensions);
+                                var optimizedPage = cache.getOptimizedPage(pageKey);
+                            
+                                if (!optimizedPage) {
+                                    //Generate the optimized page...
+                                    optimizedPage = pageOptimizer.optimizePage({
+                                        name: input.name,
+                                        packageFile: packageFile,
+                                        enabledExtensions: enabledExtensions
+                                    });
+
+                                    cache.addOptimizedPage(pageKey, optimizedPage);
+                                }
+
+                                return optimizedPage;
+
+                                ]]>
+                                </docs:code-editor>
+                            </p>
+                        </docs:section>
+                        
+                    </docs:section>
+                    
+                    <docs:section heading="Optimizer Taglib" anchor-name="OptimizerTaglib">
+                        <p>
+                            The RaptorJS Optimizer Taglib can be used in pages generated
+                            using Raptor Templates to easily declare page dependencies
+                            and inject optimized HTML into the appropriate page slots.
+                            Please see the 
+                            <a href="${url('/optimizer/taglib')}">
+                                Optimizer Taglib Documentation
+                            </a>
+                            for more details on using the Optimizer Taglib in your application.
+                        </p>
+                        
+                        
+                        
+                    </docs:section>
+                    
+                </docs:docs>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

@@ -1,0 +1,14 @@
+<c:template xmlns:c="core" params="name,colors">
+    
+    Hello $name!
+
+    <ul c:if="notEmpty(colors)">
+        <li style="color: $color" c:for="color in colors">
+            $color
+        </li>
+    </ul>
+    <div c:else="">
+        No colors!
+    </div>
+    
+</c:template>

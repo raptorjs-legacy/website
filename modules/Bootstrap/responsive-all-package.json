@@ -1,0 +1,28 @@
+{
+    "raptor": {
+        "dependencies": [
+            {
+                "path": "bootstrap/less/responsive-utilities.less", 
+                "imports": ["/style/variables.less", "bootstrap/less/mixins.less"]
+            },
+            {
+                "path": "bootstrap/less/responsive-767px-max.less", 
+                "imports": ["/style/variables.less", "bootstrap/less/mixins.less"]
+            },
+            {
+                "path": "bootstrap/less/responsive-768px-979px.less", 
+                "imports": ["/style/variables.less", "bootstrap/less/mixins.less"]
+            },
+            {
+                "path": "bootstrap/less/responsive-1200px-min.less", 
+                "imports": ["/style/variables.less", "bootstrap/less/mixins.less"]
+            },
+            {
+                "path": "bootstrap/less/responsive-navbar.less", 
+                "imports": ["/style/variables.less", "bootstrap/less/mixins.less"]
+            }
+        ]
+    }
+}
+
+

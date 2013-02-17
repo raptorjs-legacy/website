@@ -1,0 +1,12 @@
+<c:template name="components/footers/Footer"
+    xmlns:docs="docs"
+    xmlns:c="core"
+    params="type"
+    docs:functions="url">
+    
+    <c:choose>
+        <docs:footer-single-line c:when="type === 'single-line'"/>
+        <docs:footer-default c:otherwise=""/>
+    </c:choose>
+    
+</c:template>

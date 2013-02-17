@@ -1,0 +1,8 @@
+{
+    "raptor": {
+        "dependencies": [
+            "Button.rhtml",
+            "ButtonTag.js"
+        ]
+    }
+}

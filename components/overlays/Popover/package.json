@@ -1,0 +1,13 @@
+{
+    "raptor": {
+        "dependencies": [
+            {"module": "raptor/widgets"},
+            {"module": "Bootstrap/popovers"},
+            "PopoverWidget.js",
+            {
+                "path": "Popover.less", 
+                "imports": ["/style/variables.less"]
+            }
+        ]
+    }
+}

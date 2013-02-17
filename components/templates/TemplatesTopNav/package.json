@@ -1,0 +1,10 @@
+{
+    "raptor": {
+        "dependencies": [
+            {
+                "path": "TemplatesTopNav.less", 
+                "imports": ["/style/variables.less"]
+            }
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+<raptor-taglib>
+    <uri>http://docs.raptorjs.org/</uri>
+    <short-name>docs</short-name>
+    <prefix>docs</prefix>
+    
+    <function name="url" class="taglibs.docs.DocsFunctions"/>
+
+    <import-taglib path="/components/buttons/Button/Button.rtld"/>
+    <import-taglib path="/components/buttons/ButtonGroup/ButtonGroup.rtld"/>
+    
+    <import-taglib path="/components/config/Urls/Urls.rtld"/>
+    
+    <import-taglib path="/components/docs/Docs/Docs.rtld"/>
+    <import-taglib path="/components/docs/FeaturePortalSection/FeaturePortalSection.rtld"/>
+    <import-taglib path="/components/docs/ProjectDirStructure/ProjectDirStructure.rtld"/>
+    <import-taglib path="/components/docs/Section/Section.rtld"/>
+    
+    <import-taglib path="/components/editors/CodeEditor/CodeEditor.rtld"/>
+    
+    <import-taglib path="/components/footers/Footer/Footer.rtld"/>
+    <import-taglib path="/components/footers/FooterDefault/FooterDefault.rtld"/>
+    <import-taglib path="/components/footers/FooterSingleLine/FooterSingleLine.rtld"/>
+    
+    <import-taglib path="/components/icons/Icon/Icon.rtld"/>
+    
+    <import-taglib path="/components/nav/NavBar/NavBar.rtld"/>
+    <import-taglib path="/components/nav/Nav/Nav.rtld"/>
+    <import-taglib path="/components/nav/NavItem/NavItem.rtld"/>
+    <import-taglib path="/components/nav/NavDivider/NavDivider.rtld"/>
+    <import-taglib path="/components/nav/TabContent/TabContent.rtld"/>
+    <import-taglib path="/components/nav/TabPane/TabPane.rtld"/>
+    <import-taglib path="/components/nav/TopNavDefault/TopNavDefault.rtld"/>
+    
+    <import-taglib path="/components/notifications/Message/Message.rtld"/>
+    
+    <import-taglib path="/components/overlays/Popover/Popover.rtld"/>
+    
+    <import-taglib path="/components/social/GooglePlusBadge/GooglePlusBadge.rtld"/>
+    <import-taglib path="/components/social/GooglePlusOne/GooglePlusOne.rtld"/>
+    <import-taglib path="/components/social/TwitterFollow/TwitterFollow.rtld"/>
+    <import-taglib path="/components/social/TwitterTweet/TwitterTweet.rtld"/>
+    <import-taglib path="/components/social/Disqus/Disqus.rtld"/>
+    
+    <import-taglib path="/components/tracking/GoogleAnalytics/GoogleAnalytics.rtld"/>
+    
+    
+</raptor-taglib>

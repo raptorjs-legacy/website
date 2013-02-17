@@ -1,0 +1,28 @@
+.code-editor-auto-resize .CodeMirror-scroll {
+    height: auto;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.CodeMirror {
+    border: 1px solid #EEEEEE;
+}
+
+.CodeMirror {
+    background-color: #FFF;
+}
+
+.code-editor {
+    margin-bottom: 10px;
+}
+
+.code-editor > H2.code-editor-title {
+    font-size: 14px;
+    line-height: 15px;
+    vertical-align: middle;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px;
+    background-color: #EEEEEE;
+    color: #000;
+}

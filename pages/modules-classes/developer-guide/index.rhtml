@@ -1,0 +1,539 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/footers/FooterDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/editors/CodeEditor"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+    
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: Modules &amp; Classes</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body data-spy="scroll">
+            <docs:top-nav activeItem="modules-classes"/>
+            <div class="container">
+                <docs:docs heading="Getting Started with Modules, Classes, Mixins and Enums" disqus-id="modules-developer-guide">
+                    <docs:message type="warning">
+                        Documentation In-Progress
+                    </docs:message>
+                    
+                    <docs:section heading="Introduction">
+                        <p>
+                            Out of the box, JavaScript lacks basic support for namespaces, 
+                            and defining and using "classes" is not always elegant. 
+                            Because JavaScript is a very dynamic language many libraries
+                            and frameworks have been developed to address some of these
+                            shortcomings—each with their own benefits and disadvantages. 
+                            RaptorJS aims to solve many of the problems in existing
+                            solutions through a <i>simple</i>, yet powerful new syntax.
+                        </p>
+                        <p>
+                            Once RaptorJS has been initialized, the global <code>raptor</code>
+                            object can be used to start defining modules, classes, mixins and enums.
+                            For help with initializing RaptorJS please see the 
+                            <a href="${url('/get-started')}">RaptorJS Getting Started Guide</a>
+                        </p>
+                        
+                    </docs:section>
+                    <docs:section heading="Basic Usage">
+                        <p>
+                            The basic pattern for defining RaptorJS objects is to associate a  
+                            <i>factory function</i> with a
+                            <i>string</i> ID. The job of the factory function
+                            is to return the initialized object when it is first
+                            required.
+                        </p>
+                        <p>
+                            To "require" an object using RaptorJS, the <code>require(id)</code>
+                            method should be used. The <code>require(id)</code> will
+                            initialize the required object if it had not previously required. An object
+                            is initialized by invoking the factory function to get back the final object.
+                            The initialized object is then cached so that it can simply be returned for subsequent requires
+                            of the same object ID.
+                        </p>
+                        <p>
+                            On the server-side, if <code>require(id)</code> is invoked
+                            and the object has not been registered then RaptorJS goes through a resolving
+                            phase to find and load the requested object from disk. For more details,
+                            see <a href="http://raptorjs.org/api/oop_Server/#_resolve">
+                                oop._resolve(id)
+                            </a>.
+                        </p>
+                    </docs:section>
+                    <docs:section heading="Modules">
+                        <docs:section heading="Defining a Module">
+                            <p>
+                                A JavaScript object/module can be associated with a name as shown in the following
+                                example:    
+                            </p>
+                            
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define(
+                                'some/namespace/my-module', 
+                                function(require, exports, module) { //This function is only executed *once* (the first time this module is required)
+                                    return { //Return the module definition
+                                        sayHello: function() {
+                                            console.log("Hello World!");
+                                        }
+                                    }
+                                });
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="Using a Module">
+                            <p>
+                                The following code illustrates how to utilize another module/class/mixin/enum
+                                by obtaining a reference to it using the <code>require</code> function:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            var myModule = require('some/namespace/my-module');
+                            myModule.sayHello();
+                            ]]>
+                            </docs:code-editor>
+                            <docs:message type="info">
+                                <p>
+                                    NOTE: When using <code>require(moduleName)</code>, the code for
+                                    the requested module must be available. Asynchronous module loading
+                                    (loading a module asynchronously from a server) is provided
+                                     by the <a href="${url('/module-loader')}">RaptorJS Asynchronous Module Loader</a>.
+                                </p>
+                            </docs:message>
+                        </docs:section>
+                    </docs:section>
+                    <docs:section heading="Classes">
+                        <docs:section heading="Defining a Class">
+                            <p>
+                                A class can be defined by creating a factory function that returns a constructor function 
+                                (with a <code>prototype</code> property) as shown in the following example:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define(
+                                'some/namespace/MyClass', 
+                                function(require, module, exports) {
+                                    var MyClass = function(message) { //Constructor function
+                                        this.message = message;
+                                    }
+
+                                    MyClass.prototype = {
+                                        sayHello: function() {
+                                            console.log(this.message);
+                                        }
+                                    };
+
+                                    return MyClass;
+                                });
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="Creating an Instance of a Class">
+                            <p>
+                                An instance of a class can be created as shown in the following example:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            var MyClass = require("some/namespace/MyClass");
+                            var myInstance = new MyClass();
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="Inheritance">
+                            <p>
+                                Prototype-based class inheritance is also supported by RaptorJS when using the
+                                <code>define.Class</code> method. The signature for the <code>define.Class</code> method is the following:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define.Class(id, ?superclassId, ?dependencies, factory) 
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                Example:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define.Class(
+                                'some/namespace/Dog', 
+                                'some/namespace/Animal', //Name of the superclass
+                                function(require, exports, module) {
+                                    var Dog = function(breed) {
+                                        Dog.superclass.constructor.call(this, "dog"); //Invoke the constructor of the superclass
+                                        this.breed = breed;
+                                    }
+
+                                    Dog.prototype = {
+                                        eat: function(food) {
+                                            Dog.superclass.eat.apply(this, food); //Invoke the "eat" method in the superclass
+                                            this.bark();
+                                        },
+
+                                        bark: function() {
+                                            console.log("woof!");
+                                        }
+                                    };
+
+                                    return Dog;
+                                });
+                            ]]>
+                            </docs:code-editor>
+                            <docs:message type="info">
+                                <p>
+                                    The superclass argument can also be passed as part of a modifiers
+                                    object as shown in the following example:
+                                </p>
+                                <docs:code-editor 
+                                    autoResize="true"
+                                    indentUnit="4"
+                                    readOnly="true"
+                                    mode="javascript">
+                                <![CDATA[
+                                define.Class(
+                                    'some/namespace/Dog', 
+                                    {
+                                        superclass: 'some/namespace/Animal' //Name of the superclass
+                                    }, 
+                                    function(require, exports, module) {
+                                        ...
+                                    });
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    This allows an anonymous class with a superclass to be define:
+                                </p>
+                                <docs:code-editor 
+                                    autoResize="true"
+                                    indentUnit="4"
+                                    readOnly="true"
+                                    mode="javascript">
+                                <![CDATA[
+                                define.Class( 
+                                    {
+                                        superclass: 'some/namespace/Animal' //Name of the superclass
+                                    }, 
+                                    function(require, exports, module) {
+                                        ...
+                                    });
+                                ]]>
+                                </docs:code-editor>
+                            </docs:message>
+                            <docs:message type="info">
+                                <p>
+                                    NOTE: When defining a class that extends another class, the returned constructor
+                                    function is populated with a "superclass" property that is a
+                                    reference to the prototype of the superclass. In addition,
+                                    the prototype of a class is always populated with a "constructor" property,
+                                    which is a reference to the constructor function for the class associated
+                                    with the prototype object.
+                                </p>
+                            </docs:message>
+                        </docs:section>
+                    </docs:section>
+                    <docs:section heading="Mixins">
+                        <docs:section heading="Defining a Mixin">
+                            <p>
+                                RaptorJS allows mixins to be applied to an object in two different ways:
+                            </p>
+                            <ol>
+                                <li>As part of an object definition</li>
+                                <li>External from the object being defined</li>
+                            </ol>
+                        </docs:section>
+                        <docs:section heading="Applying Mixins as part of an Object Definition">
+                            <p>
+                                Mixins can be applied declaratively as part of
+                                an object definition as shown in the following example
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define.Class(
+                                'some/namespace/CircleButton',
+                                ['raptor'],
+                                function(raptor, require) {
+                                    var CircleButton = function() {
+                                    };
+                                    
+                                    CircleButton.prototype = {
+                                        //...
+                                    }
+                                    
+                                    //Apply mixins to the CircleButton's prototype:
+                                    raptor.extend(
+                                        CircleButton.prototype, 
+                                        require('some/namespace/CircleMixin'));
+                                    
+                                    //NOTE: raptor.extend simply copies properties from one object to another
+                                    
+                                    return CircleButton;
+                                });
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="Applying Mixins External to an Object Definition">
+                            <p>
+                                The <code>define.extend</code> method allows mixins to be lazily applied to another 
+                                module when the module is first required. The <code>define.extend</code> method is used 
+                                heavily to support cross-environment modules by creating environment specific 
+                                mixins for modules. Example:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            /**
+                             * Extends the "raptor/files" module with Rhino/Java specific mixins so that the
+                             * same module can work in multiple server-side JavaScript environments.
+                             * @extension Rhino
+                             */
+                            define.extend(
+                                'raptor/files',
+                                function(require) {
+                                    var JavaFile = Packages.java.io.File;
+                            
+                                    return {
+                                        exists: function(path) {
+                                            return new JavaFile(path).exists();
+                                        }
+                                    }
+                                }
+                            );
+                            ]]>
+                        </docs:code-editor>
+                        </docs:section>
+                    </docs:section>
+                    <docs:section heading="Enums">
+                        <docs:section heading="Defining an Enum">
+                            <p>
+                                An enum type can be defined as shown in the following example:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define.Enum(
+                                'some/namespace/Day',
+                                [
+                                    "SUN",
+                                    "MON",
+                                    "TUE",
+                                    "WED",
+                                    "THU",
+                                    "FRI",
+                                    "SAT"
+                                ]
+                            );
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                Enum values as complex objects can be defined as shown in the following example:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define.Enum(
+                                'some/namespace/Day',
+                                {
+                                    SUN: [false, "Sunday"],
+                                    MON: [true, "Monday"],
+                                    TUE: [true, "Tuesday"],
+                                    WED: [true, "Wednesday"],
+                                    THU: [true, "Thursday"],
+                                    FRI: [true, "Friday"],
+                                    SAT: [false, "Saturday"]
+                                },
+                                function(require) {
+                                    return {
+                                        init: function(isWeekday, longName) {
+                                            this._isWeekday = isWeekday;
+                                            this._longName = longName;
+                                        },
+                                         
+                                        getLongName: function() {
+                                            return this._longName;
+                                        },
+                                         
+                                        isWeekday: function() {
+                                            return this._isWeekday;
+                                        }
+                                    }
+                                }
+                            );
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="Enum Methods">
+                            <p>Every enum class supports the following methods.</p>
+                            <ul>
+                                <li>valueOf(name) - Returns the constant field with the same name (case sensitive)</li>
+                            </ul>
+                            <p>Every enum field supports the following methods.</p>
+                            <ul>
+                                <li>
+                                    name() - Returns the name of the enum
+                                </li>
+                                <li>
+                                    ordinal() - Returns the positional value of the enum (NOTE: This
+                                    should only be used for an array of enum strings. Order is undefined
+                                    for maps but it will work correctly in most browsers.)
+                                </li>
+                                <li>
+                                    toString() - Returns the name of the enum unless it has been overridden
+                                </li>
+                                <li>
+                                    compareTo(other) - Compares one enum field to another based on the ordinal value
+                                </li>
+                            </ul>
+                        </docs:section>
+                        
+                        <docs:section heading="Enum Usage">
+                            <p>
+                                Once you define an enum, the enum constants can be accessed as
+                                static properties of the class as shown in the following example.
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            var Day = require('some/namespace/Day');
+                            if (day === Day.FRI) {
+                                alert("It is " + day.getLongName() + "!");
+                            }
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                    </docs:section>
+
+                    <docs:section heading="Anonymous Objects">
+                        <p>
+                            Anonymous (unnamed objects) can be defined
+                            by omitting the name argument. For example:
+                        </p>
+                        <docs:code-editor 
+                            autoResize="true"
+                            indentUnit="4"
+                            readOnly="true"
+                            mode="javascript">
+                        <![CDATA[
+                        var myModule = define(
+                            function() {
+                                return {
+                                    sayHello: function() {
+                                        console.log("Hello World!");
+                                    }
+                                }
+                            });
+                        myModule.sayHello();
+                        ]]>
+                        </docs:code-editor>
+                    </docs:section>
+                    
+                    <docs:section heading="Logging">
+                        <p>
+                            For convenience, all objects defined using RaptorJS
+                            will be populated with a "logger" function that can be
+                            used to log messages at various log levels (debug, info, warn, error, etc.).
+                            Whether or not anything actually shows will depend on how the loggers 
+                            are configured. Output messages will be prefixed with the log level
+                            and the name of the object that logged the message. Loggers
+                            should be configured when RaptorJS is first initialized. For example:
+                        </p>
+                        <p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            require("raptor"); //Initialize RaptorJS on the server and enable AMD
+                            
+                            //...
+
+                            define(
+                                'some/namespace/my-module', 
+                                function(require, exports, module) { //This function is only executed *once* (the first time this module is required)
+                                    var logger = module.logger();
+                                    
+                                    return { //Return the module definition
+                                        sayHello: function() {
+                                            logger.debug("Hello World!");
+                                            /*
+                                             * Output:
+                                             * DEBUG some/namespace/my-module: Hello World!
+                                             */
+                                        }
+                                    }
+                                });
+                            ]]>
+                            </docs:code-editor>
+                        </p>
+                        <p>
+                            For more details on logging, see <a href="${url('/logging')}">RaptorJS Logging</a>.
+                        </p>
+                    </docs:section>
+                </docs:docs>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+
+        </body>
+    </html>
+</c:template>
+

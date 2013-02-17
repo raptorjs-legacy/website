@@ -1,0 +1,9 @@
+<raptor-taglib>
+    <tag name="feature-portal-section" handler-class="components.docs.FeaturePortalSection.FeaturePortalSectionTag">
+        <attribute name="title" type="string"/>
+        <attribute name="url" type="string"/>
+        <attribute name="size" type="string"/>
+        <attribute name="class" type="string"/>
+        <attribute name="float" type="string"/>
+    </tag>
+</raptor-taglib>

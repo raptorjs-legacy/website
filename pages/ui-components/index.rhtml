@@ -1,0 +1,139 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>    
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: Building UI Components</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav/>
+            
+            
+            <div class="container">
+                <docs:docs heading="Building UI Components" disqus-id="ui-components">
+
+                    <docs:section heading="Overview">
+                        <p>
+                            
+                            This guide will walk you through the steps to build UI components that
+                            are independently testable and can be rendered on the server or in the browser
+                        </p>
+                        <p>
+                            For this guide, the following technologies will be used:
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="http://jquery.com/"><b>jQuery</b></a>: Client-side DOM management and DOM event handling
+                            </li>
+                            <li>
+                                <b>CSS</b>: UI component styling
+                            </li>
+                            <li>
+                                <a href="${url('/widgets')}"><b>RaptorJS Widget Framework</b></a>: Client-side widget initialization and widget communication
+                            </li>
+                            <li>
+                                <a href="${url('/raptor-templates')}"><b>Raptor Templates</b></a>: HTML templating language for rendering UI component views
+                            </li>
+                            <li>
+                                <a href="${url('/packaging')}"><b>RaptorJS Packaging</b></a>: Declaring UI component dependencies
+                            </li>
+                            <li>
+                                <a href="${url('/optimizer')}"><b>RaptorJS Optimizer</b></a>: Delivering JavaScript and CSS code to the browser
+                            </li>
+                            <li>
+                                <a href="${url('/modules-classes')}"><b>RaptorJS AMD</b></a>: Modules, classes and mixins
+                            </li>
+                            <!-- <li>
+                                RaptorJS AMD modules:
+                                <ul>
+                                    <li>
+                                        <a href="http://raptorjs.org/api/raptor/widgets/"><b>raptor/widgets</b></a>: 
+                                        Provides functiionality for initializing widgets associated with rendered UI components.
+                                    </li>
+                                    <li>
+                                        <a href="http://raptorjs.org/api/raptor/component-renderer/"><b>raptor/component-renderer</b></a>: 
+                                        Provides functionality for rendering UI components to HTML in the browser, inserting the resulting HTML into the DOM and initializing the widgets associated with the rendered UI components
+                                    </li>
+                                    <li>
+                                        <a href="http://raptorjs.org/api/raptor/optimizer/"><b>raptor/optimizer</b></a>: Delivering JavaScript and CSS code to the browser
+                                    </li>
+                                    
+                                </ul>
+
+                            </li> -->
+                            
+                        </ul>
+                    </docs:section>
+
+                    <docs:section heading="View Demo">
+                        <p>
+                            To view a demo of the sample application that we will build for this guide, please
+                            view the following link: <a href="${url('/demos/ui-components')}"><b>RaptorJS AMD</b></a>: Modules, classes and mixins
+                        </p>
+
+                    </docs:section>
+
+
+                    <docs:section heading="Directory Structure">
+                        For this guide, we will use the following directory structure:
+                        <docs:project-dir-structure dir="/samples/ui-components"/>
+                    </docs:section>
+
+                    <docs:section heading="UI Component Parts">
+                        <p>
+                            For this guide we will be creating a simple UI component that consists of the following:
+                            <ul>
+                                <li><b>Renderer:</b> A JavaScript class that controls the rendering of the view for the UI component</li>
+                                <li><b>HTML Template:</b> A Raptor Template that is used to render the HTML</li>
+                                <li><b>Widget:</b> A JavaScript class that provides the client-side functionality including the following:
+                                    <ul>
+                                        <li>DOM Event Handling</li>
+                                        <li>Widget API Methods</li>
+                                        <li>Event-based Communication</li>
+                                    </ul>
+                                </li>
+                                <li><b>CSS:</b> A CSS file to control the appearance of the rendered component</li>
+                                <li><b>Custom Tag Definition:</b> A Raptor Taglib Definition (RTLD) file that declares what attributes are allowed when the UI component is embedded in a Raptor Template</li>
+                                <li><b>package.json:</b> A pacakge file to control how the UI component is packaged up for delivery to the web browser</li>
+                            </ul>
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="Sample Code">
+                        <p>
+                            The sample code for this guide can be found in the following location:
+                        </p>
+                    </docs:section>
+
+
+                </docs:docs>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

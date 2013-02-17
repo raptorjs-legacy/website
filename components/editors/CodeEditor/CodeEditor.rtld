@@ -1,0 +1,18 @@
+<raptor-taglib>
+
+    <tag name="code-editor" handler-class="components.editors.CodeEditor.CodeEditorTag" preserveSpace="true">
+        <attribute name="name" type="string"/>
+        <attribute name="autoResize" type="boolean"/>
+        <attribute name="mode" type="string"/>
+        <attribute name="readOnly" type="boolean"/>
+        <attribute name="autoFormat" type="boolean"/>
+        <attribute name="lineNumbers" type="boolean"/>
+        <attribute name="indentUnit" type="integer"/>
+        <attribute name="title" type="string"/>
+        <attribute name="resource" type="string"/>
+        
+        <!-- Support widget attributes -->
+        <attribute name="id" uri="widgets"/>
+    </tag>
+    
+</raptor-taglib>

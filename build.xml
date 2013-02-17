@@ -1,0 +1,109 @@
+<project name="raptorjs.org" basedir="." default="build-dev">
+	<property name="cmd.build"  location="build"/>
+	<property name="cmd.build-dev"  location="build-dev"/>
+    <property name="output.dir" location="../raptorjs.github.com"/>
+
+    <target name="copy-images">
+        <copy todir="${output.dir}/images">
+            <fileset dir="images"/>
+        </copy> 
+    </target>
+
+    <target name="build" depends="copy-images">
+        <exec executable="${cmd.build}">
+        </exec>
+    </target>
+
+	<target name="build-dev" depends="copy-images">
+		<exec executable="${cmd.build-dev}">
+        </exec>
+	</target>
+	
+	<target name="copy-demo">
+		<copy todir="${output.dir}/demos/${demoPath}">
+            <fileset dir="../samples/${demoPath}/build"/>
+        </copy> 
+	</target>
+		
+	<target name="copy-demos">
+		<delete dir="demos"/>
+		
+	    <ant dir="../samples"/>
+		
+		<antcall target="copy-demo">
+		    <param name="demoPath" value="async-loader/get-started"/>
+		</antcall>
+		
+		<antcall target="copy-demo">
+            <param name="demoPath" value="ui-components"/>
+        </antcall>
+    </target>
+	
+	
+	<target name="raptor-jsdoc">
+        <exec executable="raptor-jsdoc">
+            <arg value="src=../raptorjs/lib"/>
+            <arg value="output-dir=${output.dir}/api"/>
+            <arg value="profile=production"/>
+        	<arg value="include-filename=false"/>
+        	<arg value="publish=true"/>
+        	<arg value="props=../raptorjs/package.json,../raptorjs/jsdoc-props.json"/>
+        	<arg value="clean=api"/>
+        </exec>
+    </target>
+
+    <target name="raptor-jsdoc-dev">
+        <exec executable="raptor-jsdoc">
+            <arg value="src=../raptorjs/raptor/lib"/>
+            <arg value="output-dir=${output.dir}/"/>
+            <arg value="profile=development"/>
+            <arg value="include-filename=true"/>
+            <arg value="publish=true"/>
+            <arg value="props=../raptorjs/package.json,../raptorjs/jsdoc-props.json"/>
+            <arg value="clean=api"/>
+        </exec>
+    </target>
+	
+	<target name="git-commit">
+	    <exec executable="git" dir="${output.dir}">
+	        <arg value="add"/>
+	        <arg value="--all"/>
+	        <arg value="'**'"/>
+        </exec>
+		<exec executable="git" dir="${output.dir}">
+            <arg value="commit"/>
+            <arg value="-m"/>
+            <arg value="'Published documentation'"/>
+        </exec>
+	</target>
+
+    <target name="git-push">
+        <exec executable="git" dir="${output.dir}">
+            <arg value="push"/>
+            <arg value="origin"/>
+            <arg value="master"/>
+        </exec>
+    </target>
+
+    <target name="publish-to-github-dry-run" 
+        depends="clean,
+                 build,
+                 copy-demos,
+                 raptor-jsdoc"/>
+	
+	<target name="publish-to-github" 
+        depends="clean,
+                 build,
+                 copy-demos,
+                 raptor-jsdoc,
+		         git-commit,
+                 git-push"/>
+
+    <target name="clean">
+        <echo message="Cleaning ${output.dir}..."/>
+        <delete includeemptydirs="true">
+            <fileset dir="${output.dir}" includes="**/* .DS_Store" excludes=".git/** .gitignore CNAME .nojekyll README.md" defaultexcludes="false"/>
+        </delete>
+    </target>
+
+</project>

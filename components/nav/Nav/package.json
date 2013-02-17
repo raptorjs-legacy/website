@@ -1,0 +1,11 @@
+{
+    "raptor": {
+        "dependencies": [
+            {"module": "raptor/widgets"},
+            {"module": "Bootstrap/navs"},
+            {"module": "Bootstrap/tabs"},
+            {"module": "components/nav/NavItem"},
+            "Nav.css"
+        ]
+    }
+}

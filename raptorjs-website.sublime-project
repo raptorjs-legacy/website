@@ -1,0 +1,316 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev"
+			],
+			"name": "Build (dev)",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/publish"
+			],
+			"name": "Publish",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/publish",
+				"page=widgets"
+			],
+			"name": "Publish - widgets",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=optimizer"
+			],
+			"name": "Build (dev) - optimizer",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/optimizer/get-started-raptor-templates"
+			],
+			"name": "Build (dev) - optimizer-get-started-raptor-templates",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/optimizer/get-started-cli"
+			],
+			"name": "Build (dev) - optimizer-get-started-cli",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/optimizer/get-started-javascript-api"
+			],
+			"name": "Build (dev) - optimizer-get-started-javascript-api",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/optimizer/developer-guide"
+			],
+			"name": "Build (dev) - optimizer-developer-guide",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=raptor-templates"
+			],
+			"name": "Build (dev) - raptor-templates",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/faq"
+			],
+			"name": "Build (dev) - faq",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/raptor-templates/developer-guide"
+			],
+			"name": "Build (dev) - raptor-templates-developer-guide",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/raptor-templates/try-online"
+			],
+			"name": "Build (dev) - raptor-templates-try-online",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/"
+			],
+			"name": "Build (dev) - index",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/get-started"
+			],
+			"name": "Build (dev) - get-started",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/module-loader"
+			],
+			"name": "Build (dev) - module-loader",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/module-loader/get-started-async"
+			],
+			"name": "Build (dev) - module-loader-get-started-async",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/modules-classes"
+			],
+			"name": "Build (dev) - modules-classes",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/modules-classes/developer-guide"
+			],
+			"name": "Build (dev) - modules-classes/developer-guide",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/packaging"
+			],
+			"name": "Build (dev) - packaging",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/packaging/developer-guide"
+			],
+			"name": "Build (dev) - packaging/developer-guide",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/packaging/get-started"
+			],
+			"name": "Build (dev) - packaging/get-started",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/widgets"
+			],
+			"name": "Build (dev) - widgets",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/widgets/developer-guide"
+			],
+			"name": "Build (dev) - widgets/developer-guide",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/ui-components"
+			],
+			"name": "Build (dev) - ui-components",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
+				"page=/widgets/get-started"
+			],
+			"name": "Build (dev) - widgets/get-started",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/publish-to-github"
+			],
+			"name": "Publish to Github",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"raptor-jsdoc",
+				"src=node_modules/raptor/lib/",
+				"output-dir=api",
+				"profile=production",
+				"include-filename=true",
+				"publish=true",
+				"props=node_modules/raptor/package.json,node_modules/raptor/jsdoc-props.json",
+				"clean=api"
+			],
+			"name": "jsdoc",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"ant",
+				"src=node_modules/raptor/lib/",
+				"output-dir=api",
+				"profile=development",
+				"include-filename=true",
+				"props=node_modules/raptor/package.json,node_modules/raptor/jsdoc-props.json",
+				"clean=api"
+			],
+			"name": "jsdoc (dev)",
+			"working_dir": "${project_path}"
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "."
+		},
+		{
+			"path": "samples"
+		},
+		{
+			"path": "work"
+		},
+		{
+			"path": "../raptorjs"
+		}
+	],
+	"settings":
+	{
+		"build_switcher_systems":
+		[
+			"jsdoc",
+			"jsdoc (dev)",
+			"Publish",
+			"Publish - widgets",
+			"Build (dev)",
+			"Build (dev) - index",
+			"Build (dev) - faq",
+			"Build (dev) - get-started",
+			"Build (dev) - module-loader",
+			"Build (dev) - module-loader-get-started-async",
+			"Build (dev) - modules-classes",
+			"Build (dev) - modules-classes/developer-guide",
+			"Build (dev) - optimizer",
+			"Build (dev) - optimizer-get-started-cli",
+			"Build (dev) - optimizer-get-started-javascript-api",
+			"Build (dev) - optimizer-get-started-raptor-templates",
+			"Build (dev) - optimizer-developer-guide",
+			"Build (dev) - packaging",
+			"Build (dev) - packaging/developer-guide",
+			"Build (dev) - packaging/get-started",
+			"Build (dev) - raptor-templates",
+			"Build (dev) - raptor-templates-developer-guide",
+			"Build (dev) - raptor-templates-try-online",
+			"Build (dev) - ui-components",
+			"Build (dev) - widgets",
+			"Build (dev) - widgets/developer-guide",
+			"Build (dev) - widgets/get-started",
+			"Publish to Github",
+			"sample-projects/async-loader/get-started/publish.js",
+			"sample-projects/ui-components/publish.js"
+		]
+	}
+}

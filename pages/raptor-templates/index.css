@@ -1,0 +1,17 @@
+.feature-portal-sections {
+    clear: both;
+    padding-left: 44px;
+}
+.start-here {
+    width: 165px;
+    height: 62px;
+    position: relative;
+    background-image: url(start-here.png);
+    top: 23px;
+    left: -44px;
+    z-index: 99;
+}
+.section-try-online {
+    position: relative;
+    z-index: 100;
+}

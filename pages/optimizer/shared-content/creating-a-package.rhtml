@@ -1,0 +1,113 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+
+    <docs:section heading="Creating a Package">
+        <p>
+            <img src="${url('/images/package.png')}" width="128" height="128" class="section-icon"/>
+            The first step to generating optimized web pages is to create packages for all of your modules. A module
+            is a collection of related resources that work together to provide functionality in your application. 
+            Modules can consist of resources of any type (JavaScript, CSS, LESS, Raptor Templates, etc.) and
+            modules can have dependencies on other modules.
+            Packages are necessary so that the optimizer will understand the dependencies in your application.
+            A package is defined using a simple <code>package.json</code> file. The RaptorJS Optimizer
+            utilizes the same format of package files described in the documentation for the
+            <a href="${url('/packaging')}">
+                RaptorJS Packaging System
+            </a>. The packaging format is quickly described in this guide, but for more advanced usage please
+            see the developer guide for the <a href="${url('/packaging')}">
+                RaptorJS Packaging System
+            </a>.
+        </p>    
+        <docs:section heading="Module Directories">
+            <p>
+                A <code>package.json</code> file should be placed in a directory that corresponds to a module name.
+                For example, the corresponding <code>package.json</code> file for a module named "test.hello"
+                should be placed in the following location:
+                <code><nobr>&lt;modules-dir>/test/hello/package.json</nobr></code>. 
+                In order for the RaptorJS Optimizer to be able
+                to find your modules, you need to add the root directory containing your modules to the
+                <a href="${url('/resource-search-path')}">
+                    <nobr>RaptorJS Resource Search Path</nobr>
+                </a> as shown in the following code:
+            </p>
+            <docs:code-editor 
+                mode="javascript"
+                readOnly="true" 
+                c:parse-body-text="false">
+            <![CDATA[
+            require('raptor/resources').addSearchPathDir("/path/to/modules");
+            ]]>
+            </docs:code-editor>
+        </docs:section>
+
+        <docs:section heading="Package File Format">
+            <p>
+                At a minimum, a package needs to describe what is included in the package.
+                This is done by adding a "raptor" » "dependencies" property to a package.json file that is
+                an array of resources that should be included as part of the package. 
+                A simple <code>package.json</code> is shown below:
+            </p>
+            <docs:code-editor 
+                mode="javascript"
+                readOnly="true" 
+                c:parse-body-text="false">
+            <![CDATA[
+            {
+                "raptor": {
+                    "dependencies": [
+                        "my-widget.js",
+                        "my-css-stylesheet.css",
+                        "my-less-stylesheet.less",
+                        "my-template.rhtml"
+                    ]
+                }
+            }
+            ]]>
+            </docs:code-editor>
+            <p>
+                The above <code>package.json</code> file includes four resources. The RaptorJS Packaging System
+                is flexible enough to support any type of resource, including resources that need to be compiled
+                into either JavaScript or CSS (such as <a href="http://lesscss.org">LESS</a> CSS and 
+                <a href="${url('/raptor-templates')}">Raptor Template</a> files). Resource paths
+                that are not prefixed with a forward slash ("/") are treated as paths relative to the location
+                of the containing <code>package.json</code> file. Paths that are prefixed with a forward slash
+                are treated as relative to at least one of the resource search path entries 
+                defined for your application.
+            </p>
+            <p>
+                In addition to declaring which resources are included as part of a package, a <code>package.json</code>
+                file can also declare that it depends on another module (i.e., another <code>package.json</code> file).
+                A module dependency can be added using adding <code>{ "module": "&lt;module-name>" }</code>
+                entries as shown in the following example:
+            </p>
+            <docs:code-editor 
+                mode="javascript"
+                readOnly="true" 
+                c:parse-body-text="false">
+            <![CDATA[
+            {
+                "raptor": {
+                    "dependencies": [
+                        { "module": "raptor/widgets" },
+                        { "module": "raptor/templating" },
+                        "my-widget.js",
+                        "my-css-stylesheet.css",
+                        "my-less-stylesheet.less",
+                        "my-template.rhtml"
+                    ]
+                }
+            }
+            ]]>
+            </docs:code-editor>
+        </docs:section>
+    </docs:section>
+    
+</c:template>
+

@@ -1,0 +1,15 @@
+{
+    "raptor": {
+        "dependencies": [
+            { "module": "Bootstrap/scrollspy" },
+            { "module": "jquery-scrollTo" },
+            { "module": "components/docs/Section" },
+            { "module": "components/editors/CodeEditor" },
+            { "module": "components/editors/CodeEditor/mode-javascript" },
+            { "module": "components/editors/CodeEditor/mode-xml" },
+            { "module": "components/editors/CodeEditor/mode-htmlmixed" },
+            "Docs.css",
+            "DocsWidget.js"
+        ]
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "type": "raptor-module",
+    "name": "CodeMirror",
+    "raptor": {
+        "dependencies": [
+            {"path": "CodeMirror-2.33/lib/codemirror.js"},
+            {"path": "CodeMirror-2.33/lib/codemirror.css"},
+            {"path": "CodeMirror-2.33/lib/util/formatting.js"}
+        ]
+    }
+}

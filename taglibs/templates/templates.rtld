@@ -1,0 +1,10 @@
+<raptor-taglib>
+    <uri>http://docs.raptorjs.org/templates</uri>
+    <short-name>templates</short-name>
+    <prefix>templates</prefix>
+    
+    <import-taglib path="/components/templates/TemplateTestbed/TemplateTestbed.rtld"/>
+    <import-taglib path="/components/templates/Errors/Errors.rtld"/>
+    <import-taglib path="/components/templates/TemplatesTopNav/TemplatesTopNav.rtld"/>
+
+</raptor-taglib>

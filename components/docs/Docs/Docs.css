@@ -1,0 +1,229 @@
+BODY > DIV.container {
+    width: auto;
+}
+
+
+.docs-content > H1 {
+    padding-top: 60px;
+}
+
+.docs-content H2 {
+    padding-top: 40px;
+    margin-bottom: 10px;
+}
+
+.docs > .bd {
+}
+
+
+.docs .nav {
+    margin-bottom: 0px;
+}
+
+.docs > .bd > .docs-content {
+    margin-left: 290px;
+    margin-right: 20px;
+}
+
+.docs .section {
+    clear: both;
+}
+
+/*
+.docs .section .bd {
+    font-size: 14px;
+}
+*/
+
+#docsNav {
+    left: 0px;
+    top: 40px;
+    bottom: 0px;
+    width: 270px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    padding: 10px;
+    background-color: #EEE;
+    border-right: 1px solid #C0C0C0;
+    position: fixed;
+    overflow-y: auto;
+}
+
+.return {
+    margin-bottom: 10px;
+}
+
+DIV.toc > UL.toc {
+    margin-left: 0;
+}
+
+.docs > .bd > .docs-content > .toc  UL.toc {
+    margin: 0;
+    padding: 0;
+}
+
+.docs > .bd > .docs-content > .toc > UL.toc UL.toc UL.toc {
+    margin-left: 0px;
+    padding-left: 8px;
+}
+
+.docs-nav-footer {
+    border-top: 1px solid #C0C0C0;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+.docs-nav-footer > UL {
+    margin-left: 0px;
+}
+
+.docs-footer-padding {
+    clear: both;
+    height: 800px;
+    border-top: 1px solid #C0C0C0;
+    margin-top: 40px;
+}
+
+
+
+.toc LI {
+    list-style: none outside none;
+/*     padding-left: 2px; */
+}
+
+.toc LI > A {
+    line-height: 20px;
+}
+
+.toc LI.active > A {
+    font-weight: bold;
+    color: #033C73;
+}
+
+
+LI.toc-level-0 {
+    list-style: none outside none;
+    padding-left: 0px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+LI.toc-level-1 {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+
+LI.toc-level-2 {
+    font-size: 13px;
+    font-weight: normal;
+}
+
+LI.toc-level-3 {
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.section-level-0 > H2 {
+    font-size: 24px;
+    border-bottom: 2px solid #C0C0C0;
+    
+}
+
+.section-level-0 {
+    
+}
+
+.section-level-1 > H2 {
+    font-size: 18px;
+}
+
+.section-level-2 > H2 {
+    font-size: 16px;
+}
+
+.section-level-3 > H2 {
+    font-size: 15px;
+    font-style: italic;
+    padding-top: 0;
+}
+
+.discussion-padding {
+    height: 20px;
+    background-image: -moz-linear-gradient(top, #FFF, #EEE);
+    background-image: -ms-linear-gradient(top, #FFF, #EEE);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFF), to(#EEE));
+    background-image: -webkit-linear-gradient(top, #FFF, #EEE);
+    background-image: -o-linear-gradient(top, #FFF, #EEE);
+    background-image: linear-gradient(top, #FFF, #EEE);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3771df', endColorstr='#3996dd', GradientType=0);
+}
+
+H2.discussion {
+    font-size: 24px;
+    padding-top: 10px;
+    margin-top: 0px;
+    border-top: 2px solid Black;
+}
+
+
+@media (max-width: 979px) {
+    #docsNav {
+        top: 0px;
+    }
+
+    .docs-content H2 {
+        padding-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .navbar {
+        margin-left: 270px !important;
+    }
+
+    .docs-content > H1 {
+        padding-top: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    #docsNav {
+        left: auto;
+        top: auto;
+        bottom: auto;
+        width: auto;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+        padding: 10px;
+        background-color: #EEE;
+        border: 1px solid #C0C0C0;
+        position: static;
+        overflow-y: auto;
+    }
+
+    .docs > .bd > .docs-content {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .docs-nav-footer {
+        display: none;
+    }
+
+    .navbar {
+        margin-left: 0 !important;
+    }
+}
+
+@media (min-width: 920px) {
+    .docs-content {
+        width: 920px;
+    }
+}
+
+

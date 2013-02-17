@@ -1,0 +1,5 @@
+<raptor-taglib>
+    <tag name="project-dir-structure" handler-class="components.docs.ProjectDirStructure.ProjectDirStructureTag">
+        <attribute name="dir" type="string"/>
+    </tag>
+</raptor-taglib>

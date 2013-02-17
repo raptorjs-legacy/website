@@ -1,0 +1,10 @@
+<raptor-taglib>
+
+    <tag name="twitter-tweet" handler-class="components.social.TwitterTweet.TwitterTweetTag">
+        <attribute name="url" type="string"/>
+        <attribute name="via" type="string"/>
+        <attribute name="text" type="string"/>
+        <attribute name="size" type="string"/>
+    </tag>
+    
+</raptor-taglib>

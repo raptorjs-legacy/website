@@ -1,0 +1,39 @@
+DIV.footer-single-line {
+    border-top: 1px solid #C0C0C0;
+    margin-top: 20px;
+    background-color: #EEE;
+}
+
+DIV.footer-single-line {
+    position: fixed;
+    height: 20px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 1000;
+}
+
+DIV.footer-single-line > .container {
+    width: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 20px;
+    vertical-align: middle;
+}
+
+DIV.footer-single-line > .container > .bd {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    text-align: center;
+    line-height: 20px;
+    vertical-align: middle;
+}
+
+.back-to-top {
+    position: absolute;
+    right: 10px;
+}

@@ -1,0 +1,118 @@
+[
+    {
+        "label": "Simple",
+        "path": "simple"
+    },
+    {
+        "label": "Looping",
+        "samples": [
+            {
+                "label": "Simple Loops",
+                "path": "looping"
+            },
+            {
+                "label": "Loop Status Variable",
+                "path": "looping-varStatus"
+            },
+            {
+                "label": "Loop Separator",
+                "path": "looping-separator"
+            },
+            {
+                "label": "Property Looping",
+                "path": "looping-props"
+            }
+        ]
+        
+    },
+    {
+        "label": "Conditionals",
+        "samples": [
+            {
+                "label": "If...Else",
+                "path": "if-else"
+            },
+            {
+                "label": "Choose...When...Otherwise",
+                "path": "choose"
+            },
+            {
+                "label": "Shorthand Conditionals",
+                "path": "shorthand-conditionals"
+            }
+        ]
+    },
+    {
+        "label": "Text Replacement",
+        "path": "text-replacement"
+    },
+    {
+        "label": "Expressions",
+        "path": "expressions"
+    },
+    {
+        "label": "Includes",
+        "path": "includes",
+        "templates": ["include-target.rhtml"]
+    },
+    {
+        "label": "Escaping",
+        "path": "escaping"
+    },
+    {
+        "label": "Macros",
+        "samples": [
+            {
+                "label": "Simple Macro",
+                "path": "macros"
+            },
+            {
+                "label": "Nested Content",
+                "path": "macros-nested-content"
+            }
+        ]
+    },
+    {
+        "label": "Attributes",
+        "samples": [
+            {
+                "label": "Conditional Attributes",
+                "path": "conditional-attributes"
+            },
+            {
+                "label": "Nested Attributes",
+                "path": "nested-attributes"
+            },
+            {
+                "label": "Attributes from Object",
+                "path": "object-attributes"
+            }
+        ]
+        
+    },
+    {
+        "label": "Parameters",
+        "path": "params"
+    },
+    {
+        "label": "Variables",
+        "path": "variables"
+    },
+    {
+        "label": "Helper Functions",
+        "path": "helper-functions"
+    },
+    {
+        "label": "Whitespace",
+        "path": "whitespace",
+        "showCompilerOptions": true
+    },
+    {
+        "label": "Taglibs",
+        "path": "taglibs"
+    },
+    {
+        "label": "Nesting",
+        "path": "nesting"
+    }
+]

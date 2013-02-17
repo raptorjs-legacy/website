@@ -1,0 +1,7 @@
+<raptor-taglib>
+
+    <tag name="google-analytics" handler-class="components.tracking.GoogleAnalytics.GoogleAnalyticsTag">
+        
+    </tag>
+    
+</raptor-taglib>

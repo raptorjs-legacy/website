@@ -1,0 +1,10 @@
+{
+    "raptor": {
+        "dependencies": [
+            { "module": "components/nav/NavBar" },
+            { "module": "components/nav/Nav" },
+            { "module": "components/nav/NavDivider" },
+            "TopNavDefault.css"
+        ]
+    }
+}

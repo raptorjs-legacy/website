@@ -1,0 +1,26 @@
+<c:template
+    xmlns:c="core"
+    xmlns:w="widgets"
+    name="components/nav/Nav"
+    params="rootAttrs,navItem,isDropdownMenu,nav">
+    
+    <li w:widget="components.nav.Nav.NavItemWidget" c:attrs="navItem.attrs">
+        <a c:attrs="navItem.anchorAttrs">
+            <c:choose>
+                <c:when test="navItem.label">
+                    ${navItem.label}
+                </c:when>
+                <c:when test="navItem.invokeBody">
+                    <c:invoke function="navItem.invokeBody(nav)"/>
+                </c:when>
+            </c:choose>
+            
+            <b class="caret" c:if="isDropdownMenu"></b>
+        </a>
+        <ul class="dropdown-menu" c:if="isDropdownMenu">
+            <c:invoke function="navItem.invokeBody(nav)"/>
+        </ul>
+        
+    </li>
+    
+</c:template>

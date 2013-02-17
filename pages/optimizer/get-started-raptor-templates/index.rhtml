@@ -1,0 +1,147 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS Optimizer: Get Started using the Optimizer Taglib for Raptor Templates</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body>
+            <docs:top-nav/>
+            <div class="container">
+                <docs:docs heading="RaptorJS Optmizer: Get Started with the Optimizer Taglib" disqus-id="optimizer-get-started-raptor-templates">
+                    <docs:message type="warning">
+                        Documentation In-Progress
+                    </docs:message>
+                        
+                    <c:include template="/pages/optimizer/shared-content/get-started-overview" />
+
+                    <docs:section heading="Sample Code">
+                        <p>
+                            The sample code for this guide can be downloaded using the following link:
+                            <a href="${url('/sample-projects/optimizer-get-started-raptor-templates.zip')}">
+                                <nobr>
+                                    RaptorJS Optimizer: Get Started with the Optimizer Taglib - Sample Code
+                                </nobr>
+                            </a>
+                        </p>
+                        <p>
+                            Alternatively, you can view the sample code for this guide on Github using the following link:
+                            <a href="https://github.com/raptorjs/raptorjs.github.com/tree/master/src/sample-projects/optimizer/get-started-raptor-templates">
+                                /src/sample-projects/optimizer/get-started-raptor-templates
+                            </a>
+                        </p>
+                    </docs:section>
+
+                    <c:include template="/pages/optimizer/shared-content/creating-a-package" />
+
+                    <docs:section heading="Optimizing a Page using the Optimizer Taglib">
+                        <p>
+                            <img src="${url('/images/optimized-delivery.png')}" width="128" height="128" class="section-icon"/>
+                            The RaptorJS Optimizer Taglib can be used in
+                            conjunction with 
+                            <a href="${url('/raptor-templates')}">
+                                Raptor Templates
+                            </a>
+                            to generate optimized bundles and inject the required HTML markup. The default configuration will write all bundles to a "static" directory in the current working directory of the running process.
+                            In addition, the default configuration will use "/static/" as the URL prefix for all
+                            resource URLs. In addition, by default, no minification or other filters are applied
+                            to JavaScript and CSS code. Lastly, the default configuration configures no bundles so
+                            all resources of the same content type (i.e., either CSS or JavaScript) targeted
+                            for the same slot will be automically bundled together.
+                        </p>    
+                        <docs:section heading="Example Setup">
+                            For this guide, we will use the following directory structure:
+                            <docs:project-dir-structure dir="/sample-projects/optimizer/get-started-raptor-templates"/>
+                        </docs:section>
+
+                        <docs:section heading="Rendering and Optimizing the Page">
+                            <p>
+                                The provided
+                                <a href="https://github.com/raptorjs/raptorjs.github.com/blob/master/src/sample-projects/optimizer/get-started-raptor-templates/run-optimizer.js">
+                                    run-optimizer.js
+                                </a>
+                                script is used to render the page template (i.e., 
+                                    <a href="https://github.com/raptorjs/raptorjs.github.com/blob/master/src/sample-projects/optimizer/get-started-raptor-templates/pages/test-page/test-page.rhtml">
+                                        test-page.rhtml
+                                    </a>
+                                ). 
+                                After running the above script using <code>node</code> you should see output similar to the following:
+                            </p>
+                            <pre class="sh" xml:space="preserve" c:trim-body-indent="true" style="clear: both;">
+                            $ node run-optimizer.js
+                            INFO optimizer.BundlesFileWriter: Writing bundle file to "static/test-page-body-2fe9f81f.js"...
+                            INFO optimizer.BundlesFileWriter: Writing bundle file to "static/test-page-head-bf4cf798.css"...
+                            Writing optimized page HTML to "test-page.html"...
+                            </pre>
+                            <p>
+                                The optimized output page HTML is then written to the root directory
+                                as "test-page.html". The contents of this generated file will be similar to the following (formatted for clarity):
+                            </p>
+                            <docs:code-editor 
+                            mode="htmlmixed"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                            <![CDATA[
+                            
+                            <html>
+                                <head>
+                                    <title>RaptorJS Optimizer Taglib: Hello World</title>
+                                    <link rel="stylesheet" type="text/css" href="static/test-page-head-bf4cf798.css">
+                                </head>
+                                <body>
+                                    Hello from the RaptorJS Optimizer Taglib!
+                                    <script type="text/javascript" src="static/test-page-body-2fe9f81f.js"></script>
+                                </body>
+                            </html>
+
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                In the process of rendering the page, the following optimized
+                                resource bundles are also written to disk in the "static" directory:
+                            </p>
+                            <ul>
+                                <li>
+                                    static/test-page-body-2fe9f81f.js
+                                </li>
+                                <li>
+                                    static/test-page-head-bf4cf798.css
+                                </li>
+                            </ul>
+                        </docs:section>
+                
+                    </docs:section>
+
+                    <c:include template="/pages/optimizer/shared-content/configuring" />
+
+                </docs:docs>
+            </div>
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

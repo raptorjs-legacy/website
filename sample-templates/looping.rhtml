@@ -1,0 +1,18 @@
+<c:template xmlns:c="core" params="colors">
+    
+    <ul>
+        <li c:for="color in colors" style="color: $color">$color</li>
+    </ul>
+    
+    <ul>
+        <c:for each="color in colors">
+            <li style="color: $color">$color</li>
+        </c:for>
+    </ul>
+    
+    
+    <ul>
+        <li c:for="animal in ['dog', 'cat', 'duck']">$animal</li>
+    </ul>
+    
+</c:template>

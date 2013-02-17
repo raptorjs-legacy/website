@@ -1,0 +1,8 @@
+<raptor-taglib>
+
+    <tag name="g-badge" handler-class="components.social.GooglePlusBadge.GooglePlusBadgeTag">
+        <attribute name="title"/>
+        <attribute name="href"/>
+    </tag>
+    
+</raptor-taglib>

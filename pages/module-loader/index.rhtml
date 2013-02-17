@@ -1,0 +1,104 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    docs:functions="url"
+    params="includes,samples">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+    
+    <html html:doctype="html">
+        <head>
+            <title>RaptorJS: Module Loader</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+            <docs:google-analytics/>
+        </head>
+        <body data-spy="scroll">
+            <docs:top-nav activeItem="module-loader"/>
+            <div class="container">
+                <div class="feature-portal-top">
+
+                    <div class="feature-portal-desc">
+                        <h1>RaptorJS Module Loader</h1>
+                        <p>
+                            For server-side JavaScript environment, RaptorJS provides
+                            a cross-platform module loader that reads 
+                            modules package files to determine which code to load for a particular module. 
+                        </p>
+                        <p>
+                            For the client-side, RaptorJS provides an asynchronous
+                            module loader that uses output from the RaptorJS
+                            Optimizer to optimally download modules asynchronously. 
+                        </p>
+                    </div>
+                    
+                    <div class="feature-portal-features">
+                        <h2>Features</h2>
+                        <ul>
+                            <li>Supports Node and Rhino on the server</li>
+                            <li>Lightweight client-side module loader</li>
+                            <li>Easy to use</li>
+                            <li>Source code agnostic</li>
+                            <li>Utilizes the <a href="${url('/optimizer')}">RaptorJS Optimizer</a></li>
+                            <ul>
+                                <li>Configurable resource bundles</li>
+                                <li>URLs include checksums</li>
+                                <li>CDN Support</li>
+                                <li>Development mode</li>
+                            </ul>
+                            <li>Replacement for <a href="http://requirejs.org/">RequireJS</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <docs:feature-portal-section 
+                    title="Get Started: Async Loader"
+                    url="${url('/module-loader/get-started-async')}"
+                    size="small">
+
+                    Learn how to easily start utilizing the RaptorJS asynchronous module loader
+                    to lazily load modules for a web page.
+
+                </docs:feature-portal-section>
+
+                <docs:feature-portal-section 
+                    title="Get Started: Node"
+                    url="${url('/module-loader/get-started-node')}"
+                    size="small">
+
+                    Learn how to start loading RaptorJS JavaScript modules
+                    in a server-side <a href="http://nodejs.org/">Node</a> runtime environment.
+
+                </docs:feature-portal-section>
+
+                <docs:feature-portal-section 
+                    title="Developer Guide"
+                    url="${url('/module-loader/developer-guide')}"
+                    size="small">
+
+                    An in-depth look at utilizing and
+                    adapting the RaptorJS Optimizer to meet your needs.
+
+                </docs:feature-portal-section>
+
+            </div>
+            
+            
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+

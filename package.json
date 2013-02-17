@@ -1,0 +1,29 @@
+{
+  "type": "raptor-library",
+  "name": "raptorjs-website",
+  "version": "1.0.0",
+  "description": "Library for demo applications",
+  "homepage": "http://wiki2.arch.ebay.com/display/RAPTOR/Home",
+  "authors": [
+    {
+      "name": "Patrick Steele-Idem",
+      "email": "psteeleidem@ebay.com"
+    }
+  ],
+  "raptor": {
+    "search-path": [
+      {
+        "dir": "modules"
+      }
+    ],
+    "taglibs": [
+      "taglibs/docs/docs.rtld",
+      "taglibs/templates/templates.rtld",
+      "taglibs/test/test.rtld"
+    ]
+  },
+  "dependencies": {
+    "express": "~3.1.0",
+    "raptor": "~2.1.1"
+  }
+}

@@ -1,0 +1,44 @@
+BODY > .content {
+    margin-top: 50px;
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+BODY > .content > H1 {
+    padding-top: 20px;
+}
+
+.try-it {
+    float: right;
+    width: 450px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    padding: 10px;
+    border: 1px solid #C0C0C0;
+    margin: 10px;
+    background-color: #EEE;
+}
+
+.try-it > H1 {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    font-size: 26px;
+}
+
+.try-it > .desc {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+
+TABLE.table.expression-operators {
+    width: auto;
+}
+
+TABLE.sizes.table {
+    width: auto;
+}

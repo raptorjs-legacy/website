@@ -1,0 +1,28 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+
+    <docs:section heading="Describing Page Dependencies">
+        <p>
+            <img src="${url('/images/page-dependencies.png')}" width="128" height="128" class="section-icon"/>
+            The RaptorJS optimizer describes a few options for declaring page dependencies. You can choose
+            to create <code>package.json</code> files for your pages to describe the dependencies for
+            each page. Another option, that is described later, is to inline page dependencies in Raptor Template files using the <a href="#Taglib">Optimizer Taglib</a>.
+        </p>    
+        <p>
+            A <code>package.json</code> for a page is no different from a <code>package.json</code>
+            file for a module. A page's <code>package.json</code> file can be placed in
+            any location that is convenient for your application.
+            Once you have created a <code>package.json</code> for your page you are now ready
+            to optimize your page as described in the next section.
+        </p>
+    </docs:section>
+    
+</c:template>
+

@@ -1,0 +1,8 @@
+{
+    "raptor": {
+        "dependencies": [
+            "Container.rhtml",
+            "ContainerTag.js"
+        ]
+    }
+}

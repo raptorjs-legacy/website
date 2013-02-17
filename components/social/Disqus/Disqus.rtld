@@ -1,0 +1,9 @@
+<raptor-taglib>
+
+    <tag name="disqus" handler-class="components.social.Disqus.DisqusTag">
+        <attribute name="id"/>
+        <attribute name="short-name"/>
+        <attribute name="title"/>
+    </tag>
+    
+</raptor-taglib>

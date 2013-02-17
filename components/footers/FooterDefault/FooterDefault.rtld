@@ -1,0 +1,7 @@
+<raptor-taglib>
+
+    <tag name="footer-default" handler-class="components.footers.FooterDefault.FooterDefaultTag">
+        
+    </tag>
+    
+</raptor-taglib>

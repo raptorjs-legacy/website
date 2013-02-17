@@ -1,0 +1,9 @@
+{
+    "raptor": {
+        "dependencies": [
+            {"module": "raptor/widgets"},
+            {"module": "components/icons/Icon"},
+            "Message.css"
+        ]
+    }
+}

@@ -1,0 +1,79 @@
+<optimizer-config>
+    
+    <params file="local-properties.json"/>
+    
+    <params>
+        <profile>production</profile>
+    </params>
+    
+    <enable-profile>${profile}</enable-profile>
+    
+    <profile name="development">
+        <raptor-config>
+        {
+            logging: {
+                loggers: {
+                    'ROOT': {level: 'WARN'}
+                }
+            }
+        }
+        </raptor-config>
+        <enabled-extensions>jquery,browser,logging.console,development</enabled-extensions>
+        <bundling-enabled>false</bundling-enabled>
+        <in-place-deployment-enabled>true</in-place-deployment-enabled>
+        <minify-js>false</minify-js>
+        <minify-css>false</minify-css>
+        <checksums-enabled>false</checksums-enabled>        
+        <resolve-css-urls>true</resolve-css-urls>
+    </profile>
+    
+    <profile name="production">
+        <checksums-enabled>true</checksums-enabled>
+        <enabled-extensions>jquery,browser,production</enabled-extensions>
+        <bundling-enabled>true</bundling-enabled>
+        <resolve-css-urls>true</resolve-css-urls>
+        <in-place-deployment-enabled>false</in-place-deployment-enabled>
+        <!-- <url-prefix>/static/</url-prefix> -->
+        <minify-js>true</minify-js>
+        <minify-css>true</minify-css>
+        <raptor-config>
+        {
+        }
+        </raptor-config>
+    </profile>
+
+    <output-dir>../raptorjs.github.com/static</output-dir>
+
+    <bundles name="default">
+
+        <bundle name="jquery">
+            <module name="jQuery" recursive="true"/>
+        </bundle>
+        <bundle name="core">
+            <module name="raptor" recursive="true"/>
+            <module name="raptor/listeners" recursive="true"/>
+        </bundle>
+        <bundle name="widgets">
+            <module name="raptor/widgets" recursive="true"/>
+        </bundle>
+
+        <bundle name="docs">
+            <module name="docs-global"/>
+        </bundle>
+        <bundle name="code-editor">
+            <module name="components/editors/CodeEditor" recursive="true"/>
+            <module name="components/editors/CodeEditor/mode-javascript" recursive="true"/>
+            <module name="components/editors/CodeEditor/mode-htmlmixed" recursive="true"/>
+            <module name="components/editors/CodeEditor/mode-xml" recursive="true"/>
+        </bundle>
+        
+        <bundle name="templating">
+            <module name="raptor/templating" recursive="true"/>
+        </bundle>
+        
+        <bundle name="templating-compiler">
+            <module name="raptor/templating/compiler" recursive="true"/>
+        </bundle>
+    </bundles>
+    
+</optimizer-config>

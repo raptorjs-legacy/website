@@ -1,0 +1,11 @@
+{
+    "raptor": {
+        "dependencies": [
+            "bootstrap/js/bootstrap-button.js",
+            {
+                "path": "bootstrap/less/buttons.less", 
+                "imports": ["/style/variables.less", "bootstrap/less/mixins.less"]
+            }
+        ]
+    }
+}

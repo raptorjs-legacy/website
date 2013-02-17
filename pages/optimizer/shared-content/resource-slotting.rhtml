@@ -1,0 +1,40 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    docs:functions="url">
+    
+    <docs:section heading="Resource Slotting">
+        <p>
+            The RaptorJS Optimizer allows resources to be targeted to specific locations
+            on HTML page by assigning "slot" names to resource includes. A slot
+            is just a unique name that should correspond to a location on an HTML page.
+            An application can make use of as many resource slots that it needs.
+            By default, all CSS resources will be targeted for a slot named "head" and 
+            all JavaScript resources will be targeted for a slot named "body". The following
+            example illustrates how to retarget a resource for a custom slot for a
+            resource included inside a <code>package.json</code> file:
+        </p>
+        <docs:code-editor 
+            mode="javascript"
+            readOnly="true" 
+            c:parse-body-text="false">
+        <![CDATA[
+        {
+            "raptor": {
+                "dependencies": [
+                    ...
+                    { "path": "my-widget.js", "slot": "my-custom-slot" }
+                    ...
+                ]
+            }
+        }
+
+        ]]>
+        </docs:code-editor>
+    </docs:section>
+
+</c:template>
+
