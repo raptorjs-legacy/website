@@ -35,6 +35,10 @@ define(
 
             getSrcDir: function() {
                 return this.publisher.srcDir;
+            },
+            
+            getRaptorJSVersion: function() {
+                return this.publisher.raptorJSVersion;
             }
 
         }

@@ -62,6 +62,11 @@ var templating = require('raptor/templating'),
 var Publisher = function(config) {
     this.appendPageFilename = config.profile !== 'production';
     this.page = config.page;
+    
+    var raptorJSPackageFile = new File(__dirname, "../raptorjs/package.json");
+    var raptorJSPackage = JSON.parse(raptorJSPackageFile.readAsString());
+    
+    this.raptorJSVersion = raptorJSPackage.version;
 
     this.outputDir = new File(files.joinPaths(__dirname, "../raptorjs.github.com"));
     this.currentOutputDir = null;
