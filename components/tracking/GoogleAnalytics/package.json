@@ -1,0 +1,12 @@
+{
+    "raptor": {
+        "extensions": [
+            {
+                "name": "production",
+                "dependencies": [
+                    { "path": "GoogleAnalytics.js", "slot": "head", "inline": true }
+                ]
+            }
+        ]
+    }
+}
