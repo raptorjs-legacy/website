@@ -1,7 +1,9 @@
 <project name="raptorjs.org" basedir="." default="build-dev">
+
 	<property name="cmd.build"  location="build"/>
 	<property name="cmd.build-dev"  location="build-dev"/>
     <property name="output.dir" location="../raptorjs.github.com"/>
+    <property name="cmd.git-add"  location="git-add"/>
 
     <target name="copy-images">
         <copy todir="${output.dir}/images">
@@ -64,12 +66,11 @@
         </exec>
     </target>
 	
-	<target name="git-commit">
-	    <exec executable="git" dir="${output.dir}">
-	        <arg value="add"/>
-	        <arg value="--all"/>
-	        <arg value="'**'"/>
-        </exec>
+    <target name="git-add">
+        <exec executable="${cmd.git-add}"/>
+    </target>
+
+	<target name="git-commit" depends="git-add">
 		<exec executable="git" dir="${output.dir}">
             <arg value="commit"/>
             <arg value="-m"/>
@@ -77,7 +78,7 @@
         </exec>
 	</target>
 
-    <target name="git-push">
+    <target name="git-push" depends="git-commit">
         <exec executable="git" dir="${output.dir}">
             <arg value="push"/>
             <arg value="origin"/>
@@ -96,7 +97,6 @@
                  build,
                  copy-demos,
                  raptor-jsdoc,
-		         git-commit,
                  git-push"/>
 
     <target name="clean">
