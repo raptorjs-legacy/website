@@ -12,18 +12,27 @@
 		{
 			"cmd":
 			[
-				"${project_path}/publish"
+				"${project_path}/build"
 			],
-			"name": "Publish",
+			"name": "Build",
 			"working_dir": "${project_path}"
 		},
 		{
 			"cmd":
 			[
-				"${project_path}/publish",
+				"${project_path}/build",
 				"page=widgets"
 			],
-			"name": "Publish - widgets",
+			"name": "Build - widgets",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build",
+				"page=/"
+			],
+			"name": "Build - index",
 			"working_dir": "${project_path}"
 		},
 		{
@@ -235,6 +244,26 @@
 		{
 			"cmd":
 			[
+				"node",
+				"build.js",
+				"dev"
+			],
+			"name": "samples/ui-components",
+			"working_dir": "${project_path}/../samples/ui-components"
+		},
+		{
+			"cmd":
+			[
+				"node",
+				"build.js",
+				"dev"
+			],
+			"name": "samples/widgets",
+			"working_dir": "${project_path}/../samples/widgets"
+		},
+		{
+			"cmd":
+			[
 				"raptor-jsdoc",
 				"src=node_modules/raptor/lib/",
 				"output-dir=api",
@@ -283,8 +312,9 @@
 		[
 			"jsdoc",
 			"jsdoc (dev)",
-			"Publish",
-			"Publish - widgets",
+			"Build",
+			"Build - index",
+			"Build - widgets",
 			"Build (dev)",
 			"Build (dev) - index",
 			"Build (dev) - faq",
@@ -309,8 +339,8 @@
 			"Build (dev) - widgets/developer-guide",
 			"Build (dev) - widgets/get-started",
 			"Publish to Github",
-			"sample-projects/async-loader/get-started/publish.js",
-			"sample-projects/ui-components/publish.js"
+			"samples/ui-components",
+			"samples/widgets"
 		]
 	}
 }
