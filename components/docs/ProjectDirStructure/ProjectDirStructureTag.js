@@ -51,7 +51,7 @@ define(
         
         ProjectDirStructureTag.prototype = {
             process: function(input, context) {
-                var repoRootDir = new File(require('docs-util').getSrcDir(), "..");
+                var repoRootDir = new File(require('docs-util').getSrcDir(), "../samples");
 
                 var projectDir = new File(repoRootDir, input.dir);
                 var excludeFile = new File(projectDir, ".exclude");
