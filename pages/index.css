@@ -1,3 +1,9 @@
+* {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
 .fork > IMG {
     border: 0 none;
     position: fixed;
@@ -239,9 +245,6 @@ H1.intro {
 .feature-section {
     width: 33%;
     float: left;
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
     font-size: 14px;
 }
 
@@ -467,6 +470,21 @@ H1.intro {
     .feature-section > .content > .bd > .padding {
         min-height: auto;
         padding-bottom: 0px;
+    }
+
+    .hero {
+        width: 100%;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .main-buttons .btn {
+        font-size: 14px;
+    }
+
+    #raptorJSLogo {
+        width: 265px;
+        height: 184px;
     }
 
 }
