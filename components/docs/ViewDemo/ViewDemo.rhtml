@@ -1,0 +1,17 @@
+<c:template
+    xmlns:c="core"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    name="components/docs/Docs"
+    params="href,title,description">
+    
+    <div class="view-demo">
+        <h1>
+            <docs:icon name="play-circle" size="large"/> <a href="$href" target="_blank">View Demo: $title</a>
+        </h1>
+        <div class="desc" c:if="description">
+            $description
+        </div>
+    </div>
+
+</c:template>

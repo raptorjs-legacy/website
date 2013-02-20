@@ -1,0 +1,11 @@
+.view-demo {
+    -moz-box-sizing: border-box;
+    background-color: #EEEEEE;
+    border: 1px solid #C0C0C0;
+    padding: 10px;
+}
+
+.view-demo > H1 {
+    font-size: 26px;
+    
+}

@@ -1,0 +1,9 @@
+<raptor-taglib>
+
+    <tag name="view-demo" renderer="components/docs/ViewDemo/ViewDemoRenderer">
+        <attribute name="path" type="string"/>
+        <attribute name="title" type="string"/>
+        <attribute name="description" type="string"/>
+    </tag>
+    
+</raptor-taglib>
