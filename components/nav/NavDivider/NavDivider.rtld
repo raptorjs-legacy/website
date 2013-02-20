@@ -3,7 +3,7 @@
     <tag name="nav-divider" handler-class="components.nav.NavDivider.NavDividerTag" dynamic-attributes="true">
         <attribute name="type" type="string"/>
         
-        <imported-variable target-property="nav" expression="nav"/>
+        <import-variable target-property="nav" expression="nav"/>
     </tag>
     
 </raptor-taglib>

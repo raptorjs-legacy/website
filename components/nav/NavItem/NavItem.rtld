@@ -11,8 +11,8 @@
         <attribute name="id" uri="widgets"/>
         <attribute name="event-click" uri="widgets"/>
         
-        <nested-variable name="nav"/>
-        <imported-variable target-property="nav" expression="nav"/>
+        <variable name="nav"/>
+        <import-variable target-property="nav" expression="nav"/>
     </tag>
     
 </raptor-taglib>

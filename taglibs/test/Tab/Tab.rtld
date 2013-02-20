@@ -6,7 +6,7 @@
         
         <attribute name="title"/>
         
-        <imported-variable target-property="tabs" expression="tabs"/>
+        <import-variable target-property="tabs" expression="tabs"/>
     </tag>
     
 </raptor-taglib>
