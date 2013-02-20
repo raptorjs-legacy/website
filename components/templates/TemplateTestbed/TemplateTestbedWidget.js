@@ -25,26 +25,28 @@ define(
             this.defaultOptionsJson = stringify(require('raptor/templating/compiler').defaultOptions);
             
             this.loadSample(0);
+
+            var widgets = this.widgets;
             
-            this.renderButton.subscribe('click', function(eventArgs) {
+            widgets.renderButton.subscribe('click', function(eventArgs) {
                 this.update();
             }, this);
             
             
             
-            this.showCompiledToggleButton.subscribe('toggle', function(eventArgs) {
+            widgets.showCompiledToggleButton.subscribe('toggle', function(eventArgs) {
                 this.toggleCompiledOutput();
             }, this);
             
-            this.showOptionsToggleButton.subscribe('toggle', function(eventArgs) {
+            widgets.showOptionsToggleButton.subscribe('toggle', function(eventArgs) {
                 this.toggleCompilerOptions();
             }, this);
             
-            this.autoRenderToggleButton.subscribe('toggle', function(eventArgs) {
+            widgets.autoRenderToggleButton.subscribe('toggle', function(eventArgs) {
                 this.autoRender = !this.autoRender;
             }, this);
             
-            this.templateEditor.subscribe('change', function() {
+            widgets.templateEditor.subscribe('change', function() {
                 this.compileRequired = true;
                 this.renderRequired = true;
                 
@@ -53,7 +55,7 @@ define(
                 }
             }, this);
             
-            this.dataEditor.subscribe('change', function() {
+            widgets.dataEditor.subscribe('change', function() {
                 this.dataModified = true;
                 this.renderRequired = true;
                 
@@ -62,7 +64,7 @@ define(
                 }
             }, this);
             
-            this.optionsEditor.subscribe('change', function() {
+            widgets.optionsEditor.subscribe('change', function() {
                 this.optionsModified = true;
                 this.compileRequired = true;
                 this.renderRequired = true;
@@ -82,7 +84,8 @@ define(
                 
                 var samples = this.samples, 
                     sample,
-                    navItemId;
+                    navItemId,
+                    widgets = this.widgets;
 
                 raptor.forEach(index, function(i) {
                     sample = samples[i];
@@ -127,9 +130,9 @@ define(
                     sample.templatesLoaded = true;
                 }
                 
-                this.templateEditor.setValue(sample.template);
-                this.dataEditor.setValue(sample.data);
-                this.optionsEditor.setValue(sample.options || this.defaultOptionsJson);
+                widgets.templateEditor.setValue(sample.template);
+                widgets.dataEditor.setValue(sample.data);
+                widgets.optionsEditor.setValue(sample.options || this.defaultOptionsJson);
                 this.update();
                 
                 if (sample.showCompilerOptions) {
@@ -148,9 +151,10 @@ define(
             },
             
             update: function() {
-                this.updateJson('compilerOptions', 'optionsModified', this.optionsEditor, this.optionsErrors);
+                var widgets = this.widgets;
+                this.updateJson('compilerOptions', 'optionsModified', widgets.optionsEditor, widgets.optionsErrors);
                 this.compileTemplate();
-                this.updateJson('templateData', 'dataModified', this.dataEditor, this.dataErrors);
+                this.updateJson('templateData', 'dataModified', widgets.dataEditor, widgets.dataErrors);
                 this.renderTemplate();
             },
             
@@ -164,13 +168,15 @@ define(
                 }
                 
                 this.templateName = null;
+
+                var widgets = this.widgets;
                 
-                var templateSrc = this.templateEditor.getValue();
+                var templateSrc = widgets.templateEditor.getValue();
                 var compiler = require('raptor/templating/compiler');
                 
                 var compiledSrc;
                 
-                this.templateErrors.clearErrors();
+                widgets.templateErrors.clearErrors();
                 var templateDom;
                 
                 try
@@ -178,7 +184,7 @@ define(
                     templateDom = require('raptor/xml/dom').createParser().parse(templateSrc);
                 }
                 catch(e) {
-                    this.handleEditorException(this.templateErrors, "Invalid XML: " + e);
+                    this.handleEditorException(widgets.templateErrors, "Invalid XML: " + e);
                 }
                 
                 if (templateDom) {
@@ -201,13 +207,13 @@ define(
                             console.error(e);
                         }
                         
-                        this.handleEditorException(this.templateErrors, e);
+                        this.handleEditorException(widgets.templateErrors, e);
                     }
                 }
                 
                 
                 if (compiledSrc) {
-                    this.compiledEditor.setValue(compiledSrc);
+                    widgets.compiledEditor.setValue(compiledSrc);
                     
                     require('raptor/templating').unload(templateName);
 
@@ -217,11 +223,11 @@ define(
                         this.templateName = templateName;
                     }
                     catch(e) {
-                        this.handleEditorException(this.templateErrors, e);
+                        this.handleEditorException(widgets.templateErrors, e);
                     }
                 }
                 else {
-                    this.compiledEditor.setValue('');
+                    widgets.compiledEditor.setValue('');
                 }
                 
                 this.compileRequired = false;
@@ -254,22 +260,24 @@ define(
                 if (!this.renderRequired) {
                     return;
                 }
+
+                var widgets = this.widgets;
                 
                 if (this.templateData && this.templateName && this.compilerOptions) {
                     try
                     {
                         var output = require('raptor/templating').renderToString(this.templateName, this.templateData);
-                        this.outputEditor.setValue(output);
+                        widgets.outputEditor.setValue(output);
                         this.$("#htmlViewer").html(output);
                     }
                     catch(e) {
-                        this.handleEditorException(this.templateErrors, e); //TBD: ADD THIS TO THE OUTPUT ERRORS?
-                        this.outputEditor.setValue('');
+                        this.handleEditorException(widgets.templateErrors, e); //TBD: ADD THIS TO THE OUTPUT ERRORS?
+                        widgets.outputEditor.setValue('');
                         this.$("#htmlViewer").html('');
                     }
                 }
                 else {
-                    this.outputEditor.setValue('');
+                    widgets.outputEditor.setValue('');
                     this.$("#htmlViewer").html('');
                 }
                 this.renderRequired = false;
@@ -297,7 +305,8 @@ define(
             },
             
             toggleAutoFormatHtml: function() {
-                this.outputEditor.setAutoFormat(!this.outputEditor.isAutoFormat());
+                var widgets = this.widgets;
+                widgets.outputEditor.setAutoFormat(!widgets.outputEditor.isAutoFormat());
             },
         };
         
