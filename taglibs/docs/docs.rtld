@@ -14,6 +14,7 @@
     <import-taglib path="/components/docs/FeaturePortalSection/FeaturePortalSection.rtld"/>
     <import-taglib path="/components/docs/ProjectDirStructure/ProjectDirStructure.rtld"/>
     <import-taglib path="/components/docs/Section/Section.rtld"/>
+    <import-taglib path="/components/docs/ViewDemo/ViewDemo.rtld"/>
     
     <import-taglib path="/components/editors/CodeEditor/CodeEditor.rtld"/>
     
@@ -39,9 +40,6 @@
     <import-taglib path="/components/social/GooglePlusOne/GooglePlusOne.rtld"/>
     <import-taglib path="/components/social/TwitterFollow/TwitterFollow.rtld"/>
     <import-taglib path="/components/social/TwitterTweet/TwitterTweet.rtld"/>
-    <import-taglib path="/components/social/Disqus/Disqus.rtld"/>
-    
-    <import-taglib path="/components/tracking/GoogleAnalytics/GoogleAnalytics.rtld"/>
-    
+    <import-taglib path="/components/social/Disqus/Disqus.rtld"/>    
     
 </raptor-taglib>
