@@ -35,8 +35,8 @@
                     <docs:section heading="Overview">
                         <p>
                             
-                            This guide will walk you through the steps to build UI components that
-                            are independently testable and can be rendered on the server or in the browser
+                            This guide will describe a recipe for building UI components that
+                            are independently testable and can be rendered on the server or in the browser.
                         </p>
                         <p>
                             For this guide, the following technologies will be used:
@@ -46,7 +46,7 @@
                                 <a href="http://jquery.com/"><b>jQuery</b></a>: Client-side DOM management and DOM event handling
                             </li>
                             <li>
-                                <b>CSS</b>: UI component styling
+                                <b><a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a></b>: Underlying UI component implementations
                             </li>
                             <li>
                                 <a href="${url('/widgets')}"><b>RaptorJS Widget Framework</b></a>: Client-side widget initialization and widget communication
@@ -86,17 +86,13 @@
                     </docs:section>
 
                     <docs:section heading="View Demo">
-                        <p>
-                            To view a demo of the sample application that we will build for this guide, please
-                            view the following link: <a href="${url('/demos/ui-components')}"><b>RaptorJS AMD</b></a>: Modules, classes and mixins
-                        </p>
-
+                        <docs:view-demo path="/demos/ui-components"/>
                     </docs:section>
 
 
                     <docs:section heading="Directory Structure">
                         For this guide, we will use the following directory structure:
-                        <docs:project-dir-structure dir="/samples/ui-components"/>
+                        <docs:project-dir-structure dir="/ui-components"/>
                     </docs:section>
 
                     <docs:section heading="UI Component Parts">
