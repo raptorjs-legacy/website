@@ -1172,8 +1172,8 @@
                             </docs:code-editor>
                             <p>
                                 Assigning a widget ID to a nested widget will result in a property with the same
-                                being added to the containing widget and the value of that property will be a reference to the nested 
-                                widget. This is illustrated in the sample widget implementation:
+                                being added to the "widgets" collection of the containing widget and the value of 
+                                that property will be a reference to the nested widget. This is illustrated in the sample widget implementation:
                             </p>
                             <docs:code-editor 
                                 mode="javascript"
@@ -1186,8 +1186,9 @@
                                 function(require) {
                                     return {
                                         init: function() {
-                                            var resetButtonWidget = this.resetButton,
-                                                submitButtonWidget = this.submitButton;
+                                            var widgets = this.widgets,
+                                                resetButtonWidget = widgets.resetButton,
+                                                submitButtonWidget = widgets.submitButton;
                                             //...
                                         }
                                     }
@@ -1225,7 +1226,7 @@
                                     c:parse-body-text="false"
                                     title="/demo/MyWidget.js">
                                 <![CDATA[
-                                var buttonWidgets = this.buttons;
+                                var buttonWidgets = this.widgets.buttons;
                                 buttonWidgets.forEach(function() { ... });
                                 ]]>
                                 </docs:code-editor>
