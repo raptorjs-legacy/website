@@ -1,0 +1,2 @@
+#!/bin/sh
+(cd ../raptorjs.github.com; git add --all '**')
