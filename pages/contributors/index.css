@@ -5,5 +5,10 @@
     margin-bottom: 15px;
     border: 1px solid #DFDFDF;
     border-radius: 10px;
-    
+
+}
+
+.more-details {
+    border-top: 1px solid #DFDFDF;
+    padding-top: 10px;
 }
