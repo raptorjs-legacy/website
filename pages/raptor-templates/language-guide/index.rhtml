@@ -1,0 +1,1502 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:optimizer="optimizer"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params="includes,samples"
+    docs:functions="url">
+
+    <optimizer:page name="${data.pageName}" base-path="${data.pageOutputDir}">
+        <dependencies>
+            <module name="docs-global"/>
+            <module name="components/nav/TopNavDefault"/>
+            <module name="components/docs/Docs"/>
+            <module name="components/icons/Icon"/>
+            <css path="index.css"/>
+        </dependencies>
+    </optimizer:page>
+    
+    
+    <html html:doctype="html">
+        <head>
+            <title>Raptor Templates: Language Guide</title>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <optimizer:slot name="head"/>
+        </head>
+        <body data-spy="scroll">
+            <docs:top-nav/>
+            <div class="container">
+                <docs:docs heading="Raptor Templates: Language Guide" return-label="Raptor Templates" return-href="${url('/raptor-templates')}" disqus-id="raptor-templates-language-guide">
+                    
+                    <docs:section heading="Introduction">
+                        <p>
+                            All Raptor templates are required to be well-formed XML. This
+                            constraint allows the template language to use the structure of the
+                            XML document to its advantage. For example, a template directive
+                            that controls structural logic can be applied as an attribute of the
+                            element that it controls. In addition, unlike in non-XML-based
+                            templating languages, whitespace removal rules are based on the XML
+                            structure and not a string language directives. Despite a template
+                            being well-formed XML, the output does not have to be well-formed
+                            XML which makes the Raptor Templating Language flexible enough for
+                            using in all types of web applications.
+                        </p>
+                        <p>
+                            The Raptor Templating Language aims to be easy to understand by utilizing
+                            concepts that front-end developers are already familiar with such as
+                            XML/HTML and JavaScript. While the Raptor Templating Language
+                            introduces a new grammar on top of XHTML, it is not an entirely new
+                            language which reduces the learning curve.
+                        </p>
+                        
+                        <docs:section heading="Sample Template">
+                            <p>
+                                Below is a sample Raptor HTML template:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <c:template
+                                xmlns:c="core"
+                                name="demo"
+                                params="colors">
+                             
+                                <!-- Colors available -->
+                                <ul c:if="notEmpty(colors)">
+                                    <li c:for="color in colors">
+                                        $color
+                                    </li>
+                                </ul>
+                                 
+                                <!-- No colors available -->
+                                <div c:if="empty(colors)">
+                                    No colors!
+                                </div>
+                                 
+                            </c:template>
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                            </p>
+                        </docs:section>
+                        
+                        <docs:section heading="Template Rendering">
+                            <p>
+                                To produce output, a compiled template
+                                is invoked with the provided user data
+                                that is required by the template.
+                            </p>
+                            <p>
+                                For example, given the following input data:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            {
+                                colors: ["red", "green", "blue"]
+                            }
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                The output of rendering the above sample template would be the following:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <ul><li>red</li><li>green</li><li>blue</li></ul>
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                For comparison, given the following input data consisting of an empty array of colors:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            {
+                                colors: []
+                            }
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                The output would be the following:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <div>No colors!</div>
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        
+                        <docs:section heading="Template Directives Overview">
+                            <p>
+                                Almost all of the Raptor templating directives can be used as either
+                                an attribute or as an element. The template included above can be
+                                rewritten to apply template directives as elements instead of as
+                                attributes to produce the equivalent output. For example:
+                            </p>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Applying directives using attributes
+                                        </th>
+                                        <th>
+                                            Applying directives using elements
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 50%">
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <c:template
+                                                xmlns:c="core"
+                                                name="demo"
+                                                params="colors">
+                                             
+                                                <!-- Colors available -->
+                                                <ul c:if="notEmpty(colors)">
+                                                    <li c:for="color in colors">
+                                                        $color
+                                                    </li>
+                                                </ul>
+                                                 
+                                                <!-- No colors available -->
+                                                <div c:if="empty(colors)">
+                                                    No colors!
+                                                </div>
+                                                 
+                                            </c:template>
+                                            ]]>
+                                            </docs:code-editor>
+                                        </td>
+                                        <td style="width: 50%">
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <c:template
+                                                xmlns:c="core"
+                                                name="demo"
+                                                params="colors">
+                                              
+                                                <!-- Colors available -->
+                                                <c:if test="notEmpty(colors)">
+                                                    <ul>
+                                                        <c:for each="color in colors">
+                                                            <li>
+                                                                $color
+                                                            </li>
+                                                        </c:for>
+                                                    </ul>
+                                                </c:if>
+                                                  
+                                                <!-- No colors available -->
+                                                <c:if test="empty(colors)">
+                                                    <div>
+                                                        No colors!
+                                                    </div>
+                                                </c:if>
+                                                 
+                                            </c:template>
+                                            ]]>
+                                            </docs:code-editor>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <p>
+                                The disadvantage of using elements to control structural logic is
+                                that they change the nesting of the elements which can impact
+                                readability. For this reason it is often more suitable to use
+                                attributes.
+                            </p>
+                        </docs:section>
+                        
+                        <docs:section heading="Extensibility">
+                            <p>
+                            </p>
+                        </docs:section>
+                        
+                    </docs:section>
+                    
+                    <docs:section heading="Expressions">
+                        <p>
+                            Valid JavaScript expressions are allowed wherever expressions can be
+                            used within a template. However, because templates must be
+                            well-formed XML you will have problems if you try to use unescaped
+                            less than ("&lt;") and ampersand ("${entity:amp}") characters as part of an
+                            expression since those characters are special XML characters and
+                            would break parsing. You can choose to escape the special characters
+                            (i.e. use "${entity:amp}lt;" for "&lt;" and "${entity:amp}amp;" 
+                            for "${entity:amp}") or, preferably, you
+                            can choose to use any of the following equivalent binary operators
+                            supported by the Raptor Templating Language:
+                        </p>
+                        <table class="expression-operators table table-striped table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>JavaScript Operator</th>
+                                    <th>Raptor Equivalent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>${entity:amp}${entity:amp}</code></td>
+                                    <td><code>and</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>||</code></td>
+                                    <td><code>or</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>===</code></td>
+                                    <td><code>eq</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>!==</code></td>
+                                    <td><code>ne</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>&lt;</code></td>
+                                    <td><code>lt</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>></code></td>
+                                    <td><code>gt</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>&lt;=</code></td>
+                                    <td><code>le</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>>=</code></td>
+                                    <td><code>ge</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <docs:section heading="Helper Functions">
+                            <p>
+                                Because expressions in Raptor Templates allow any JavaScript
+                                code, expressions can make use of global functions. It 
+                                is also possible to import functions provided
+                                by taglibs as local variables to avoid the use of
+                                global functions. See <a href="#TaglibHelperFunctions">
+                                    <nobr>Taglibs ${entity:raquo} Helper Functions</nobr> 
+                                </a>
+                                for more details.
+                                
+                            </p>
+                        </docs:section>
+                        
+                        <docs:section heading="Expression Escape Sequences">
+                            <p c:parse-body-text="false">
+                                 If the text "${" is intended to be part of the output then the "$" 
+                                 character must be escaped using a backslash as shown in the following code:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            \${test} <!-- Output: ${test} -->
+                            ]]>
+                            </docs:code-editor>
+                            <p c:parse-body-text="false">
+                                In the unlikely case that "\${" was intended to be part of the
+                                output then the backslash must be escaped by another backslash as
+                                shown in the following code:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            \\${test} <!-- Output: \${test} -->
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        
+                        <docs:section heading="Expression Handlers">
+                            <p>
+                            </p>
+                        </docs:section>
+                        
+                    </docs:section>
+                    
+                    <docs:section heading="Template Directives">
+                        
+                        <docs:section heading="Template">
+                            
+                            <docs:section heading="${startTag:c:template}">
+                                <p>
+                                    The root element of all templates should be a &lt;c:template>
+                                    tag. This tag defines the name of the template and the input
+                                    parameters for the template. In addition, XML namespaces
+                                    corresponding to taglibs should be attached to the root element.
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <c:template
+                                    xmlns:c="http://raptorjs.org/templates/core"
+                                    name="greeting"
+                                    params="name,count">
+                                    ...  
+                                </c:template>
+                                ]]>
+                                </docs:code-editor>
+
+                                <docs:message type="info">
+                                    <p>
+                                        All taglib URIs support a "short name" that can be used as an
+                                        alternative to a long taglib URI. For example, the short name for
+                                        "http://raptorjs.org/templates/core" is "core". Therefore, the
+                                        following will work as well:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="xml"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    <c:template
+                                        xmlns:c="core"
+                                        name="greeting"
+                                        params="name,count">
+                                        ...
+                                    </c:template>
+                                    ]]>
+                                    </docs:code-editor>
+                                </docs:message>
+                                
+                                <p>
+                                    The "names" attribute is required and when loaded the template will
+                                    register itself based on the name provided. The "params" attribute
+                                    can be used to create one or more local variables using
+                                    corresponding properties from the provided data object. The params
+                                    attribute is optional, but if provided, it should consist of a
+                                    comma-separated list of variable names.
+                                </p>
+                                
+                                <docs:message type="info">
+                                    <p>
+                                        The "params" attribute is used to create local variables that can be
+                                        easily accessed throughout the HTML template. Alternatively,
+                                        properties of the data object can be accessed directly. The
+                                        following are equivalent:
+                                    </p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    With params
+                                                </th>
+                                                <th>
+                                                    Without params
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 50%">
+                                                    <docs:code-editor 
+                                                        mode="xml"
+                                                        readOnly="true" 
+                                                        c:parse-body-text="false">
+                                                        <![CDATA[
+                                                        <c:template
+                                                        xmlns:c="core"
+                                                        name="greeting"
+                                                        params="name,count">
+                                                      
+                                                        Hello $name! 
+                                                        You have $count new messages.
+                                                      
+                                                    </c:template>
+                                                    ]]>
+                                                    </docs:code-editor>
+                                                </td>
+                                                <td style="width: 50%">
+                                                    <docs:code-editor 
+                                                        mode="xml"
+                                                        readOnly="true" 
+                                                        c:parse-body-text="false">
+                                                    <![CDATA[
+                                                    <c:template
+                                                        xmlns:c="core"
+                                                        name="greeting">
+                                                      
+                                                        Hello ${data.name}! 
+                                                        You have ${data.count} new messages.
+                                                      
+                                                    </c:template>
+                                                    ]]></docs:code-editor>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p>
+                                        The benefit of declaring parameters is that the local variables will
+                                        be minified which can reduce the size of the compiled output if the
+                                        variable is used in many places. In addition, declaring params
+                                        make it easier for other developers to understand what
+                                        input is expected for a template.
+                                    </p>
+                                </docs:message>
+                            </docs:section>
+                            
+                            <docs:section heading="${startTag:c:include}">
+                                <p>
+                                    Another template can easily be included using the &lt;c:include>
+                                    directive. The "template" attribute is required to specify name of
+                                    the template to include and all other attributes are used as
+                                    arguments to the template.
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <c:include template="myTemplate" someArg="${someVar}" anotherArg="Hello"/>
+                                ]]>
+                                </docs:code-editor>
+
+                                <p>
+                                    As shown in the above example, attributes are used to define the template
+                                    data for the included template. Alternatively, the <code>template-data</code>
+                                    attribute can be used to pass along a complete data object to use
+                                    for the included template as shown in the following example:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <c:include template="myTemplate" template-data="includeData"/>
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    In the above example, <code>includeData</code> is an expression
+                                    that resolves to a JavaScript object. The resolved JavaScript
+                                    object will then be used as the <code>data</code> object
+                                    for the included template.
+                                </p>
+                            </docs:section>
+                            
+                        </docs:section>
+                        
+                        <docs:section heading="Text Replacement">
+                            <p c:parse-body-text="false">
+                                Dynamic text should be of the form &lt;variable-name> or
+                                ${{entity:lt}javascript-expression>}:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <div>
+                                Hello $name!
+                            </div>
+                            <div>
+                                Hello ${name.toUpperCase()}!
+                            </div>
+                            <img src="$imgUrl"/>
+                            ]]>
+                            </docs:code-editor>
+                            
+                            <docs:section heading="XML Escaping">
+                                <p>
+                                    By default, special XML characters in the output of an expression
+                                    are always escaped to prevent <a href="http://en.wikipedia.org/wiki/Cross-site_scripting">cross-site scripting (XSS)</a> attacks.
+                                    For example, given the following template:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                Hello $name
+                                ]]>
+                                </docs:code-editor>
+                            </docs:section>
+                            <p>
+                                And the following data:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            {
+                                "name": "<script>alert('Hello World')</script>"
+                            }
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                The output would be the following:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true">
+                            <![CDATA[
+                            Hello ${entity:amp}lt;script${entity:amp}gt;alert('Hello World')${entity:amp}lt;/script${entity:amp}gt;!
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                In this example, the browser would not interpret the script tag
+                                since the XML characters had been escaped.
+                            </p>
+                            <p c:parse-body-text="false">
+                                To disable XML escaping, the expression should be of the form ${xml:<span>&lt;</span>javascript-expression>}. 
+                                The "xml" expression handler lets the compiler know that XML is
+                                expected and that the XML characters should not be escaped.
+                            </p>
+                        </docs:section>
+                    
+                        <docs:section heading="Conditionals">
+                            <p>
+                            </p>
+                            
+                            <docs:section heading="if...else-if...else">
+                                <p>
+                                    Any element or fragment of HTML can be made conditional using the c:if, c:else-if or c:else directive.
+                                </p>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Applied as an attribute
+                                            </th>
+                                            <th>
+                                                Applied as an element
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 50%">
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
+                                                <![CDATA[
+                                                <!--Simple if-->
+                                                <div c:if="someCondition">
+                                                    Hello World
+                                                </div>
+
+                                                <!--Complex if-->
+                                                <div c:if="test === 'a'">
+                                                    A
+                                                </div>
+                                                <div c:else-if="test === 'b'">
+                                                    B
+                                                </div>
+                                                <div c:else-if="test === 'c'">
+                                                    c
+                                                </div>
+                                                <div c:else="">
+                                                    Something else
+                                                </div>
+                                                ]]>
+                                                </docs:code-editor>
+                                            </td>
+                                            <td style="width: 50%">
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
+                                                <![CDATA[
+                                                <!--Simple if-->
+                                                <c:if test="someCondition">
+                                                    <div>
+                                                        Hello World
+                                                    </div>
+                                                </c:if>
+
+                                                <!--Complex if-->
+                                                <c:if test="test === 'a'">
+                                                    <div>
+                                                        A
+                                                    </div>
+                                                </c:if>
+                                                <c:else-if test="test === 'b'">
+                                                    <div>
+                                                        B
+                                                    </div>
+                                                </c:else-if>
+                                                <c:else-if test="test === 'c'">
+                                                    <div>
+                                                        C
+                                                    </div>
+                                                </c:else-if>
+                                                <c:else>
+                                                    <div>
+                                                        Something else
+                                                    </div>
+                                                </c:else>
+                                                ]]>
+                                                </docs:code-editor>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </docs:section>
+                            
+                            <docs:section
+                                anchor-name="ChooseWhenOtherwise"  
+                                heading="choose…when…otherwise">
+                                <p>
+                                    The c:choose directive, in combination with the directives c:when
+                                    and c:otherwise provides advanced conditional processing for
+                                    rendering one of several alternatives. The first matching c:when
+                                    branch is rendered, or, if no c:when branch matches, the c:otherwise
+                                    branch is rendered.
+                                </p>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Applied as an attribute
+                                            </th>
+                                            <th>
+                                                Applied as an element
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 50%">
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
+                                                <![CDATA[
+                                                <c:choose>
+                                                    <c:when test="myVar === 'A'">
+                                                        <div>A</div>
+                                                    </c:when>
+                                                    <c:when test="myVar === 'B'">
+                                                        <div>B</div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <div>Something else</div>
+                                                    </c:otherwise>
+                                                <c:choose>
+                                                ]]>
+                                                </docs:code-editor>
+                                            </td>
+                                            <td style="width: 50%">
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
+                                                <![CDATA[
+                                                <c:choose>
+                                                    <div c:when="myVar === 'A'">
+                                                        A
+                                                    </div>
+                                                    <div c:when="myVar === 'B'">
+                                                        B
+                                                    </div>
+                                                    <div c:otherwise="">
+                                                        Something else
+                                                    </div>
+                                                <c:choose>
+                                                ]]>
+                                                </docs:code-editor>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p>
+                                    Given a value of "A" for "myVar", the output would be the following:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <div>A</div>
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    Given a value of "C" for "myVar", the output would be the following:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <div>Something else</div>
+                                ]]>
+                                </docs:code-editor>
+                            </docs:section>
+                            
+                            <docs:section heading="Shorthand conditionals">
+                                <p>
+                                    Shorthand conditionals allow for conditional
+                                    values inside attributes or wherever expressions are allowed.
+                                    Shorthand conditionals are of the following form:<br/>
+                                    <code>\{?&lt;expression>;&lt;true-template>[;&lt;false-template>]}</code>
+                                </p>
+                                <p>
+                                    For example:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <div class="{?active;tab-active}">Hello</div>
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    With a value of <code>true</code> for <code>active</code>, the output
+                                    would be the following:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <div class="tab-active">Hello</div>
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    With a value of <code>false</code> for <code>active</code>, the output
+                                    would be the following:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <div>Hello</div>
+                                ]]>
+                                </docs:code-editor>
+                                <docs:message type="info">
+                                    <p>
+                                        If the expression inside an attribute
+                                        evalutes to <code>null</code> or an empty string then the attribute is not included in the output.
+                                    </p>
+                                </docs:message>
+                                <p>
+                                    As shown in the previous example, the "else" block for shorthand conditionals is optional.
+                                    The usage of an else block is shown below:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <div class="{?active;tab-active;tab-inactive}">Hello</div>
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    With a value of <code>false</code> for <code>active</code>, the output
+                                    would be the following:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <div class="tab-inactive">Hello</div>
+                                ]]>
+                                </docs:code-editor>
+                            </docs:section>
+                            
+                        </docs:section>
+                        
+                        <docs:section heading="Looping">
+                            <docs:section heading="for">
+                                <p>
+                                    Any element can be repeated for every item in an array using the
+                                    c:for directive. The directive can be applied as an element or as an
+                                    attribute.
+                                </p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Applied as an attribute
+                                                </th>
+                                                <th>
+                                                    Applied as an element
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 50%">
+                                                    <docs:code-editor 
+                                                        mode="xml"
+                                                        readOnly="true" 
+                                                        c:parse-body-text="false">
+                                                    <![CDATA[
+                                                    <ul>
+                                                        <li c:for="item in items">${item}</li>
+                                                    </ul>
+                                                    ]]>
+                                                    </docs:code-editor>
+                                                </td>
+                                                <td style="width: 50%">
+                                                    <docs:code-editor 
+                                                        mode="xml"
+                                                        readOnly="true" 
+                                                        c:parse-body-text="false">
+                                                    <![CDATA[
+                                                    <ul>
+                                                        <c:for each="item in items">
+                                                            <li>${item}</li>
+                                                        </c:for>
+                                                    </ul>
+                                                    ]]>
+                                                    </docs:code-editor>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p>
+                                        Given a value of <code>["red", "green", "blue"]</code> for 
+                                        <code>items</code>, the output would be the following:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="xml"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    <ul>
+                                        <li>red</li>
+                                        <li>green</li>
+                                        <li>blue</li>
+                                    </ul>
+                                    ]]>
+                                </docs:code-editor>
+                                
+                                <docs:section heading="Loop status variable">
+                                    <p>
+                                        If while looping you need access to additional information about the
+                                        status of the looping then the "status-var" attribute can be
+                                        specified to introduce a new variable. The loop status variable
+                                        supports the following methods:
+                                    </p>
+                                    <ul>
+                                        <li>getLength()</li>
+                                        <li>isLast()</li>
+                                        <li>isFirst()</li>
+                                        <li>getIndex()</li>
+                                    </ul>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Applied as an attribute
+                                                </th>
+                                                <th>
+                                                    Applied as an element
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 50%">
+                                                    <docs:code-editor 
+                                                        mode="xml"
+                                                        readOnly="true" 
+                                                        c:parse-body-text="false">
+                                                    <![CDATA[
+                                                    <ul>
+                                                        <li c:for="item in items; status-var=loopStatus">
+                                                            ${loopStatus.getIndex()+1}) ${item}
+                                                        </li>
+                                                    </ul>
+                                                    ]]></docs:code-editor>
+                                                </td>
+                                                <td style="width: 50%">
+                                                    <docs:code-editor 
+                                                        mode="xml"
+                                                        readOnly="true" 
+                                                        c:parse-body-text="false">
+                                                    <![CDATA[
+                                                    <ul>
+                                                        <c:for each="item in items" status-var="loopStatus">
+                                                            <li>
+                                                                ${loopStatus.getIndex()+1}) ${item}
+                                                            </li>
+                                                        </c:for>
+                                                    </ul>
+                                                    ]]>
+                                                    </docs:code-editor>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p>
+                                        Given a value of <code>["red", "green", "blue"]</code> for 
+                                        items, the output would be the following:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="xml"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    <ul>
+                                        <li>
+                                            1) red
+                                        </li>
+                                        <li>
+                                            2) green
+                                        </li>
+                                        <li>
+                                            3) blue
+                                        </li>
+                                    </ul>
+                                    ]]></docs:code-editor>
+                                </docs:section>
+                                
+                                <docs:section heading="Separator">
+                                    <p>
+                                        When looping over an array of items, a separator can be defined. The
+                                        separator will automatically be written to the output after each
+                                        iteration.
+                                    </p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Applied as an attribute
+                                                </th>
+                                                <th>
+                                                    Applied as an element
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 50%">
+                                                    <docs:code-editor 
+                                                        mode="xml"
+                                                        readOnly="true" 
+                                                        c:parse-body-text="false">
+                                                    <![CDATA[
+                                                    <span c:for="item in items; separator=', '">
+                                                       ${item}
+                                                    </span>
+                                                    ]]>
+                                                    </docs:code-editor>
+                                                </td>
+                                                <td style="width: 50%">
+                                                    <docs:code-editor 
+                                                        mode="xml"
+                                                        readOnly="true" 
+                                                        c:parse-body-text="false">
+                                                    <![CDATA[
+                                                    <c:for each="item in items" separator=", ">
+                                                        <span>
+                                                            ${item}
+                                                        </span>
+                                                    </c:for>
+                                                    ]]>
+                                                    </docs:code-editor>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p>
+                                        Given a value of <code>["red", "green", "blue"]</code> for 
+                                        items, the output would be the following:
+                                    </p>
+                                    <docs:code-editor 
+                                        mode="xml"
+                                        readOnly="true" 
+                                        c:parse-body-text="false">
+                                    <![CDATA[
+                                    <span>red<span>, <span>green</span>, <span>blue</span>
+                                    ]]>
+                                    </docs:code-editor>
+                                </docs:section>
+                                
+                            </docs:section>
+                            
+                            
+                            
+                        </docs:section>
+                        
+                        <docs:section heading="Macros">
+                            <p>
+                                Macros allow for reusable fragments within an HTML template. 
+                                Macros can also be parameterized. A macro can be defined 
+                                using the &lt;c:de> directive and a macro 
+                                when defining a macro.
+                            </p>
+                            
+                            <docs:section heading="def">
+                                <p>
+                                    The &lt;c:def> directive can be used to define a reusable
+                                    function within a template.
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <c:def function="greeting(name, count)">
+                                    Hello $name! You have $count new messages.
+                                </c:def>
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    The above macro can then be invoked as part of any
+                                    expression. Alternatively, the <a href="#invoke">&lt;c:invoke></a>
+                                    directive can be used invoke a macro function
+                                    using named attributes. The following sample
+                                    template shows how to use macro functions inside
+                                    expressions:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <c:def function="greeting(name, count)">
+                                    Hello $name! You have $count new messages.
+                                </c:def>
+
+                                <p>
+                                    ${greeting("John", 10)}
+                                </p>
+                                <p>
+                                    ${greeting("Frank", 20)}
+                                </p>
+                                ]]>
+                                </docs:code-editor>
+                                <p>
+                                    The output for the above template would be the following:
+                                </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<p>
+    Hello John! You have 10 new messages.
+</p>
+<p>
+    Hello Frank! You have 20 new messages.
+</p>]]></docs:code-editor>
+                            </docs:section>
+                            
+                            <docs:section heading="invoke" anchor-name="invoke">
+                                <p>
+                                    The &lt;c:invoke> directive can be used to 
+                                    invoke a function defined using the &lt;c:def>
+                                    directive or a function that is part of the input
+                                    to a template. The &lt;c:invoke> directive allows
+                                    arguments to be passed using element attributes,
+                                    but that format is only supported for functions
+                                    that were previously defined using the &lt;c:def>
+                                    directive.
+                                </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<c:def function="greeting(name, count)">
+    Hello ${name}! You have ${count} new messages.
+</c:def>
+ 
+<c:invoke function="greeting" name="John" count="${10}"/>
+<c:invoke function="greeting('Frank', 20)"/> 
+]]></docs:code-editor>
+                                <p>
+                                    The output for the above template would be the following:
+                                </p>
+<docs:code-editor
+    title="Output" 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<p>
+    Hello John! You have 10 new messages.
+</p>
+<p>
+    Hello Frank! You have 20 new messages.
+</p>]]></docs:code-editor>
+                                <docs:message type="info">
+                                    <p>
+                                        NOTE: By default, the arguments will be of type "string" when using
+                                        &lt;c:invoke>. However, argument attributes support JavaScript
+                                        expressions which allow for other types of arguments. Example:
+                                    </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[count="10" <!-- string argument -->
+count="${10}"  <!-- number argument -->]]></docs:code-editor>
+                                </docs:message>
+                            </docs:section>
+                            
+                            
+                        </docs:section>
+                        
+                        <docs:section heading="Structure Manipulation">
+                            <p>
+                            </p>
+                            
+                            <docs:section heading="attrs">
+                                <p>
+                                    The <code>c:attrs</code> attribute allows attributes to be dynamically added to
+                                    an element at runtime. The value of the c:attrs attribute should be
+                                    an expression that resolves to an object with properties that
+                                    correspond to the dynamic attributes. For example:
+                                </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<div c:attrs="myAttrs">
+    Hello World!
+</div>]]></docs:code-editor>
+                                <p>
+                                    Given a value of  
+                                    <code>{style: "background-color: #FF0000;", "class": "my-div"}</code> 
+                                    for the <code>myAttrs</code> variable, the output would then be the
+                                    following:
+                                </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<div style="background-color: #FF0000;" class="my-div">
+    Hello World!
+</div>]]></docs:code-editor>
+                            </docs:section>
+                            
+                            <docs:section heading="content">
+                                <p>
+                                    This directive replaces any nested content with the result of
+                                    evaluating the expression:
+                                </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<ul>
+    <li c:content="myExpr">Hello</li>
+</ul>]]></docs:code-editor>
+                                <p>
+                                    Given a value of <code>"Bye!"</code> for the value of <code>myExpr</code>, the output of the
+                                    above template would be the following:
+                                </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<ul>
+    <li>Bye!</li>
+</ul>]]></docs:code-editor>
+                            </docs:section>
+                            
+                            <docs:section heading="replace">
+                                <p>
+                                    This directive replaces the element itself with the result of
+                                    evaluating the expression:
+                                </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<div>
+    <span c:replace="myExpr">Hello</span>
+</div>]]></docs:code-editor>
+                                <p>
+                                    Given a value of "Bye!" for the value of "myExpr", the output of the
+                                    above template would be the following: 
+                                </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<div>
+    Bye!
+</div>]]></docs:code-editor>
+                            </docs:section>
+                            
+                            <docs:section heading="strip">
+                                <p>
+                                    This directive conditionally strips the top-level element from the
+                                    output. If the expression provided as the attribute value evaluates
+                                    to true then the element is stripped from the output:
+                                </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<div>
+    <span c:strip="true"><b>Hello</b></span>
+</div>]]></docs:code-editor>
+
+<docs:code-editor 
+    title="Output"
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<div>
+    <b>Hello</b>
+</div>]]></docs:code-editor>
+                            </docs:section>
+                            
+                        </docs:section>
+                        
+                    </docs:section>
+                    
+                    <docs:section heading="Taglibs">
+                        <p>
+                        </p>
+                        <docs:section heading="Runtime Tag Handlers">
+                            <p>
+                                Tag handlers allow templates to be extended by allowing the
+                                rendering of an element template to be controlled by an external
+                                class/component. Handlers are given a reference to their body
+                                fragment so that they can control how to handle the rendering of
+                                their body content. In addition, a handler can introduce scoped
+                                variables that are available to the nested body content only.
+                            </p>
+                            <p>
+                                For example, the &lt;test:greeting> handler might be used as follows:
+                            </p>    
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<c:template
+    xmlns:c="core"
+    xmlns:test="test"
+    name="simple-handlers">
+     
+    <test:greeting name="World"/>
+     
+</c:template>]]></docs:code-editor>
+<docs:code-editor 
+    title="Tag Handler Implementation"
+    mode="javascript"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[define.Class(
+    'taglibs/test/GreetingHandler',
+    function(require) {
+        return {
+            process: function(input, context) {
+                context.write("Hello " + input.name + "!");
+            }
+        }
+    });]]></docs:code-editor>
+<docs:code-editor 
+    title="Output"
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[Hello World!]]></docs:code-editor>
+                            <p>
+                                The following Taglib fragment shows how to associate
+                                a custom tag with a runtime tag handler class:
+                            </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<tag>
+    <name>greeting</name>
+    <handler-class>taglibs/test/GreetingHandler</handler-class>
+    <attribute name="name" type="string"/>
+</tag>]]></docs:code-editor>
+                            <p>
+                                
+                                For more details on creating taglibs, please see the following sub-page:                   
+                            </p>
+                            <ul>
+                                <li><a href="${url('/raptor-templates/taglibs')}">Advanced ${entity:raquo} Creating Taglibs</a></li>
+                            </ul>
+
+                        </docs:section>
+                        
+                        <docs:section heading="Compile-Time Tag Handlers">
+                            <p>
+                                Raptor Templates allow custom tags to be handled
+                                both at runtime via runtime tag handlers and
+                                also at compile-time via compile-time tag handlers.
+                                Raptor Templates allow a "Node" class to be associated
+                                with a custom tag and this class is required to implement
+                                one method—<code>doGenerateCode</code>. As part of compilation
+                                process, a tree of nodes is built based on the input
+                                template and to generate code, the <code>generateCode</code>
+                                method of the root node is invoked which recursively
+                                invoke the <code>generateCode</code> method for all
+                                child nodes.
+                            </p>
+                            <p>
+                                The following Taglib fragment shows how to associate
+                                a custom tag with a node compiler class:
+                            </p>    
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<tag>
+    <name>if</name> 
+    <node-class>templating.taglibs.core.IfNode</node-class>
+    <attribute name="test" type="expression"/>
+</tag>]]></docs:code-editor>
+                            <p>
+                                
+                                For more details on Raptor Templates compilation and creating taglibs, please see the following sub-pages                    
+                            </p>
+                            <ul>
+                                <li><a href="${url('/raptor-templates/compilation')}">Advanced ${entity:raquo} Raptor Templates Compilation</a></li>
+                                <li><a href="${url('/raptor-templates/taglibs')}">Advanced ${entity:raquo} Creating Taglibs</a></li>
+                            </ul>
+                        </docs:section>
+                        
+                        <docs:section heading="Compile-Time Transformers">
+                            <p>
+                                Raptor Templates allows code generation to be
+                                controlled by registering compile-time tree transformers.
+                                Transformers have full control over the parsed node tree before the
+                                code generation phase. Transformers can manipulate the node tree in any way, including removing/adding/rearranging nodes, adding/removing element attributes, etc.
+                            </p>
+                            <p>
+                                As an example, the core taglib registers a transform that looks for the <code>c:if</code> attribute
+                                on all elements and will surround the node with a new <code>&lt;c:if></code> 
+                                node.
+                            </p>    
+                            <p>
+                                
+                                For more details on Raptor Templates compilation and registering transformers, please see the following sub-pages                    
+                            </p>
+                            <ul>
+                                <li><a href="${url('/raptor-templates/compilation')}">Advanced ${entity:raquo} Raptor Templates Compilation</a></li>
+                                <li><a href="${url('/raptor-templates/taglibs')}">Advanced ${entity:raquo} Creating Taglibs</a></li>
+                            </ul>
+                        </docs:section>
+                        
+                        <docs:section heading="Helper Functions" anchor-name="TaglibHelperFunctions">
+                            <p>
+                                Raptor Template taglibs can export helper functions that can be used
+                                in any template that imports the functions. Imported helper functions
+                                be used inside any JavaScript expression.
+                            </p>
+                            <p>
+                                The following code shows how to import and use functions inside a Raptor Template:
+                            </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<c:template
+    xmlns:test="test"
+    xmlns:c="core"
+    test:functions="reverse">
+    
+    <div>${reverse('reverse test')}</div>
+    
+</c:template>]]></docs:code-editor>
+                            <p>
+                                The output for the above rendered template would be the following:
+                            </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<div>tset esrever</div>]]></docs:code-editor>
+                            <p>
+                                Helper functions can be registered as part of a taglib as shown in the following
+                                taglib code fragment:
+                            </p>
+<docs:code-editor 
+    mode="xml"
+    readOnly="true" 
+    c:parse-body-text="false"
+><![CDATA[<function name="reverse" class="taglibs/test/TestFunctions"/>]]></docs:code-editor>
+                            <p>
+                                The above fragment registers a helper function and tells the Raptor Template compiler
+                                where the implementation for the function can be found. The sample code
+                                below illustrates how to implement helper functions:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            define(
+                                "taglibs/test/TestFunctions",
+                                function() {
+                                    return {
+                                        reverse: function(str) {
+                                            var out = "";
+                                            for (var i=str.length-1; i>=0; i--) {
+                                                out += str.charAt(i); 
+                                            }
+                                            return out;
+                                        }
+                                    }
+                                });
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                
+                                For more details on creating taglibs, please see the following sub-page:                   
+                            </p>
+                            <ul>
+                                <li><a href="${url('/raptor-templates/taglibs')}">Advanced ${entity:raquo} Creating Taglibs</a></li>
+                            </ul>  
+                        </docs:section>
+                        
+                    </docs:section>
+                    
+                    <docs:section heading="Advanced">
+                        <p>
+                        </p>
+                        <docs:section heading="Creating Taglibs">
+                            <p>
+                                Please see the sub-page, 
+                                <a href="${url('/raptor-templates/taglibs')}">Creating Taglibs</a>, 
+                                for more details.
+                            </p>
+
+                        </docs:section>
+                    </docs:section>
+                    
+                </docs:docs>
+            </div>
+            <optimizer:slot name="body"/>
+            
+            <w:init-widgets/>
+        </body>
+    </html>
+</c:template>
+
