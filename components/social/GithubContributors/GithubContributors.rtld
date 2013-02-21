@@ -1,0 +1,8 @@
+<raptor-taglib>
+
+    <tag name="github-contributors" handler-class="components/social/GithubContributors/GithubContributorsRenderer">
+        <attribute name="owner"/>
+        <attribute name="repo"/>
+    </tag>
+    
+</raptor-taglib>
