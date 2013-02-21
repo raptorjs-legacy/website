@@ -227,7 +227,8 @@
                         <![CDATA[
                         <c:template
                             xmlns:c="core"
-                            xmlns:optimizer="optimizer">
+                            xmlns:optimizer="optimizer"
+                            xmlns:w="widgets">
 
                             <optimizer:page name="demo-page">
                                 <dependencies>
@@ -242,9 +243,12 @@
                             <html>
                                 <head>
                                     ...
+                                    <optimizer:slot name="head"/>
                                 </head>
                                 <body>
                                     ...
+                                    <optimizer:slot name="body"/>
+                                    <w:init-widgets/>
                                 </body>
                             </html>
 
