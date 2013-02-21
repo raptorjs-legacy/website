@@ -19,6 +19,7 @@
             { "module": "components/footers/Footer" },
             { "module": "components/notifications/Message" },
             { "module": "components/docs/FeaturePortalSection" },
+            { "module": "components/docs/FeaturePortalSections" },
             { "module": "components/docs/ViewDemo" },
             { "module": "components/social/Disqus" },
             { "module": "components/tracking/GoogleAnalytics" },

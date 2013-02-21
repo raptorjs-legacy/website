@@ -33,11 +33,31 @@
 	    <ant dir="../samples"/>
 		
 		<antcall target="copy-demo">
-		    <param name="demoPath" value="async-loader/get-started"/>
+		    <param name="demoPath" value="async-loader"/>
 		</antcall>
 		
 		<antcall target="copy-demo">
+            <param name="demoPath" value="optimizer-cli"/>
+        </antcall>
+		
+		<antcall target="copy-demo">
+            <param name="demoPath" value="optimizer-javascript-api"/>
+        </antcall>
+        	
+		<antcall target="copy-demo">
+            <param name="demoPath" value="optimizer-raptor-templates"/>
+        </antcall>
+		
+        <antcall target="copy-demo">
+            <param name="demoPath" value="tutorial"/>
+        </antcall>
+		
+		<antcall target="copy-demo">
             <param name="demoPath" value="ui-components"/>
+        </antcall>
+		
+        <antcall target="copy-demo">
+            <param name="demoPath" value="widgets"/>
         </antcall>
     </target>
 	

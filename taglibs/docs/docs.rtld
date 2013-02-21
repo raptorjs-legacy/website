@@ -12,6 +12,7 @@
     
     <import-taglib path="/components/docs/Docs/Docs.rtld"/>
     <import-taglib path="/components/docs/FeaturePortalSection/FeaturePortalSection.rtld"/>
+    <import-taglib path="/components/docs/FeaturePortalSections/FeaturePortalSections.rtld"/>
     <import-taglib path="/components/docs/ProjectDirStructure/ProjectDirStructure.rtld"/>
     <import-taglib path="/components/docs/Section/Section.rtld"/>
     <import-taglib path="/components/docs/ViewDemo/ViewDemo.rtld"/>
@@ -36,6 +37,7 @@
     
     <import-taglib path="/components/overlays/Popover/Popover.rtld"/>
     
+    <import-taglib path="/components/social/GithubContributors/GithubContributors.rtld"/>
     <import-taglib path="/components/social/GooglePlusBadge/GooglePlusBadge.rtld"/>
     <import-taglib path="/components/social/GooglePlusOne/GooglePlusOne.rtld"/>
     <import-taglib path="/components/social/TwitterFollow/TwitterFollow.rtld"/>

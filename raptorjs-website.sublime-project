@@ -48,6 +48,15 @@
 			"cmd":
 			[
 				"${project_path}/build-dev",
+				"page=contributors"
+			],
+			"name": "Build (dev) - contributors",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-dev",
 				"page=/optimizer/get-started-raptor-templates"
 			],
 			"name": "Build (dev) - optimizer-get-started-raptor-templates",
@@ -316,9 +325,10 @@
 			"Build - index",
 			"Build - widgets",
 			"Build (dev)",
-			"Build (dev) - index",
+			"Build (dev) - contributors",
 			"Build (dev) - faq",
 			"Build (dev) - get-started",
+			"Build (dev) - index",
 			"Build (dev) - module-loader",
 			"Build (dev) - module-loader-get-started-async",
 			"Build (dev) - modules-classes",

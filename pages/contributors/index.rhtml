@@ -11,8 +11,8 @@
         <dependencies>
             <module name="docs-global"/>
             <module name="components/nav/TopNavDefault"/>
-            <module name="components/docs/Docs"/>
-            <module name="components/icons/Icon"/>
+            <module name="components/footers/FooterDefault"/>
+            <module name="components/social/GithubContributors"/>
             <css path="index.css"/>
         </dependencies>
     </optimizer:page>
@@ -31,9 +31,25 @@
             
             
             <div class="container">
-                <docs:message type="warning">
-                    Documentation In-Progress
-                </docs:message>
+                <div class="content">
+                    <h1>RaptorJS Contributors</h1>
+
+                    <div class="section drop-shadow">
+                        <h2>Contributors to RaptorJS</h2>
+                        <docs:github-contributors owner="raptorjs" repo="raptorjs"/>
+                    </div>
+
+                    <div class="section drop-shadow">
+                        <h2>Contributors to Website Documentation</h2>
+                        <docs:github-contributors owner="raptorjs" repo="website"/>
+                    </div>
+
+                    <div class="section drop-shadow">
+                        <h2>Contributors to Sample Apps</h2>
+                        <docs:github-contributors owner="raptorjs" repo="samples"/>
+                    </div>
+
+                </div>
             </div>
             
             <optimizer:slot name="body"/>

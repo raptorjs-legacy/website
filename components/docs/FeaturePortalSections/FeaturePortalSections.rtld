@@ -1,0 +1,4 @@
+<raptor-taglib>
+    <tag name="feature-portal-sections" template="components/docs/FeaturePortalSections">
+    </tag>
+</raptor-taglib>
