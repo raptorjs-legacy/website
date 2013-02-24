@@ -257,8 +257,38 @@
 				"build.js",
 				"dev"
 			],
+			"name": "samples/async-loader",
+			"working_dir": "${project_path}/../samples/async-loader"
+		},
+		{
+			"cmd":
+			[
+				"node",
+				"build.js",
+				"dev"
+			],
+			"name": "samples/packaging",
+			"working_dir": "${project_path}/../samples/packaging"
+		},
+		{
+			"cmd":
+			[
+				"node",
+				"build.js",
+				"dev"
+			],
 			"name": "samples/ui-components",
 			"working_dir": "${project_path}/../samples/ui-components"
+		},
+		{
+			"cmd":
+			[
+				"node",
+				"build.js",
+				"dev"
+			],
+			"name": "samples/tutorial",
+			"working_dir": "${project_path}/../samples/tutorial"
 		},
 		{
 			"cmd":
@@ -349,8 +379,11 @@
 			"Build (dev) - widgets/developer-guide",
 			"Build (dev) - widgets/get-started",
 			"Publish to Github",
+			"samples/async-loader",
+			"samples/packaging",
 			"samples/ui-components",
-			"samples/widgets"
+			"samples/widgets",
+			"samples/tutorial"
 		]
 	}
 }
