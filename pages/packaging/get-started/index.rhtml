@@ -19,61 +19,17 @@
 
     
     <html html:doctype="html">
-        <head>
-            <title>RaptorJS: Get Started using Packaging &amp; Extensions</title>
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <optimizer:slot name="head"/>
-        </head>
+        <docs:head title="RaptorJS: Get Started using Packaging">
+        </docs:head>
         <body>
             <docs:top-nav/>
             
             
             <div class="container">
-                <docs:docs heading="Get Started using RaptorJS Packaging and Extensions" disqus-id="packaging-get-started">
-                    <docs:message type="warning">
-                        Documentation In-Progress
-                    </docs:message>
-                        
-                    <docs:section heading="Overview">
-                        <p>
-                            RaptorJS extends the popular <code>package.json</code>
-                            format so that it is better suited for packaging up code to be delivered
-                            to a browser <i>and</i> be loaded on the server. 
-                            RaptorJS packages allows developers to make dependencies explicit—including
-                            which dependencies are environment-specific.
-                        </p>
-                        <p>
-                            RaptorJS packages can be created for JavaScript modules and UI components. 
-                            RaptorJS imposes no requirements on the code that is packaged so developers
-                            can continue to write code however they prefer. RaptorJS packages
-                            are extensible and support any type of dependency (
-                                JavaScript, CSS, 
-                                <a href="http://lesscss.org/">
-                                    LESS
-                                </a>, 
-                                <a href="${url('/raptor-templates')}">
-                                    Raptor Templates
-                                </a>, etc.
-                            ).
-                        </p>
-                        <p>
-                            RaptorJS packages can be loaded on the server using the
-                            <a href="${url('/module-loader')}">
-                                <nobr>RaptorJS JavaScript Module Loader</nobr>
-                            </a>. 
-                            The <a href="${url('/optimizer')}">
-                                <nobr>RaptorJS Optimizer</nobr>
-                            </a> uses RaptorJS packages to determine
-                            which resources need to be optimized for delivery
-                            to web browsers and the
-                            <a href="${url('/module-loader/get-started-async')}">
-                                <nobr>RaptorJS Async Loader</nobr>
-                            </a>
-                             uses information from packages to optimally download
-                             packages asynchronously.
-                        </p>
-                    </docs:section>
+                <docs:docs heading="Get Started using RaptorJS Packaging" disqus-id="packaging-get-started">
+
+                    <c:include template="/pages/packaging/shared-content/overview.rhtml" />
+
                     <docs:section heading="Sample RaptorJS Package">
                             
                         <docs:code-editor 
@@ -87,80 +43,201 @@
                             "version": "1.0",
                             "description": "My amazing module.",
                             "raptor": {
-                                "dependencies": [
-                                    { "module": "another/namespace/another-module" },
-                                    "my-module-common.js",
-                                ],
-                                "extensions": [
-                                    {
-                                        "name": "server",
-                                        "dependencies": [
-                                            "my-module-server.js"
-                                        ]
-                                    },
-                                    {
-                                        "name": "browser",
-                                        "dependencies": [
-                                            "my-module.less"
-                                        ]
-                                    }
+                                "dependencies": [ 
+                                    { "module": "some/namespace/another-module" },
+                                    "my-module.js", 
+                                    "my-module.css" 
                                 ]
                             }   
                         }
                         ]]>
                         </docs:code-editor>
                     </docs:section>
-                    <docs:section heading="Package Extensions">
+                    <docs:section heading="RaptorJS Package Format">
                         <p>
-                            RaptorJS packages allow for environment-specific dependencies to
-                            be declared. Environment-specific dependencies are placed
-                            inside named extensions. If dependencies are part of a named
-                            extension that is not marked as "enabled" then the associated
-                            dependencies will be ignored.
+                            A <code>package.json</code> file is used to attach
+                            metadata to a module (i.e. a collection of files). Some of the metadata
+                            is simply for documentation (author, description, etc.)
+                            and some of the metadata is used by libraries and tools such as the
+                            <a href="${url('/optimizer')}">RaptorJS Optimizer</a>.
+                            Because <code>package.json</code> files are used by multiple systems
+                            a namespacing scheme is used to prevent conflicts.
+                            All metadata that is specific to RaptorJS is nested
+                            within a top-level <code>"raptor"</code> property and everything else is ignored
+                            by the RaptorJS tools. A simple <code>package.json</code>file is shown below:
+                        </p>
+                        <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                        <![CDATA[
+                        {
+                            "name": "some/namespace/my-module",
+                            "version": "1.0",
+                            "description": "My amazing module.",
+                            "raptor": {
+                                "dependencies": [ 
+                                    { "module": "some/namespace/another-module" },
+                                    "my-module.js", 
+                                    "my-module.css", 
+                                    "my-module.rhtml"
+                                ]
+                            }   
+                        }
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            The above package includes some non-essential metadata (i.e. name, version and description)
+                            and some RaptorJS-specific metadata—including an array of dependencies.
+                            The above package declares four dependencies:
+                        </p>
+                        <ol>
+                            <li>A module named "some/namespace/another-module"</li>
+                            <li>A JavaScript file named "my-module.js"</li>
+                            <li>A CSS file named "my-module.css"</li>
+                            <li>A Raptor Template file named "my-module.rhtml"</li>
+                        </ol>
+                        <p>
+                            Unless a file path is prefixed with a forward-slash ("/"), the file is assumed to
+                            be relative to the directory that contains the <code>package.json</code> file.
+                            Paths that are prefixed with a forward-slash are assumed to be relative
+                            to at least one of the resource search path entries.
                         </p>
                         <p>
-                            Extension names are arbitrary and developers can introduce their
-                            own extension names for their application. However, there are a
-                            few common extension names:
+                            Transitive dependencies can be declared by adding another module as a dependency.
+                            RaptorJS is extensible and allows dependency handlers to be registered to support any
+                            type of dependency—including dependencies that must be compiled to JavaScript and CSS.
+                            For more information on registering dependency handlers, please see
+                            the <a href="#DependencyHandlers">Registering Dependency Handlers</a>
+                            section below.
                         </p>
-                        <ul>
-                            <li>
-                                <b>server</b> - Enabled for any server-side JavaScript environment (e.g. Node and Rhino)
-                            </li>
-                            <li>
-                                <b>node</b> - Enabled for Node only
-                            </li>
-                            <li>
-                                <b>rhino</b> - Enabled for Rhino only
-                            </li>
-                            <li>
-                                <b>browser</b> - Enabled for the browser only
-                            </li>
-                            <li>
-                                <b>jquery</b> - Enabled for environments that have jQuery loaded
-                            </li>
-                            <li>
-                                <b>development</b> - Enabled for development (i.e. non-production) environments only
-                            </li>
-                        </ul>
+                        <docs:section heading="Declaring Dependency Types">
+                            <p>
+                                For simple <code>String</code> dependencies the dependency type is inferred
+                                from the file extension. However, for completeness, RaptorJS supports a more 
+                                verbose and equivalent syntax for declaring dependencies:
+                            </p>    
+                            <docs:code-editor 
+                                    autoResize="true"
+                                    indentUnit="4"
+                                    readOnly="true"
+                                    mode="javascript">
+                            <![CDATA[
+                            {
+                                "name": "some/namespace/my-module",
+                                "version": "1.0",
+                                "description": "My amazing module.",
+                                "raptor": {
+                                    "dependencies": [ 
+                                        { "type": module", "name": "some/namespace/another-module" },
+                                        { "type": "js",    "path": "my-module.js" }, 
+                                        { "type": "css",   "path": "my-module.css" }, 
+                                        { "type": "rhtml", "path": "my-module.rhtml" }
+                                    ]
+                                }   
+                            }
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="Package Extensions">
+                            <p>
+                                RaptorJS packages allow for environment-specific dependencies to
+                                be declared. Environment-specific dependencies are placed
+                                inside named extensions. If dependencies are part of a named
+                                extension that is not marked as "enabled" then the associated
+                                dependencies will be ignored.
+                            </p>
+                            <p>
+                                Extension names are arbitrary and developers can introduce their
+                                own extension names for their application. However, there are a
+                                few common extension names:
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>server</b> - Enabled for any server-side JavaScript environment (e.g. Node and Rhino)
+                                </li>
+                                <li>
+                                    <b>node</b> - Enabled for Node only
+                                </li>
+                                <li>
+                                    <b>rhino</b> - Enabled for Rhino only
+                                </li>
+                                <li>
+                                    <b>browser</b> - Enabled for the browser only
+                                </li>
+                                <li>
+                                    <b>jquery</b> - Enabled for environments that have jQuery loaded
+                                </li>
+                                <li>
+                                    <b>development</b> - Enabled for development (i.e. non-production) environments only
+                                </li>
+                            </ul>
+                            <p>
+                                Sample <code>package.json</code> file that declares extensions is 
+                                shown below:
+                            </p>
+                            <docs:code-editor 
+                                    autoResize="true"
+                                    indentUnit="4"
+                                    readOnly="true"
+                                    mode="javascript">
+                            <![CDATA[
+                            {
+                                "name": "some/namespace/my-module",
+                                "version": "1.0",
+                                "description": "My amazing module.",
+                                "raptor": {
+                                    "dependencies": [
+                                        { "module": "another/namespace/another-module" },
+                                        "my-module-common.js",
+                                    ],
+                                    "extensions": [
+                                        {
+                                            "name": "server",
+                                            "dependencies": [
+                                                "my-module-server.js"
+                                            ]
+                                        },
+                                        {
+                                            "name": "browser",
+                                            "dependencies": [
+                                                "my-module.less"
+                                            ]
+                                        }
+                                    ]
+                                }   
+                            }
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                    </docs:section>
+                    <docs:section heading="Dependency Types">
+                        <p>
+                            To support any type of dependency, RaptorJS can easily be extended to
+                            support any type of dependency. The only requirement is that each dependency type 
+                            must compile to either JavaScript or CSS. On the server, only JavaScript dependencies will
+                            be loaded and non-JavaScript dependencies will be ignored. For more information
+                            on adding support for new types of dependencies please see the 
+                            <a href="${url('/packaging/developer-guide')}">RaptorJS Packaging Developer Guide</a>
+                        </p>
                     </docs:section>
 
-                    <docs:section heading="Module Packages">
+                    <docs:section heading="Resolving Module Packages" anchor-name="ResolvingModulePackages">
                         <p>
-                            For a module named "some/namespace/my-module" (or, the equivalent, "some/namespace/my-module"),
-                            the <code>package.json</code> should be placed in the following location:
+                            For a module named "some/namespace/my-module",
+                            the <code>package.json</code> should be placed in one of the following locations:
                         </p>
+                        <ol>
+                            <li>&lt;path-to-modules>/some/namespace/my-module/package.json</li>
+                            <li>&lt;path-to-modules>/some/namespace/my-module-package.json</li>
+                        </ol>
                         <p>
-                            <code>/path/to/modules/some/namespace/my-module/package.json</code>    
-                        </p> 
-                        <p>
-                            Alternatively, the <code>package.json</code> can be placed in the following location
-                            and also be discovered correctly:
+                            The second usage (i.e. "my-module-package.json"), allows multiple packages to be placed
+                            in the same directory.
                         </p>
-                        <p>
-                            <code>/path/to/modules/some/namespace/my-module-package.json</code>    
-                        </p>
-                        
+                    </docs:section>
+                    <docs:section heading="Usage">
                         <docs:section heading="Loading Modules on the Server">
                             <p>
                                 When the module, "some/namespace/my-module", is required on the server 
@@ -169,7 +246,7 @@
                                     RaptorJS JavaScript Module Loader
                                 </a>
                                 will read the corresponding <code>package.json</code> file
-                                to determine which resources to evaluate. The server-side
+                                to determine which resources should be evaluate. The server-side
                                 module loader
                                 will ignore the dependencies that are part of the "browser"
                                 extension since the "browser" extension would not be enabled for
@@ -219,19 +296,43 @@
                                 </li>
                             </ol>
                         </docs:section>
-                        
-                        <docs:section heading="More Reading">
-                            <p>
-                                For more information on the RaptorJS Packaging, please
-                                see the developer guide using the following link:
-                                <a href="${url('/packaging/developer-guide')}">
-                                    RaptorJS Packaging Developer Guide
-                                </a>
-                            </p>
-
-                        </docs:section>
-                        
                     </docs:section>
+                    
+                    <docs:section heading="3rd-Party Libraries">
+                        <p>
+                            For third-party libraries that are not already packaged up using 
+                            RaptorJS packages, a <code>package.json</code> file can easily be
+                            added without changing the code for the third-party library. For an example
+                            of this, please take a look at the following sample package for Twitter Bootstrap
+                            library:
+                            <a href="https://github.com/raptorjs/samples/blob/master/ui-components/modules/twitter-bootstrap/package.json">
+                                twitter-bootstrap/package.json
+                            </a>
+                        </p>
+                    </docs:section>
+                    
+                    <docs:section heading="Further Reading">
+                        <p>
+                            For more information on the RaptorJS Packaging, please
+                            see the developer guide using the following link:
+                            <a href="${url('/packaging/developer-guide')}">
+                                RaptorJS Packaging Developer Guide
+                            </a>
+                        </p>
+                        <p>
+                            For more information how modules are delivered to the browser, please
+                            see the documentation for the <a href="${url('/optimizer')}">RaptorJS Optimizer</a>
+                        </p>
+                        <p>
+                            For more information how modules are loaded, please
+                            see the documentation for the <a href="${url('/module-loader')}">RaptorJS Module Loader</a>
+                        </p>
+
+                    </docs:section>
+
+
+                        
+                    
 
                 </docs:docs>
             </div>

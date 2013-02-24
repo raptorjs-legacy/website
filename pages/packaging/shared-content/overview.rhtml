@@ -1,0 +1,48 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params=""
+    docs:functions="url">
+
+    <docs:section heading="Overview">
+        <p>
+            RaptorJS extends the popular <code>package.json</code>
+            format so that it is better suited for packaging up code to be delivered
+            to a browser <i>and</i> be loaded in multiple server-side JavaScript environments (Node, Rhino, etc.). 
+            RaptorJS packages allows developers to make dependencies explicit—including
+            which dependencies are environment-specific. This information is used for
+            both loading modules on the server and for distributing modules to
+            the browser.
+        </p>
+        <p>
+            RaptorJS packages can be created for JavaScript modules, UI components, etc. 
+            RaptorJS imposes no requirements on the code that is packaged so developers
+            can continue to write code however they prefer. RaptorJS packages
+            are extensible and support any type of dependency (
+                JavaScript, CSS, 
+                <a href="http://lesscss.org/">
+                    LESS
+                </a>, 
+                <a href="${url('/raptor-templates')}">
+                    Raptor Templates
+                </a>, etc.).
+        </p>
+        <p>
+            RaptorJS includes a module loader for Node and Rhino that inspects
+            RaptorJS packages to determine how to load JavaScript modules on the server. 
+            The 
+            <a href="${url('/optimizer')}">
+                <nobr>RaptorJS Optimizer</nobr>
+            </a> uses RaptorJS packages to determine
+            which resources need to be optimized for delivery
+            to web browsers. Lastly, the client-side 
+            <a href="${url('/module-loader/get-started-async')}">
+                <nobr>RaptorJS Async Loader</nobr>
+            </a>
+             uses information from packages to optimally download
+             packages asynchronously.
+        </p>
+    </docs:section>
+</c:template>
