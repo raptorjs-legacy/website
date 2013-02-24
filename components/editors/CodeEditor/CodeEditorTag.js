@@ -45,6 +45,9 @@ define(
 
                 if (input.resource) {
                     var resource = require('raptor/resources').findResource(input.resource);
+                    if (!resource || !resource.exists()) {
+                        throw raptor.createError("Resource not found: " + input.resource);
+                    }
                     bodyText = resource.readAsString();
                 }
                 else if (input.invokeBody) {
