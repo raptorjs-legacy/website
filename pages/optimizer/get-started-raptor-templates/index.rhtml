@@ -67,63 +67,92 @@
                         </p>    
                         <docs:section heading="Example Setup">
                             For this guide, we will use the following directory structure:
-                            <docs:project-dir-structure dir="/sample-projects/optimizer/get-started-raptor-templates"/>
+                            <docs:project-dir-structure dir="/optimizer-raptor-templates"/>
+                        </docs:section>
+
+                        <docs:section heading="Page Template">
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true"
+                                resource="/samples/optimizer-raptor-templates/modules/pages/index/index.rhtml"
+                                />
+
                         </docs:section>
 
                         <docs:section heading="Rendering and Optimizing the Page">
                             <p>
                                 The provided
-                                <a href="https://github.com/raptorjs/raptorjs.github.com/blob/master/src/sample-projects/optimizer/get-started-raptor-templates/run-optimizer.js">
-                                    run-optimizer.js
+                                <a href="https://github.com/raptorjs/samples/blob/master/optimizer-raptor-templates/build.js">
+                                    build.js
                                 </a>
-                                script is used to render the page template (i.e., 
-                                    <a href="https://github.com/raptorjs/raptorjs.github.com/blob/master/src/sample-projects/optimizer/get-started-raptor-templates/pages/test-page/test-page.rhtml">
-                                        test-page.rhtml
-                                    </a>
-                                ). 
-                                After running the above script using <code>node</code> you should see output similar to the following:
+                                script is used to render the page template shown above.
+                                The source for this script is shown below:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true"
+                                resource="/samples/optimizer-raptor-templates/build.js"
+                                />
+                            <p>
+                                The following commands should be executed to generated the optimized page:
                             </p>
                             <pre class="sh" xml:space="preserve" c:trim-body-indent="true" style="clear: both;">
-                            $ node run-optimizer.js
-                            INFO optimizer.BundlesFileWriter: Writing bundle file to "static/test-page-body-2fe9f81f.js"...
-                            INFO optimizer.BundlesFileWriter: Writing bundle file to "static/test-page-head-bf4cf798.css"...
-                            Writing optimized page HTML to "test-page.html"...
+                            npm install
+                            node build.js
                             </pre>
                             <p>
-                                The optimized output page HTML is then written to the root directory
-                                as "test-page.html". The contents of this generated file will be similar to the following (formatted for clarity):
+                                After running the above commands you should see output similar to the following:
+                            </p>
+
+                            <pre class="sh" xml:space="preserve" c:trim-body-indent="true" style="clear: both;">
+                            INFO raptor/optimizer/PageOptimizer: Optimized page bundles for "index" built in 16ms
+                            INFO raptor/optimizer/BundleFileWriter: Writing bundle file to "build/static/index-async-d45d02a6.js"...
+                            INFO raptor/optimizer/BundleWriter: Bundle "index-async" (js) written to disk in 13ms
+                            INFO raptor/optimizer/BundleFileWriter: Writing bundle file to "build/static/index-async-c1c02230.css"...
+                            INFO raptor/optimizer/BundleWriter: Bundle "index-async" (css) written to disk in 1ms
+                            INFO raptor/optimizer/BundleFileWriter: Writing bundle file to "build/static/index-8833d501.js"...
+                            INFO raptor/optimizer/BundleWriter: Bundle "index" (js) written to disk in 4ms
+                            INFO raptor/optimizer/BundleFileWriter: Writing bundle file to "build/static/index-2d2550a1.css"...
+                            INFO raptor/optimizer/BundleWriter: Bundle "index" (css) written to disk in 0ms
+                            INFO raptor/optimizer/PageOptimizer: Optimized page "index" in 45ms
+                            Optimized HTML page written to disk:
+                            build/index.html
+                            </pre>
+                            <p>
+                                The optimized output page HTML is written to <code>build/index.html</code>
+                                and it should look similar to the following:
                             </p>
                             <docs:code-editor 
                             mode="htmlmixed"
                             readOnly="true" 
                             c:parse-body-text="false">
                             <![CDATA[
-                            
                             <html>
                                 <head>
                                     <title>RaptorJS Optimizer Taglib: Hello World</title>
-                                    <link rel="stylesheet" type="text/css" href="static/test-page-head-bf4cf798.css">
+                                    <link rel="stylesheet" type="text/css" href="static/index-2d2550a1.css">
                                 </head>
                                 <body>
-                                    Hello from the RaptorJS Optimizer Taglib!
-                                    <script type="text/javascript" src="static/test-page-body-2fe9f81f.js"></script>
+                                    Hello from the RaptorJS Optimizer Taglib! 
+                                    <script type="text/javascript" src="static/index-8833d501.js"></script>
+                                    <script type="text/javascript">
+                                        require('module-c').sayHello(); 
+                                        require('module-d', function(moduleD) {
+                                            moduleD.sayHello();
+                                        });
+                                    </script>
                                 </body>
                             </html>
-
                             ]]>
                             </docs:code-editor>
                             <p>
-                                In the process of rendering the page, the following optimized
-                                resource bundles are also written to disk in the "static" directory:
+                                In the process of rendering the page, the optimized
+                                resource bundles written to disk into the "build/static" directory.
                             </p>
-                            <ul>
-                                <li>
-                                    static/test-page-body-2fe9f81f.js
-                                </li>
-                                <li>
-                                    static/test-page-head-bf4cf798.css
-                                </li>
-                            </ul>
+                            <p>
+                                NOTE: The optimized resource bundles are only generated when
+                                the page is rendered for the first time.
+                            </p>
                         </docs:section>
                 
                     </docs:section>
