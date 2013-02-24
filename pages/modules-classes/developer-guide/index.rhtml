@@ -20,35 +20,46 @@
     
     
     <html html:doctype="html">
-        <head>
-            <title>RaptorJS: Modules &amp; Classes</title>
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <optimizer:slot name="head"/>
-        </head>
+        <docs:head title="RaptorJS: Modules &amp; Classes">
+        </docs:head>
         <body data-spy="scroll">
             <docs:top-nav activeItem="modules-classes"/>
             <div class="container">
                 <docs:docs heading="Getting Started with Modules, Classes, Mixins and Enums" disqus-id="modules-developer-guide">
-                    <docs:message type="warning">
-                        Documentation In-Progress
-                    </docs:message>
-                    
                     <docs:section heading="Introduction">
                         <p>
                             Out of the box, JavaScript lacks basic support for namespaces, 
                             and defining and using "classes" is not always elegant. 
                             Because JavaScript is a very dynamic language many libraries
                             and frameworks have been developed to address some of these
-                            shortcomings—each with their own benefits and disadvantages. 
-                            RaptorJS aims to solve many of the problems in existing
-                            solutions through a <i>simple</i>, yet powerful new syntax.
+                            shortcomings—each with their own benefits and disadvantages.
                         </p>
                         <p>
-                            Once RaptorJS has been initialized, the global <code>raptor</code>
-                            object can be used to start defining modules, classes, mixins and enums.
-                            For help with initializing RaptorJS please see the 
-                            <a href="${url('/get-started')}">RaptorJS Getting Started Guide</a>
+                            RaptorJS provides a simple library for
+                            defining namespaced modules, classes, mixins and enums.
+                            This library uses a clean and easy-to-understand
+                            syntax based on the <a href="https://github.com/amdjs/amdjs-api/wiki/AMD">Asynchronous Module Definition (AMD)</a> syntax. 
+                            RaptorJS provides an AMD implementation that extends AMD in backwards compatible
+                            ways to provide new features that make
+                            building modular JavaScript applications even easier.
+                            The syntax is is very close to pure JavaScript, but
+                            fills gaps in the existing JavaScript language.
+                            Now you can start creating modular code
+                            that is easy to maintain without waiting for
+                            a new version of JavaScript or switching to an
+                            alternate language.
+                        </p>
+                        <p>
+                            The RaptorJS AMD implementation can be loaded on the server (under Node and Rhino)
+                            or in the browser
+                            <nobr>(<docs:popover>
+                                 <docs:popover-content>
+                                     Not including a 
+                                     partial EcmaScript 5 shim
+                                     required for older web browsers.
+                                 </docs:popover-content>
+                                  ~1.8k gzipped
+                             </docs:popover>)</nobr>.
                         </p>
                         
                     </docs:section>
@@ -71,10 +82,7 @@
                         <p>
                             On the server-side, if <code>require(id)</code> is invoked
                             and the object has not been registered then RaptorJS goes through a resolving
-                            phase to find and load the requested object from disk. For more details,
-                            see <a href="http://raptorjs.org/api/oop_Server/#_resolve">
-                                oop._resolve(id)
-                            </a>.
+                            phase to find and load the requested object from disk.
                         </p>
                     </docs:section>
                     <docs:section heading="Modules">
