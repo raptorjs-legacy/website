@@ -317,13 +317,15 @@
                                 'some/namespace/Animal', //Name of the superclass
                                 function(require, exports, module) {
                                     var Dog = function(breed) {
-                                        Dog.superclass.constructor.call(this, "dog"); //Invoke the constructor of the superclass
+                                        // Invoke the constructor of the superclass:
+                                        Dog.superclass.constructor.call(this, "dog"); 
                                         this.breed = breed;
                                     }
 
                                     Dog.prototype = {
                                         eat: function(food) {
-                                            Dog.superclass.eat.apply(this, food); //Invoke the "eat" method in the superclass
+                                            // Invoke the "eat" method in the superclass:
+                                            Dog.superclass.eat.apply(this, food); 
                                             this.bark();
                                         },
 
