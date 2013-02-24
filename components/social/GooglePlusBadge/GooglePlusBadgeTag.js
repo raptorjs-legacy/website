@@ -1,7 +1,7 @@
 define(
     "components.social.GooglePlusBadge.GooglePlusBadgeTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var GooglePlusBadgeTag = function() {
             
         };

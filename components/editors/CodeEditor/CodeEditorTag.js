@@ -1,7 +1,7 @@
 define(
     "components.editors.CodeEditor.CodeEditorTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var CodeEditorTag = function() {
             
         };

@@ -1,7 +1,7 @@
 define(
     "components.nav.TabContent.TabContentTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var TabContentTag = function() {
             
         };

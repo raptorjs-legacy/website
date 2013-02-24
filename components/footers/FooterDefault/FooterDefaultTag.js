@@ -1,7 +1,7 @@
 define(
     "components.footers.FooterDefault.FooterDefaultTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var FooterDefaultTag = function() {
             
         };

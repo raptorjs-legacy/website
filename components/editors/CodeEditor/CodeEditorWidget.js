@@ -1,7 +1,7 @@
 define(
     "components/editors/CodeEditor/CodeEditorWidget",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var CodeEditorWidget = function(config) {
             var _this = this;
             

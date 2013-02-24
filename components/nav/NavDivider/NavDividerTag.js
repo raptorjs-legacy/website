@@ -1,7 +1,7 @@
 define(
     "components.nav.NavDivider.NavDividerTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var NavDividerTag = function() {
             
         };

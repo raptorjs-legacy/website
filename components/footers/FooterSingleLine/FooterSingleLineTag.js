@@ -1,7 +1,7 @@
 define(
     "components.footers.FooterSingleLine.FooterSingleLineTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var FooterDefaultTag = function() {
             
         };

@@ -1,7 +1,7 @@
 define(
     "components.social.TwitterTweet.TwitterTweetTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var TwitterTweetTag = function() {
             
         };

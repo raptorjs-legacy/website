@@ -1,7 +1,7 @@
 define(
     "components.nav.TabPane.TabPaneTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var TabPaneTag = function() {
             
         };

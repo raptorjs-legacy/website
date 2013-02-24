@@ -1,7 +1,7 @@
 define(
     "components.templates.Errors.ErrorsTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var ErrorsTag = function() {
             
         };

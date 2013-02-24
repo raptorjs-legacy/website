@@ -1,7 +1,7 @@
 define(
     "components.docs.FeaturePortalSection.FeaturePortalSectionTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var FeaturePortalSectionTag = function() {
             
         };

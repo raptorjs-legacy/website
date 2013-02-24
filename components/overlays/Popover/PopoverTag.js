@@ -1,7 +1,7 @@
 define(
     "components.overlays.Popover.PopoverTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var PopoverTag = function() {
             
         };

@@ -1,7 +1,7 @@
 define(
     "components.config.Urls.UrlsTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var UrlsTag = function() {
             
         };

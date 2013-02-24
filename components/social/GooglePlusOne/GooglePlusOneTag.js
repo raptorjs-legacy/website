@@ -1,7 +1,7 @@
 define(
     "components.social.GooglePlusOne.GooglePlusOneTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var GooglePlusOneTag = function() {
             
         };

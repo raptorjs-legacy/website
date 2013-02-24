@@ -1,6 +1,6 @@
 define.Class(
     "components/social/GithubContributors/GithubContributorsWidget",
-    function(raptor, raptor) {
+    function(raptor, require) {
         var templating = require('raptor/templating'),
             componentRenderer = require('raptor/component-renderer'),
             githubApi = require('github-api');

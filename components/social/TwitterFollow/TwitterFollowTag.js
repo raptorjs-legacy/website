@@ -1,7 +1,7 @@
 define(
     "components.social.TwitterFollow.TwitterFollowTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var TwitterFollowTag = function() {
             
         };

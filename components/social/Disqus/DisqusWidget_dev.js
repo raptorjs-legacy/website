@@ -1,6 +1,6 @@
 define.Class(
     "components.social.Disqus.DisqusWidget",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         return {};
     });

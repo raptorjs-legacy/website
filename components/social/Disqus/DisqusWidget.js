@@ -1,7 +1,7 @@
 define.Class(
     "components.social.Disqus.DisqusWidget",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var DisqusWidget = function(config) {
             window.disqus_shortname = config.shortName; // required: replace example with your forum shortname
             if (config.id) {

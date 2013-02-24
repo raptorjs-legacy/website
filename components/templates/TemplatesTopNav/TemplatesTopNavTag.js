@@ -1,7 +1,7 @@
 define(
     "components.templates.TemplatesTopNav.TemplatesTopNavTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var TopNavTag = function() {
             
         };

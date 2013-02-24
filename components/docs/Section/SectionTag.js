@@ -1,7 +1,7 @@
 define(
     "components.docs.Section.SectionTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var SectionTag = function() {
             
         };

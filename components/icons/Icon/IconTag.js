@@ -1,7 +1,7 @@
 define(
     "components.icons.Icon.IconTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var strings = require('raptor/strings');
         
         var IconTag = function() {

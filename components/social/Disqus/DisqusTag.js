@@ -1,7 +1,7 @@
 define(
     "components.social.Disqus.DisqusTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var DisqusTag = function() {
             
         };

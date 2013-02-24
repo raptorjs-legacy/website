@@ -1,7 +1,7 @@
 define(
     "components.nav.TopNavDefault.TopNavDefaultTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var TopNavTag = function() {
             
         };

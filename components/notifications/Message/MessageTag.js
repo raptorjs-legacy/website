@@ -1,7 +1,7 @@
 define(
     "components.notifications.Message.MessageTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         var MessageTag = function() {
             
         };
