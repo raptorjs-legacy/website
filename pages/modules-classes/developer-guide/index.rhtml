@@ -65,25 +65,158 @@
                     </docs:section>
                     <docs:section heading="Basic Usage">
                         <p>
-                            The basic pattern for defining RaptorJS objects is to associate a  
+                            The RaptorJS AMD implementation follows the basic pattern for defining 
+                            objects which is to associate a 
                             <i>factory function</i> with a
                             <i>string</i> ID. The job of the factory function
                             is to return the initialized object when it is first
                             required.
                         </p>
-                        <p>
-                            To "require" an object using RaptorJS, the <code>require(id)</code>
-                            method should be used. The <code>require(id)</code> will
-                            initialize the required object if it had not previously required. An object
-                            is initialized by invoking the factory function to get back the final object.
-                            The initialized object is then cached so that it can simply be returned for subsequent requires
-                            of the same object ID.
-                        </p>
-                        <p>
-                            On the server-side, if <code>require(id)</code> is invoked
-                            and the object has not been registered then RaptorJS goes through a resolving
-                            phase to find and load the requested object from disk.
-                        </p>
+                        <docs:section heading="Defining">
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define(
+                                'some/namespace/my-module', 
+                                function(require, exports, module) {
+                                    return { //Return the module definition
+                                        sayHello: function() {
+                                            console.log("Hello World!");
+                                        }
+                                    }
+                                });
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="Requiring">
+                            <p>
+                                To "require" an object using RaptorJS, the <code>require(id)</code>
+                                function should be used. The <code>require(id)</code> function will
+                                initialize the required object if it had not previously required. An object
+                                is initialized by invoking the factory function to get back the final object.
+                                The initialized object is then cached so that it can simply be returned for subsequent requires
+                                of the same object ID.
+                            </p>
+                            <p>
+                                On the server-side, if <code>require(id)</code> is invoked
+                                and the object has not been registered then RaptorJS goes through a resolving
+                                phase to find and load the requested object from disk.
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            var myModule = require('some/namespace/my-module');
+                            myModule.sayHello();
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                Asynchronous "requiring" of function is also supported. Please
+                                see the <a href="#RequireAsync">require(ids, callback)</a>
+                                section below.
+                            </p>
+                        </docs:section>
+                    </docs:section>
+                    <docs:section heading="Require">
+                        <docs:section heading="require(id)" anchor-name="RequireSync">
+                            <p>
+                                The <code>require(id)</code> function should be used to synchronously
+                                get a reference to another module/class/mixin/enum as shown in
+                                the following sample code:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            var myModule = require('some/namespace/my-module');
+                            myModule.sayHello();
+                            ]]>
+                            </docs:code-editor>
+                            <docs:message type="info">
+                                <p>
+                                    NOTE: When using synchronous <code>require(id)</code> function, the code for
+                                    the requested module must be available. For asynchronous loading,
+                                    please see the next section.
+                                </p>
+                            </docs:message>
+                        </docs:section>
+                        <docs:section heading="require(ids, callback)" anchor-name="RequireAsync">
+                            <p>
+                                The <code>require(ids, callback)</code> function should be used to asynchronously
+                                load one or more modules and get a reference to the loaded modules. The following code
+                                illustrates how the asynchronous require function can be used:
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            require(['a', 'b', 'c'], function(a, b, c) {
+                                //Modules a, b and c are ready to be used
+                            }); 
+                            ]]>
+                            </docs:code-editor>
+                            <docs:message type="info">
+                                <p>
+                                    Asynchronous module loading
+                                    (loading a module asynchronously from a server) is provided
+                                    by the <a href="${url('/module-loader')}">RaptorJS Asynchronous Module Loader</a>.
+                                    The <code><a href="">raptor/loader</a></code> module must be
+                                    included on the page for asynchronous module loading to work. In
+                                    addition, any modules that are to be loaded asynchronously
+                                    must be added as an "async" dependency. Please see the 
+                                    documentation for the <a href="${url('/module-loader')}">RaptorJS Asynchronous Module Loader</a>
+                                    for more details.
+                                </p>
+                            </docs:message>
+                        </docs:section>
+                        <docs:section heading="require.find(id)" anchor-name="RequireFind">
+                            <p>
+                                The <code>require.find(id)</code> method can be used to get a reference to a module. Unlike the <code>require</code> function, <code>require.find(id)</code> will return null if a module with the specified ID is not found.
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            var myModule = require.find('my-module');
+                            if (myModule) {
+                                // Module found
+                            }
+                            else {
+                                // Module not found
+                            }
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="require.exists(id)" anchor-name="RequireExists">
+                            <p>
+                                The <code>require.exists(id)</code> method can be used to check if a module exists with the specified module ID. The method will return <code>true</code> of the module exists, <code>false</code> otherwise.
+                            </p>
+                            <docs:code-editor 
+                                autoResize="true"
+                                indentUnit="4"
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            if (require.exists('my-module') {
+                                // Module exists
+                            }
+                            else {
+                                // Module does not exist
+                            }
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
                     </docs:section>
                     <docs:section heading="Modules">
                         <docs:section heading="Defining a Module">
@@ -100,7 +233,7 @@
                             <![CDATA[
                             define(
                                 'some/namespace/my-module', 
-                                function(require, exports, module) { //This function is only executed *once* (the first time this module is required)
+                                function(require, exports, module) {
                                     return { //Return the module definition
                                         sayHello: function() {
                                             console.log("Hello World!");
@@ -110,33 +243,9 @@
                             ]]>
                             </docs:code-editor>
                         </docs:section>
-                        <docs:section heading="Using a Module">
-                            <p>
-                                The following code illustrates how to utilize another module/class/mixin/enum
-                                by obtaining a reference to it using the <code>require</code> function:
-                            </p>
-                            <docs:code-editor 
-                                autoResize="true"
-                                indentUnit="4"
-                                readOnly="true"
-                                mode="javascript">
-                            <![CDATA[
-                            var myModule = require('some/namespace/my-module');
-                            myModule.sayHello();
-                            ]]>
-                            </docs:code-editor>
-                            <docs:message type="info">
-                                <p>
-                                    NOTE: When using <code>require(moduleName)</code>, the code for
-                                    the requested module must be available. Asynchronous module loading
-                                    (loading a module asynchronously from a server) is provided
-                                     by the <a href="${url('/module-loader')}">RaptorJS Asynchronous Module Loader</a>.
-                                </p>
-                            </docs:message>
-                        </docs:section>
                     </docs:section>
                     <docs:section heading="Classes">
-                        <docs:section heading="Defining a Class">
+                        <docs:section heading="Defining a Class" anchor-name="DefineClass">
                             <p>
                                 A class can be defined by creating a factory function that returns a constructor function 
                                 (with a <code>prototype</code> property) as shown in the following example:
@@ -289,7 +398,7 @@
                                 <li>External from the object being defined</li>
                             </ol>
                         </docs:section>
-                        <docs:section heading="Applying Mixins as part of an Object Definition">
+                        <docs:section heading="raptor.extend(target, mixins)">
                             <p>
                                 Mixins can be applied declaratively as part of
                                 an object definition as shown in the following example
@@ -323,7 +432,7 @@
                             ]]>
                             </docs:code-editor>
                         </docs:section>
-                        <docs:section heading="Applying Mixins External to an Object Definition">
+                        <docs:section heading="define.extend(targetId, factory)" anchor-name="DefineExtend">
                             <p>
                                 The <code>define.extend</code> method allows mixins to be lazily applied to another 
                                 module when the module is first required. The <code>define.extend</code> method is used 
@@ -357,7 +466,7 @@
                         </docs:code-editor>
                         </docs:section>
                     </docs:section>
-                    <docs:section heading="Enums">
+                    <docs:section heading="Enums" anchor-name="DefineEnum">
                         <docs:section heading="Defining an Enum">
                             <p>
                                 An enum type can be defined as shown in the following example:
@@ -490,15 +599,9 @@
                         </docs:code-editor>
                     </docs:section>
                     
-                    <docs:section heading="Logging">
+                    <docs:section heading="Logging" anchor-name="ModuleLogger">
                         <p>
-                            For convenience, all objects defined using RaptorJS
-                            will be populated with a "logger" function that can be
-                            used to log messages at various log levels (debug, info, warn, error, etc.).
-                            Whether or not anything actually shows will depend on how the loggers 
-                            are configured. Output messages will be prefixed with the log level
-                            and the name of the object that logged the message. Loggers
-                            should be configured when RaptorJS is first initialized. For example:
+                            The module argument that is passed to a factory function supports a new logger method that can be used to obtain a reference to a logger for the module/class being defined. For Example:
                         </p>
                         <p>
                             <docs:code-editor 
@@ -507,24 +610,15 @@
                                 readOnly="true"
                                 mode="javascript">
                             <![CDATA[
-                            require("raptor"); //Initialize RaptorJS on the server and enable AMD
-                            
-                            //...
-
                             define(
                                 'some/namespace/my-module', 
-                                function(require, exports, module) { //This function is only executed *once* (the first time this module is required)
+                                function(require, exports, module) {
                                     var logger = module.logger();
-                                    
-                                    return { //Return the module definition
-                                        sayHello: function() {
-                                            logger.debug("Hello World!");
-                                            /*
-                                             * Output:
-                                             * DEBUG some/namespace/my-module: Hello World!
-                                             */
-                                        }
-                                    }
+                                    logger.debug("This is a debug message"); 
+                                    /* 
+                                    Console Output: 
+                                    DEBUG some/namespace/my-module This is a debug message
+                                    */
                                 });
                             ]]>
                             </docs:code-editor>
@@ -532,6 +626,130 @@
                         <p>
                             For more details on logging, see <a href="${url('/logging')}">RaptorJS Logging</a>.
                         </p>
+                    </docs:section>
+                    <docs:section heading="Differences from the AMD Spec">
+                        <p>
+                            The RaptorJS AMD implementation introduces some <b>backwards compatible</b> 
+                            improvements to the AMD specification that are described below:
+                        </p>
+                        <docs:section heading="Module IDs">
+                            <p>
+                                Using dots as the separators instead of forward slashes is supported and module IDs will normalized by converting all dots to forward slashes. However, it is recommended to use forward slashes to be AMD-compliant.
+                            </p>
+                        </docs:section>
+                        <docs:section heading="Factory Function Arguments">
+                            <p>
+                                For RaptorJS, the last three arguments will always be [require, exports, module]. If an array of dependency IDs is provided then those dependencies will be passed in before the three built-in arguments. For example:
+                            </p>
+                            <docs:code-editor 
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define(
+                                'some/namespace/my-module', 
+                                ['a', 'b', 'c'],
+                                function(a, b, c, require, exports, module) {
+                                    //...
+                                });
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                Developer code can still explicitly reference "require", "exports" and "module" as shown in the following example code:
+                            </p>
+                            <docs:code-editor 
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            define(
+                                'some/namespace/my-module', 
+                                ['require', 'exports', 'module', 'a', 'b', 'c'],
+                                function(require, exports, module, a, b, c) {
+                                    //...
+                                });
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="Sync and Async require">
+                            <p>
+                                Like most AMD implementations, RaptorJS supports both a synchronous "require" function and an asynchronous "require" function:
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>Synchronous:</b> <code>require(id)</code>
+                                </li>
+                                <li>
+                                    <b>Asynchronous:</b> <code>require(ids, callback)</code>
+                                </li>
+                            </ul>
+                            <p>
+                                Asynchronous loading requires the that separate raptor/loader/require module be included as part of the initial page load.
+                            </p>
+                        </docs:section>
+                        <docs:section heading="Asynchronous Package Loading">
+                            <p>
+                                RaptorJS will not provide any support for loader plugins. Instead, RaptorJS will allow any "package" of code to be downloaded asynchronously. For a given package to be downloaded asynchronously, the client must be provided with the list of required JavaScript or CSS URLs for each package/module upfront (which the <a href="${url('/optimizer')}">RaptorJS Optimizer</a> tool will do for you automatically). The RaptorJS Optimizer will generate the required metadata (including JavaScript and CSS urls) that is required to download packages asynchronously. With this approach, developers no longer have to worry about configuring the client with base paths and the server will always generate cacheable URLs that can optionally be delivered through a CDN. During development, URLs are generated such that each file resource has a unique URL that points to the original file on disk. In comparison, during a production build, file resources are concatenated together as part of a single resource/URL and resources are minified based on the optimizer's configuration.
+                            </p>
+                            <p>
+                                Modules/packages can be downloaded using asynchronous version of the require function (i.e. <code>require(ids, callback)</code> method. For example:
+                            </p>
+                            <docs:code-editor 
+                                readOnly="true"
+                                mode="javascript">
+                            <![CDATA[
+                            require(['a', 'b', 'c'], function(a, b, c) {
+                                //Modules a, b and c are ready to be used
+                            });
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                        <docs:section heading="Global require function">
+                            <p>
+                                When loaded on the server or included in the browser, the "raptor" 
+                                module introduces a global <code>require</code> function. This allows both the synchronous "require" function to be used outside the context of a define. If the "require" method is used outside the context of a define then absolute module names must be used (since there is nothing for the required module name to be relative to). This frees developers from having to create a "define" block just to make use of another module.
+                            </p>
+                        </docs:section>
+                        <docs:section heading="Additional define methods">
+                            <ul>
+                                <li><a href="#DefineClass">define.Class(...)</a></li>
+                                <li><a href="#DefineEnum">define.Enum(...)</a></li>
+                                <li><a href="#DefineExtend">define.extend(...)</a></li>
+                            </ul>
+                        </docs:section>
+                        <docs:section heading="Additional module methods">
+                            <ul>
+                                <li><a href="#ModuleLogger">module.logger()</a></li>
+                            </ul>
+                        </docs:section>
+                        <docs:section heading="Additional require methods">
+                            <ul>
+                                <li><a href="#RequireFind">require.find(id)</a></li>
+                                <li><a href="#RequireExists">require.exists(id)</a></li>
+                            </ul>
+                        </docs:section>
+                    </docs:section>
+                    <docs:section heading="Node Integration">
+                        <p>
+                            Node does not natively provide the "define" function that is required by AMD. RaptorJS solves this problem by modifying the Node runtime to automatically add a "define" function to every module. This is done by modifying the Node wrapper code to introduce an additional "define" parameter that gets initialized with a "define" function provided by RaptorJS. The "define" function understands the context where it is being defined which allows it to create a "require" function that wraps the Node provided require function so that it can be used to load both AMD modules and CommonJS modules on the server.
+                        </p>
+                        <p>
+                            In addition, RaptorJS modifies the Node runtime to allow the native "require" function to be used to load both CommonJS modules and top-level (i.e. not relative) AMD modules. This is done by hooking into Node's path resolver.
+                        </p>
+                        <p>
+                            The related code can be found in the following file: 
+                            <a href="https://github.com/raptorjs/raptorjs/blob/master/lib/raptor/raptor_node.js">
+                                /lib/raptor/raptor_node.js
+                            </a>
+                        </p>
+                        <p>
+                            The end result is a seamless integration of the AMD pattern into a Node server environment. The AMD functionality is enabled the first time the "raptor" module is required, but the "define" function will then only be available in modules that are subsequently loaded by Node. To manually create a "define" function the following code can be used:
+                        </p>
+                        <docs:code-editor 
+                            readOnly="true"
+                            mode="javascript">
+                        <![CDATA[
+                        var define = require('raptor').createDefine(module /* Node module object */);
+                        ]]>
+                        </docs:code-editor>
                     </docs:section>
                 </docs:docs>
             </div>
