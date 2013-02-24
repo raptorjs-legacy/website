@@ -19,12 +19,8 @@
 
     
     <html html:doctype="html">
-        <head>
-            <title>RaptorJS: Building UI Components</title>
-            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <optimizer:slot name="head"/>
-        </head>
+        <docs:head title="RaptorJS: Building UI Components">
+        </docs:head>
         <body>
             <docs:top-nav/>
             
@@ -37,6 +33,8 @@
                             
                             This guide will describe a recipe for building UI components that
                             are independently testable and can be rendered on the server or in the browser.
+                            Since this is only a recipe feel free to adapt it to your needs and swap
+                            out technologies as you see fit.
                         </p>
                         <p>
                             For this guide, the following technologies will be used:
@@ -89,12 +87,6 @@
                         <docs:view-demo path="/demos/ui-components"/>
                     </docs:section>
 
-
-                    <docs:section heading="Directory Structure">
-                        For this guide, we will use the following directory structure:
-                        <docs:project-dir-structure dir="/ui-components"/>
-                    </docs:section>
-
                     <docs:section heading="UI Component Parts">
                         <p>
                             For this guide we will be creating a simple UI component that consists of the following:
@@ -113,13 +105,202 @@
                                 <li><b>package.json:</b> A pacakge file to control how the UI component is packaged up for delivery to the web browser</li>
                             </ul>
                         </p>
+                        <p>
+                            Each UI component part is described in further detail in the sections below.
+                        </p>
+                        <docs:section heading="Renderer">
+                            <p>
+                                The role of the <code>Renderer</code> is to produce output HTML markup based on provided input.
+                                The <code>Renderer</code> should be an object with a <code>render</code> method that accepts two arguments:
+                            </p>
+                            <ul>
+                                <li><b>input</b> (Object): The input data model to the UI component</li>
+                                <li>
+                                    <b>context</b> (<a href="http://raptorjs.org/api/raptor/render-context/Context/">Context</a>): 
+                                    An object that provides a <code>write</code> method (among other methods) that should be used to
+                                    add content to the output. The <a href="http://raptorjs.org/api/raptor/render-context/Context/">Context</a>
+                                    object is also used to track information during rendering (such as the list of rendered widgets).
+                                </li>
+                            </ul>
+                            <p>
+                                A sample <code>Renderer</code> is shown below:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="/ui/buttons/Button/ButtonRenderer.js">
+                            <![CDATA[
+                            define(
+                                "ui/buttons/Button/ButtonRenderer",
+                                function(require) {
+                                    return {
+                                        render: function(input, context) {
+                                            context.write('<button type="button">' + 
+                                                input.label + 
+                                                '</button>');
+                                        }
+                                    };
+                                });
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                Typically, a <code>Renderer</code> will make use of an HTML template to
+                                produce its HTML output. In the previous example, String concatenation and
+                                the <code>context.write()</code> method are used for illustration purposes
+                                only. The next section illustrates how an HTML template can be used
+                                to produce the view for the UI component.
+                            </p>
+                        </docs:section>
+
+                        <docs:section heading="HTML Template">
+                            <p>
+                                Typically, a <code>Renderer</code> will use a template to render it's view. If supported, the template
+                                rendering engine should be provided the <a href="http://raptorjs.org/api/raptor/render-context/Context/">Context</a> 
+                                object to write out its output. If the template rendering engine of choice does not support sending
+                                its output to a <a href="http://raptorjs.org/api/raptor/render-context/Context/">Context</a>
+                                object, and, instead, produces an output <code>String</code> then the <code>Renderer</code> should
+                                invoke the <code>context.write(htmlString)</code> and pass the rendered HTML <code>String</code>
+                                as the first and only argument.
+                            </p>
+                            <p>
+                                For this guide we will be using <a href="${url('/raptor-templates')}">Raptor Templates</a>
+                                as our templating language. A sample HTML template and the updated <code>Renderer</code>
+                                are shown below:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="/ui/buttons/Button/Button.rhtml">
+                            <![CDATA[
+                            <c:template xmlns:c="core"
+                                name="ui/buttons/Button"
+                                params="label">
+                                
+                                <button type="button">$label</button>
+
+                            </c:template>
+                            ]]>
+                            </docs:code-editor>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="/ui/buttons/Button/ButtonRenderer.js">
+                            <![CDATA[
+                            define(
+                                "ui/buttons/Button/ButtonRenderer",
+                                function(require) {
+                                    var templating = require('raptor/templating');
+
+                                    return {
+                                        render: function(input, context) {
+                                            templating.render(
+                                                'ui/buttons/Button',
+                                                {
+                                                    label: input.label
+                                                },
+                                                context);
+                                        }
+                                    };
+                                });
+                            ]]>
+                            </docs:code-editor>
+                            <docs:message type="info">
+                                <p>
+                                    If the templating engine produces a <code>String</code> object as the output,
+                                    the <code>Renderer</code> should write out the resulting
+                                    HTML string to the the context as shown in the following sample 
+                                    code:
+                                </p>
+                                <docs:code-editor 
+                                    mode="javascript"
+                                    readOnly="true" 
+                                    c:parse-body-text="false"
+                                    title="/ui/buttons/Button/ButtonRenderer.js">
+                                <![CDATA[
+                                var htmlString = templating.renderToString(
+                                    'ui/buttons/Button',
+                                    {
+                                        label: input.label
+                                    });
+
+                                context.write(htmlString);
+                                ]]>
+                                </docs:code-editor>
+                            </docs:message>
+                        </docs:section>
+
+                        <docs:section heading="Widget">
+                            <p>
+                                The <code>Widget</code> is a JavaScript class that provides
+                                the client-side behavior for a widget such as handling DOM events.
+                                In addition, the <code>Widget</code> class exposes an API
+                                for the widget to allow external objects to interact with the
+                                UI component in the browser.
+                            </p>
+                            <p>
+                                An instance of a <code>Widget</code> should be bound to the DOM
+                                node corresponding to the rendered HTML produced by the
+                                <code>Renderer</code>. The <a href="${url('/widgets/developer-guide/#Taglib')}">Widgets Taglib</a>
+                                for <a href="${url('/raptor-templates')}">Raptor Templates</a> makes
+                                it effortless to initialize <code>Widget</code> instances
+                                and bind them to their corresponding DOM nodes. A <code>Widget</code>
+                                can be bound to a rendered HTML element using the custom <code>w:widget</code>
+                                attribute as shown in the following updated example template:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="/ui/buttons/Button/Button.rhtml">
+                            <![CDATA[
+                            <c:template xmlns:c="core"
+                                name="ui/buttons/Button"
+                                params="label">
+                                
+                                <button type="button" w:widget="ui/buttons/Button/ButtonWidget">
+                                    $label
+                                </button>
+
+                            </c:template>
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                A sample implementation for <code>ui/buttons/Button/ButtonWidget</code>
+                                is shown in the following sample code:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="/ui/buttons/Button/ButtonWidget.js">
+                            <![CDATA[
+                            define(
+                                "ui/buttons/Button/ButtonWidget",
+                                function(require) {
+                                    function ButtonWidget(widgetConfig) {
+                                        $(this.getEl()).on('click', function() {
+                                            alert('Button Clicked!');
+                                        });
+                                    }
+
+                                    ButtonWidget.prototype = {
+                                        setColor: function(color) {
+                                            this.getEl().style.backgroundColor = color;
+                                        },
+
+                                        setLabel: function(label) {
+                                            this.getEl().innerHTML = label;
+                                        }
+                                    }
+                                });
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
                     </docs:section>
 
-                    <docs:section heading="Sample Code">
-                        <p>
-                            The sample code for this guide can be found in the following location:
-                        </p>
-                    </docs:section>
 
 
                 </docs:docs>
