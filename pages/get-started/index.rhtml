@@ -30,29 +30,163 @@
                     <docs:section heading="Overview">
                         <p>
                             This guide will help you quickly get started with using
-                            RaptorJS in an environment with <a href="http://nodejs.org/">Node</a> installed. While RaptorJS works 
-                            in other JavaScript environments, many of the features of RaptorJS
-                            are best experienced with Node.
-                        </p>
-                        <p>
-                            This guide will help you quickly start using RaptorJS in
-                            a Node application. For more details on building a real-world web
-                            application you will want to go through the <a href="${url('/tutorial')}">tutorial</a>.
+                            RaptorJS to build an HTML app, as well as use RaptorJS in a Node app running on the server.
                         </p>
                     </docs:section>
                         
                     <docs:section heading="Installing Node">
                         
-                        The easiest way to start using RaptorJS is to install
-                        the "raptor" module using <a href="https://npmjs.org/">npm</a>,
-                        the package manager for Node. npm is installed as part of Node so if you
-                        have not yet installed node then head over to the 
-                        <a href="http://nodejs.org/">Node website</a> and download and install the appropriate
-                        version of Node.  
+                        <p>
+                            The easiest way to start using RaptorJS is to install
+                            the "raptor" module using <a href="https://npmjs.org/">npm</a>,
+                            the package manager for Node. npm is installed as part of Node so if you
+                            have not yet installed node then head over to the 
+                            <a href="http://nodejs.org/">Node website</a> and download and install the appropriate
+                            version of Node.
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="Installing the RaptorJS Node Module">
+                        <p>
+                            The RaptorJS Node module should be installed globally
+                            since it includes command line utilities. The following command
+                            should be used to install RaptorJS via <code>npm</code>:
+                        </p>
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ npm install raptor --global
+                        </pre>
+                        <docs:message type="info">
+                            <p>
+                                NOTE: You will need to give administrative rights when installing a Node package
+                                globally so typically the above command will be used with the <code>sudo</code> command
+                                on Mac and Linux:
+                            </p>
+                            <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                            $ sudo npm install raptor --global
+                            </pre>
+                        </docs:message>
+                    </docs:section>
+                    <docs:section heading="Using RaptorJS in an HTML App">
+                        <p>
+                            RaptorJS includes an implementation of the 
+                            <a href="https://github.com/amdjs/amdjs-api/wiki/AMD">Asynchronous Module Definition (AMD)</a>
+                            specification and a collection of modules and tools that are helpful in
+                            building web applications. The core <code><a href="http://raptorjs.org/api/raptor/">raptor</a></code> module 
+                            provides the AMD implementation.  RaptorJS includes a powerful and easy to use
+                            resource optimizer that can be used to generated optimized JavaScript
+                            and CSS resources so that RaptorJS modules can easily be included in your web application.
+                            For example, to generate an optimized build of the core 
+                            <code><a href="http://raptorjs.org/api/raptor/">raptor</a></code> JavaScript module and the <code><a href="http://raptorjs.org/api/raptor/pubsub">raptor/pubsub</a></code> JavaScript module
+                            which provides a Pub/Sub implementation, the following command can be executed at the command line:
+                        </p>
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ raptor-optimizer raptor raptor/pubsub ./test.css --name test-page --minify 
+                        </pre>
+                        <p>
+                            After running the above command, files named "test-page.js" and "test-page.css" will be written to the current
+                            directory that consists of all of the code required for the <code>raptor</code>
+                            and <code>raptor/pubsub</code> modules to work, as well as the CSS code contained in "./test.css".
+                        </p>
+                        <p>
+                            The <a href="${url('/optimizer')}">RaptorJS Optimizer</a> is
+                            extremely flexible and, in addition to a command line interface, a
+                            JavaScript API is provided, as well as a custom Taglib for <a href="${url('/raptor-templates')}">Raptor Templates</a>.
+                        </p>
+                        <p>
+                            For example, the sample JavaScript code below illustrates how easy it is to optimize a page that includes
+                            the the <code><a href="http://raptorjs.org/api/raptor/">raptor</a></code> and <code><a href="http://raptorjs.org/api/raptor/pubsub/">raptor/pubsub</a></code> modules as dependencies:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+
+                        require('raptor'); //Initialize RaptorJS on the server and enable AMD
+
+                        var optimizer = require('raptor/optimizer');
+
+                        var optimizedPage = optimizer.optimizePage({
+                            name: 'test-page',
+                            dependencies: [
+                                { module: 'raptor'}, 
+                                { module: 'raptor/pubsub', 
+                                '/test.css']
+                        });
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            In the above sample code, <code>samplePage</code> will
+                            be an instance of <a href="http://raptorjs.org/api/raptor/optimizer/OptimizedPage/">raptor/optimizer/OptimizedPage</a>,
+                            which contains information about the optimized page.
+                        </p>
+                        <p>
+                            The <a href="${url('/optimizer/get-started-raptor-templates')}">Optimizer Taglib</a> makes it even easier
+                            to build optimized pages by automatically optimizing resource bundles and generating the HTML
+                            to include those optimized resources as shown in the following sample code:
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <c:template
+                            xmlns:c="core"
+                            xmlns:optimizer="optimizer">
+
+                            <optimizer:page name="test-page">
+                                <dependencies>
+                                    <module name="raptor"/>
+                                    <module name="raptor/pubsub"/>
+                                    <module name="test.css"/>
+                                </dependencies>
+                            </optimizer:page>
+
+                            <html>
+                                <head>
+                                    <title>Test Page</title>
+                                    <optimizer:slot name="head"/>
+                                </head>
+                                <body>
+                                    <h1>Test Page</h1>
+                                    <optimizer:slot name="body"/>
+                                </body>
+                            </html>
+
+                        </c:template>
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            The output of rendering the above template will be similar to the following:
+                        </p>
+                        <docs:code-editor 
+                            mode="htmlmixed"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <html>
+                            <head>
+                                <title>Test Page</title>
+                                <link rel="stylesheet" type="text/css" href="test-page-414fff80.css">
+                            </head>
+                            <body>
+                                <h1>Test Page</h1>
+                                <script type="text/javascript" src="test-page-a4cceb8e.js"></script>
+                            </body>
+                        </html>
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            The above code barely scratches the surface of what is supported
+                            by the <a href="${url('/optimizer')}">RaptorJS Optimizer</a>. Please see the
+                            following documentation for more information on using and configuring the <a href="${url('/optimizer')}">RaptorJS Optimizer</a>:
+                            <a href="${url('/optimizer')}">RaptorJS Optimizer</a>
+                        </p>
+
                     </docs:section>
                     
-                    <docs:section heading="Creating a Node Project">
-                        npm makes it easy to create a Node project that includes the module for RaptorJS.
+                    <docs:section heading="Using RaptorJS in a Node App">
+                        <a href="https://npmjs.org/">npm</a> makes it easy to create a Node project that includes the module for RaptorJS.
                         Follow the steps below to start using RaptorJS in a Node application:
                         <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
                         $ mkdir hello-world              
@@ -132,7 +266,7 @@
                         Not very exciting, but at least we know that RaptorJS is
                         working in a Node environment.
                     </docs:section>
-                    <docs:section heading="More Reading">
+                    <docs:section heading="Further Reading">
                         <p>
                             Now that you have Node configured and RaptorJS running in server-side environment,
                             you are now more ready to start learning about the other libraries and tools
