@@ -1,0 +1,7 @@
+<raptor-taglib>
+
+    <tag name="head" template="components/page/Head/Head.rhtml">
+        <attribute name="title" type="string"/>
+    </tag>
+    
+</raptor-taglib>

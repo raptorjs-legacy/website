@@ -37,6 +37,8 @@
     
     <import-taglib path="/components/overlays/Popover/Popover.rtld"/>
     
+    <import-taglib path="/components/page/Head/Head.rtld"/>
+    
     <import-taglib path="/components/social/GithubContributors/GithubContributors.rtld"/>
     <import-taglib path="/components/social/GooglePlusBadge/GooglePlusBadge.rtld"/>
     <import-taglib path="/components/social/GooglePlusOne/GooglePlusOne.rtld"/>
