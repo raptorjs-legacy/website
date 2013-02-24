@@ -1,12 +1,17 @@
 define(
     "components.docs.ProjectDirStructure.ProjectDirStructureTag",
     ['raptor'],
-    function(raptor, raptor) {
+    function(raptor, require) {
         
         var File = require('raptor/files/File'),
             githubUrl = "https://github.com/raptorjs/samples/blob/master",
-            startsWith = require('raptor/strings').startsWith;
+            startsWith = require('raptor/strings').startsWith,
+            defaultExcludes = ['/.gitignore', 
+                               '/npm-debug.log',
+                               '/build/',
+                               '/node_modules/'];
         
+
         var FileNode = function(file, projectDir, repoRootDir) {
             this.file = file;
             this.parentNode = null;
@@ -57,13 +62,12 @@ define(
                 var excludeFile = new File(projectDir, ".exclude");
 
 
-                var excludes = null;
+                var excludes = defaultExcludes;
                 if (excludeFile.exists()) {
                     var excludesStr = excludeFile.readAsString();
-                    excludes = excludesStr.split(/\n/);
+                    var sampleExcludes = excludesStr.split(/\n/);
+                    excludes = excludes.concat(sampleExcludes);
                 }
-
-
 
                 var walkDir = function(file, parentNode) {
                     var filename = file.getName();
@@ -74,13 +78,16 @@ define(
                     var node = new FileNode(file, projectDir, repoRootDir);
                     var relPath = node._relPath(projectDir);
 
-                    if (filename === 'node_modules') {
-                        return null;
-                    }
+
 
                     if (excludes) {
+                        var excludePathToCheck = relPath;
+                        if (file.isDirectory()) {
+                            excludePathToCheck += '/';
+                        }
+
                         for (var i=0, len=excludes.length; i<len; i++) {
-                            if (startsWith(relPath, excludes[i])) {
+                            if (excludePathToCheck.startsWith(excludes[i])) {
                                 return null;
                             }
                         }
