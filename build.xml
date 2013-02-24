@@ -9,6 +9,8 @@
         <copy todir="${output.dir}/images">
             <fileset dir="images"/>
         </copy> 
+
+        <copy file="images/favicon.ico" tofile="${output.dir}/favicon.ico"/>
     </target>
 
     <target name="build" depends="copy-images">
