@@ -8,6 +8,7 @@
             { "module": "components/editors/CodeEditor/mode-javascript" },
             { "module": "components/editors/CodeEditor/mode-xml" },
             { "module": "components/editors/CodeEditor/mode-htmlmixed" },
+            { "module": "components/editors/CodeEditor/mode-shell" },
             "Docs.css",
             "DocsWidget.js"
         ]
