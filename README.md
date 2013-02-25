@@ -25,7 +25,7 @@ ant build-prod
 
 ### Generating a Single Page (Development)
 ```
-./build-page-dev <path-path>
+./build-page-dev <page-path>
 ```
 Example:
 ```
@@ -34,7 +34,7 @@ Example:
 
 ### Generating a Single Page (Production)
 ```
-./build-page <path-path>
+./build-page <page-path>
 ```
 Example:
 ```
