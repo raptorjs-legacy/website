@@ -1,6 +1,6 @@
 define.Class(
     "components/social/GithubContributors/GithubContributorsWidget",
-    function(raptor, require) {
+    function(require) {
         var templating = require('raptor/templating'),
             componentRenderer = require('raptor/component-renderer'),
             githubApi = require('github-api');
@@ -41,7 +41,7 @@ define.Class(
                         )
                         .error(
                             function(error) {
-                                console.error(err);
+                                console.error(error);
                                 this.showError();
                             }.bind(this)
                         );

@@ -6,11 +6,15 @@
     
 
     <div class="contributor" c:for="contributor in contributors">
-        <img src="$contributor.avatar_url" class="avatar"/>
+
+        <img src="$contributor.avatar_url" class="avatar" c:if="contributor.avatar_url"/>
         <span class="login">
-            <a href="$contributor.html_url" target="_blank">
+            <a href="$contributor.html_url" target="_blank" c:if="contributor.type === 'User'">
                 $contributor.login
             </a>
+            <c:else-if test="contributor.type === 'Anonymous'">
+                $contributor.name (Anonymous)
+            </c:else-if>
         </span>
     </div>
 
