@@ -20,7 +20,7 @@ ant
 
 ### Generating the Entire Website (Production)
 ```
-ant build
+ant build-production
 ```
 
 ### Generating a Single Page (Development)
