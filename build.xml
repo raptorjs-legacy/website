@@ -24,12 +24,12 @@
         <copy file="images/favicon.ico" tofile="${output.dir}/favicon.ico"/>
     </target>
 
-    <target name="build" depends="npm-install,copy-images">
+    <target name="build-production" depends="npm-install,copy-images">
         <exec executable="${cmd.build}">
         </exec>
     </target>
 
-	<target name="build-dev" depends="copy-images">
+	<target name="build-dev" depends="npm-install,copy-images">
 		<exec executable="${cmd.build-dev}">
         </exec>
 	</target>
@@ -120,15 +120,22 @@
         </exec>
     </target>
 
+    <target name="start-server">
+        <exec executable="node">
+            <arg value="server.js"/>
+        </exec>
+    </target>
+
     <target name="publish-to-github-dry-run" 
         depends="clean,
-                 build,
+                 build-production,
                  copy-demos,
-                 raptor-jsdoc"/>
+                 raptor-jsdoc,
+                 start-server"/>
 	
 	<target name="publish-to-github" 
         depends="clean,
-                 build,
+                 build-production,
                  copy-demos,
                  raptor-jsdoc,
                  git-push"/>
@@ -140,7 +147,7 @@
         </delete>
 
         <delete includeEmptyDirs="true" removeNotFollowedSymlinks="true" failonerror="false">
-            <fileset dir="node_modules" followsymlinks="false"/>
+            <fileset dir="node_modules" followsymlinks="false" defaultexcludes="false"/>
             <fileset dir="work"/>
         </delete>
     </target>
