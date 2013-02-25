@@ -24,7 +24,7 @@
         <copy file="images/favicon.ico" tofile="${output.dir}/favicon.ico"/>
     </target>
 
-    <target name="build-production" depends="npm-install,copy-images">
+    <target name="build-prod" depends="npm-install,copy-images">
         <exec executable="${cmd.build}">
         </exec>
     </target>
@@ -128,14 +128,14 @@
 
     <target name="publish-to-github-dry-run" 
         depends="clean,
-                 build-production,
+                 build-prod,
                  copy-demos,
                  raptor-jsdoc,
                  start-server"/>
 	
 	<target name="publish-to-github" 
         depends="clean,
-                 build-production,
+                 build-prod,
                  copy-demos,
                  raptor-jsdoc,
                  git-push"/>
