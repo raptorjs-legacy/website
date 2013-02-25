@@ -13,6 +13,24 @@ var files = require('raptor/files');
 require('raptor/resources').getSearchPath().addDir(__dirname);
 require('raptor/templating/compiler').setWorkDir(files.joinPaths(__dirname, "work"));
 
+var args = require('optimist')
+                .usage('Usage: $0 [options]\nExamples:\n' + 
+                       '  Build entire website (development):\n' + 
+                       '   $0 build --dev\n\n' + 
+                       '  Build entire website (production):\n' + 
+                       '   $0 build\n\n' + 
+                       '  Build a single page (development):\n' + 
+                       '   $0 --page /raptor-templates --dev')
+                .alias('p', 'page')
+                .describe('p', 'The name of a page to build')
+                .alias('d', 'dev')
+                .boolean('d')
+                .describe('d', 'Enable development-mode (no minification, in-place deployment, etc.)')
+                .check(function(argv) {
+
+                })
+                .argv;
+
 var templating = require('raptor/templating'),
     logger = require('raptor/logging').logger('publish'),
     strings = require('raptor/strings'),
@@ -25,42 +43,11 @@ var templating = require('raptor/templating'),
         
         return new File(files.resolvePath(basePath || cwd, path));
     },
-    configArgRegExp=/^(?:-|--)([A-Za-z0-9_\-]+)(?:=([^\s]+))?$/,
-    paramArgRegExp=/^([A-Za-z0-9_\-]+)(?:=([^\s]+))?$/,
-    cwd = process.cwd(),
-    parseArgs = function(args) {
-        var result={};
-        args.forEach(function(arg, i) {
-            var matches,
-                name,
-                value;
-            if ((matches = configArgRegExp.exec(arg))) {
-                name = matches[1];
-                value = matches[2] || '';
-            }
-            else if ((matches = paramArgRegExp.exec(arg))) {
-                name = matches[1];
-                value = matches[2];
-                
-            }
-            else {
-                name = arg;
-                value = true;
-            }
-            
-            if (value === 'true' || value === 'false') {
-                value = value === 'true';
-            }
-            result[name] = value; 
-        });
-        
-        return result;
-    },
-    args = parseArgs(process.argv.slice(2));
+    cwd = process.cwd();
 
 
 var Publisher = function(config) {
-    this.appendPageFilename = config.profile !== 'production';
+    this.appendPageFilename = config.dev === true;
     this.page = config.page;
     
     var raptorJSPackageFile = new File(__dirname, "../raptorjs/package.json");
@@ -146,21 +133,18 @@ Publisher.prototype = {
     }
 };
 
-
-
-exports.publish = function(config) {
-    try
-    {
-        require('raptor/optimizer').configure(new File(__dirname, "optimizer-config.xml"), config);
-        raptor.extend(config, args);
-        
-        var publisher = new Publisher(config);
-        var start = new Date().getTime();
-        publisher.publish();
-        console.log("Publish time: " + (new Date().getTime() - start) + 'ms');
-    }
-    catch(e) {
-        logger.error("Unable to publish docs. Exception: " + e, e);
-    }
+try
+{
+    require('raptor/optimizer').configure(new File(__dirname, "optimizer-config.xml"), {
+        profile: args.dev === true ? 'development' : 'production'
+    });
     
-};
+    
+    var publisher = new Publisher(args);
+    var start = new Date().getTime();
+    publisher.publish();
+    console.log("Publish time: " + (new Date().getTime() - start) + 'ms');
+}
+catch(e) {
+    logger.error("Unable to publish docs. Exception: " + e, e);
+}

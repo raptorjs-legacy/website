@@ -20,8 +20,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build",
-				"page=widgets"
+				"${project_path}/build-page-page",
+				"widgets"
 			],
 			"name": "Build - widgets",
 			"working_dir": "${project_path}"
@@ -29,8 +29,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build",
-				"page=/"
+				"${project_path}/build-page",
+				"/"
 			],
 			"name": "Build - index",
 			"working_dir": "${project_path}"
@@ -38,8 +38,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=optimizer"
+				"${project_path}/build-page-dev",
+				"optimizer"
 			],
 			"name": "Build (dev) - optimizer",
 			"working_dir": "${project_path}"
@@ -47,8 +47,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=contributors"
+				"${project_path}/build-page-dev",
+				"contributors"
 			],
 			"name": "Build (dev) - contributors",
 			"working_dir": "${project_path}"
@@ -56,8 +56,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/optimizer/get-started-raptor-templates"
+				"${project_path}/build-page-dev",
+				"/optimizer/get-started-raptor-templates"
 			],
 			"name": "Build (dev) - optimizer-get-started-raptor-templates",
 			"working_dir": "${project_path}"
@@ -65,8 +65,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/optimizer/get-started-cli"
+				"${project_path}/build-page-dev",
+				"/optimizer/get-started-cli"
 			],
 			"name": "Build (dev) - optimizer-get-started-cli",
 			"working_dir": "${project_path}"
@@ -74,8 +74,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/optimizer/get-started-javascript-api"
+				"${project_path}/build-page-dev",
+				"/optimizer/get-started-javascript-api"
 			],
 			"name": "Build (dev) - optimizer-get-started-javascript-api",
 			"working_dir": "${project_path}"
@@ -83,8 +83,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/optimizer/developer-guide"
+				"${project_path}/build-page-dev",
+				"/optimizer/developer-guide"
 			],
 			"name": "Build (dev) - optimizer-developer-guide",
 			"working_dir": "${project_path}"
@@ -92,8 +92,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=raptor-templates"
+				"${project_path}/build-page-dev",
+				"raptor-templates"
 			],
 			"name": "Build (dev) - raptor-templates",
 			"working_dir": "${project_path}"
@@ -101,8 +101,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/faq"
+				"${project_path}/build-page-dev",
+				"/faq"
 			],
 			"name": "Build (dev) - faq",
 			"working_dir": "${project_path}"
@@ -110,8 +110,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/raptor-templates/developer-guide"
+				"${project_path}/build-page-dev",
+				"/raptor-templates/developer-guide"
 			],
 			"name": "Build (dev) - raptor-templates-developer-guide",
 			"working_dir": "${project_path}"
@@ -119,8 +119,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/raptor-templates/try-online"
+				"${project_path}/build-page-dev",
+				"/raptor-templates/try-online"
 			],
 			"name": "Build (dev) - raptor-templates-try-online",
 			"working_dir": "${project_path}"
@@ -128,8 +128,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/"
+				"${project_path}/build-page-dev",
+				"/"
 			],
 			"name": "Build (dev) - index",
 			"working_dir": "${project_path}"
@@ -137,8 +137,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/get-started"
+				"${project_path}/build-page-dev",
+				"/get-started"
 			],
 			"name": "Build (dev) - get-started",
 			"working_dir": "${project_path}"
@@ -146,8 +146,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/module-loader"
+				"${project_path}/build-page-dev",
+				"/module-loader"
 			],
 			"name": "Build (dev) - module-loader",
 			"working_dir": "${project_path}"
@@ -155,8 +155,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/module-loader/get-started-async"
+				"${project_path}/build-page-dev",
+				"/module-loader/get-started-async"
 			],
 			"name": "Build (dev) - module-loader-get-started-async",
 			"working_dir": "${project_path}"
@@ -164,8 +164,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/modules-classes"
+				"${project_path}/build-page-dev",
+				"/modules-classes"
 			],
 			"name": "Build (dev) - modules-classes",
 			"working_dir": "${project_path}"
@@ -173,8 +173,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/modules-classes/developer-guide"
+				"${project_path}/build-page-dev",
+				"/modules-classes/developer-guide"
 			],
 			"name": "Build (dev) - modules-classes/developer-guide",
 			"working_dir": "${project_path}"
@@ -182,8 +182,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/packaging"
+				"${project_path}/build-page-dev",
+				"/packaging"
 			],
 			"name": "Build (dev) - packaging",
 			"working_dir": "${project_path}"
@@ -191,8 +191,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/packaging/developer-guide"
+				"${project_path}/build-page-dev",
+				"/packaging/developer-guide"
 			],
 			"name": "Build (dev) - packaging/developer-guide",
 			"working_dir": "${project_path}"
@@ -200,8 +200,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/packaging/get-started"
+				"${project_path}/build-page-dev",
+				"/packaging/get-started"
 			],
 			"name": "Build (dev) - packaging/get-started",
 			"working_dir": "${project_path}"
@@ -209,8 +209,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/widgets"
+				"${project_path}/build-page-dev",
+				"/widgets"
 			],
 			"name": "Build (dev) - widgets",
 			"working_dir": "${project_path}"
@@ -218,8 +218,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/widgets/developer-guide"
+				"${project_path}/build-page-dev",
+				"/widgets/developer-guide"
 			],
 			"name": "Build (dev) - widgets/developer-guide",
 			"working_dir": "${project_path}"
@@ -227,8 +227,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/ui-components"
+				"${project_path}/build-page-dev",
+				"/ui-components"
 			],
 			"name": "Build (dev) - ui-components",
 			"working_dir": "${project_path}"
@@ -236,8 +236,8 @@
 		{
 			"cmd":
 			[
-				"${project_path}/build-dev",
-				"page=/widgets/get-started"
+				"${project_path}/build-page-dev",
+				"/widgets/get-started"
 			],
 			"name": "Build (dev) - widgets/get-started",
 			"working_dir": "${project_path}"
@@ -297,6 +297,16 @@
 				"build.js",
 				"dev"
 			],
+			"name": "samples/todomvc",
+			"working_dir": "${project_path}/../samples/todomvc"
+		},
+		{
+			"cmd":
+			[
+				"node",
+				"build.js",
+				"dev"
+			],
 			"name": "samples/widgets",
 			"working_dir": "${project_path}/../samples/widgets"
 		},
@@ -343,6 +353,9 @@
 		},
 		{
 			"path": "../raptorjs"
+		},
+		{
+			"path": "../samples-api"
 		}
 	],
 	"settings":
@@ -381,6 +394,7 @@
 			"Publish to Github",
 			"samples/async-loader",
 			"samples/packaging",
+			"samples/todomvc",
 			"samples/ui-components",
 			"samples/widgets",
 			"samples/tutorial"
