@@ -87,6 +87,10 @@
                         <docs:view-demo path="/demos/ui-components"/>
                     </docs:section>
 
+                    <docs:section heading="Demo Source">
+                        <docs:project-dir-structure dir="/ui-components"/>
+                    </docs:section>
+
                     <docs:section heading="UI Component Parts">
                         <p>
                             For this guide we will be creating a simple UI component that consists of the following:
@@ -108,7 +112,7 @@
                         <p>
                             Each UI component part is described in further detail in the sections below.
                         </p>
-                        <docs:section heading="Renderer">
+                        <docs:section heading="Renderer" anchor-name="Renderer">
                             <p>
                                 The role of the <code>Renderer</code> is to produce output HTML markup based on provided input.
                                 The <code>Renderer</code> should be an object with a <code>render</code> method that accepts two arguments:
@@ -129,10 +133,10 @@
                                 mode="javascript"
                                 readOnly="true" 
                                 c:parse-body-text="false"
-                                title="/ui/buttons/Button/ButtonRenderer.js">
+                                title="/modules/ui/buttons/SimpleButton/SimpleButtonRenderer.js">
                             <![CDATA[
                             define(
-                                "ui/buttons/Button/ButtonRenderer",
+                                "ui/buttons/SimpleButton/SimpleButtonRenderer",
                                 function(require) {
                                     return {
                                         render: function(input, context) {
@@ -146,22 +150,18 @@
                             </docs:code-editor>
                             <p>
                                 Typically, a <code>Renderer</code> will make use of an HTML template to
-                                produce its HTML output. In the previous example, String concatenation and
+                                produce its HTML output. In the sample code shown above, String concatenation and
                                 the <code>context.write()</code> method are used for illustration purposes
                                 only. The next section illustrates how an HTML template can be used
                                 to produce the view for the UI component.
                             </p>
                         </docs:section>
 
-                        <docs:section heading="HTML Template">
+                        <docs:section heading="HTML Template" anchor-name="HTMLTemplate">
                             <p>
                                 Typically, a <code>Renderer</code> will use a template to render it's view. If supported, the template
                                 rendering engine should be provided the <a href="http://raptorjs.org/api/raptor/render-context/Context/">Context</a> 
-                                object to write out its output. If the template rendering engine of choice does not support sending
-                                its output to a <a href="http://raptorjs.org/api/raptor/render-context/Context/">Context</a>
-                                object, and, instead, produces an output <code>String</code> then the <code>Renderer</code> should
-                                invoke the <code>context.write(htmlString)</code> and pass the rendered HTML <code>String</code>
-                                as the first and only argument.
+                                object to write out its output.
                             </p>
                             <p>
                                 For this guide we will be using <a href="${url('/raptor-templates')}">Raptor Templates</a>
@@ -172,10 +172,10 @@
                                 mode="xml"
                                 readOnly="true" 
                                 c:parse-body-text="false"
-                                title="/ui/buttons/Button/Button.rhtml">
+                                title="/modules/ui/buttons/SimpleButton/SimpleButton.rhtml">
                             <![CDATA[
                             <c:template xmlns:c="core"
-                                name="ui/buttons/Button"
+                                name="ui/buttons/SimpleButton"
                                 params="label">
                                 
                                 <button type="button">$label</button>
@@ -187,17 +187,17 @@
                                 mode="javascript"
                                 readOnly="true" 
                                 c:parse-body-text="false"
-                                title="/ui/buttons/Button/ButtonRenderer.js">
+                                title="/modules/ui/buttons/SimpleButton/SimpleButtonRenderer.js">
                             <![CDATA[
                             define(
-                                "ui/buttons/Button/ButtonRenderer",
+                                "ui/buttons/SimpleButton/SimpleButtonRenderer",
                                 function(require) {
                                     var templating = require('raptor/templating');
 
                                     return {
                                         render: function(input, context) {
                                             templating.render(
-                                                'ui/buttons/Button',
+                                                'ui/buttons/SimpleButton',
                                                 {
                                                     label: input.label
                                                 },
@@ -218,10 +218,10 @@
                                     mode="javascript"
                                     readOnly="true" 
                                     c:parse-body-text="false"
-                                    title="/ui/buttons/Button/ButtonRenderer.js">
+                                    title="/modules/ui/buttons/SimpleButton/SimpleButtonRenderer.js">
                                 <![CDATA[
                                 var htmlString = templating.renderToString(
-                                    'ui/buttons/Button',
+                                    'ui/buttons/SimpleButton',
                                     {
                                         label: input.label
                                     });
@@ -232,7 +232,7 @@
                             </docs:message>
                         </docs:section>
 
-                        <docs:section heading="Widget">
+                        <docs:section heading="Widget" anchor-name="Widget">
                             <p>
                                 The <code>Widget</code> is a JavaScript class that provides
                                 the client-side behavior for a widget such as handling DOM events.
@@ -254,51 +254,366 @@
                                 mode="xml"
                                 readOnly="true" 
                                 c:parse-body-text="false"
-                                title="/ui/buttons/Button/Button.rhtml">
-                            <![CDATA[
-                            <c:template xmlns:c="core"
-                                name="ui/buttons/Button"
-                                params="label">
-                                
-                                <button type="button" w:widget="ui/buttons/Button/ButtonWidget">
-                                    $label
-                                </button>
-
-                            </c:template>
-                            ]]>
-                            </docs:code-editor>
+                                resource="/samples/ui-components/modules/ui/buttons/SimpleButton/SimpleButton.rhtml"
+                                title="/modules/ui/buttons/SimpleButton/SimpleButton.rhtml"/>
                             <p>
-                                A sample implementation for <code>ui/buttons/Button/ButtonWidget</code>
+                                A sample implementation for <code>ui/buttons/SimpleButton/SimpleButtonWidget</code>
                                 is shown in the following sample code:
                             </p>
                             <docs:code-editor 
                                 mode="javascript"
                                 readOnly="true" 
                                 c:parse-body-text="false"
-                                title="/ui/buttons/Button/ButtonWidget.js">
+                                resource="/samples/ui-components/modules/ui/buttons/SimpleButton/SimpleButtonWidget.js"
+                                title="/modules/ui/buttons/SimpleButton/SimpleButtonWidget.js"/>
+                            <p>
+                                The <a href="http://raptorjs.org/api/raptor/widgets/">raptor/widgets</a> module
+                                must be included on the page when using the RaptorJS Widget Framework.
+                                If custom widget tags and/or attributes (e.g. <code>w:widget</code>) will be rendered in the browser, the
+                                <a href="http://raptorjs.org/api/source/raptor/templating/taglibs/widgets/package.json/"><nobr>raptor/templating/taglibs/widgets</nobr></a>
+                                module must be included on the page as well. Please see the <a href="#Package">package.json</a> section below for information
+                                on managing UI component dependencies.
+                            </p>
+                        </docs:section>
+                        <docs:section heading="CSS" anchor-name="CSS">
+                            <p>
+                                Each UI component will typically have a stylesheet to control the look 
+                                of the UI component. The CSS file (or LESS file) that contains
+                                CSS styles specific to the UI component being developed would typically
+                                be placed in the same directory as the UI component. Lastly, the
+                                root element of the UI component will typically be assigned a unique 
+                                CSS class name so that styles selectors can be used to apply styling
+                                to the UI component. Example CSS file:
+
+                            </p>
+                            <docs:code-editor 
+                                mode="css"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                resource="/samples/ui-components/modules/ui/buttons/SimpleButton/SimpleButton.css"
+                                title="/modules/ui/buttons/SimpleButton/SimpleButton.css"/>
+                            <p>
+                                Styles that are shared across multiple UI components can be added to
+                                a separate module and the separate module should be added
+                                as a dependency for the UI component being developed. 
+                                Please see the <a href="#Package">package.json</a> section below for information
+                                on managing UI component dependencies.
+                            </p>
+
+                        </docs:section>
+                        <docs:section heading="package.json" anchor-name="Package">
+                            <p>
+                                A <code>package.json</code> file is needed for each UI component so that the 
+                                <a href="${url('/optimizer')}">RaptorJS Optimizer</a> will know
+                                which files need to be sent to the web browser for the UI
+                                component to function correctly. All of the resource and modules dependencies for
+                                the UI component should be listed in the <code>package.json</code>
+                                for the UI component as shown in the following sample <code>package.json</code>:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                resource="/samples/ui-components/modules/ui/buttons/SimpleButton/package.json"
+                                title="/modules/ui/buttons/SimpleButton/package.json"/>
+                            <p>
+                                In the above <code>package.json</code> file, the following dependencies only
+                                need to be included if the UI component is to be rendered in the web browser:
+                            </p>
+                            <ul>
+                                <li><b>Module:</b> raptor/templating</li>
+                                <li><b>Module:</b> raptor/templating/taglibs/widgets</li>
+                                <li><b>Resource:</b> ButtonRenderer.js</li>
+                                <li><b>Resource:</b> Button.rhtml</li>
+                            </ul>
+                            <p>
+                                In some cases it is beneficial to create two packages for a UI component to separate
+                                out the dependencies required for rendering into a separate "render" package. For example:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="/modules/ui/buttons/SimpleButton/package.json">
                             <![CDATA[
-                            define(
-                                "ui/buttons/Button/ButtonWidget",
-                                function(require) {
-                                    function ButtonWidget(widgetConfig) {
-                                        $(this.getEl()).on('click', function() {
-                                            alert('Button Clicked!');
-                                        });
-                                    }
-
-                                    ButtonWidget.prototype = {
-                                        setColor: function(color) {
-                                            this.getEl().style.backgroundColor = color;
-                                        },
-
-                                        setLabel: function(label) {
-                                            this.getEl().innerHTML = label;
-                                        }
-                                    }
-                                });
+                            {
+                                "raptor": {
+                                    "dependencies": [
+                                        {"module": "raptor/widgets"},
+                                        "SimpleButtonWidget.js",
+                                        "SimpleButton.css"
+                                    ]
+                                }
+                            }
+                            ]]>
+                            </docs:code-editor>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="/modules/ui/buttons/SimpleButton/render-package.json">
+                            <![CDATA[
+                            {
+                                "raptor": {
+                                    "dependencies": [
+                                        {"module": "ui/buttons/SimpleButton"},
+                                        {"module": "raptor/templating"},
+                                        {"module": "raptor/templating/taglibs/widgets"},
+                                        "SimpleButtonRenderer.js",
+                                        "SimpleButton.rhtml"
+                                    ]
+                                }
+                            }
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                With the above approach of splitting the packages, if the UI component is to be rendered on the server
+                                then only  the <code>ui/buttons/SimpleButton</code> module needs to be included on the page.
+                                If the <code>ui/buttons/SimpleButton</code> component is to be rendered on the browser then the <code>ui/buttons/SimpleButton/render</code>
+                                module should be included instead (internally the <code>ui/buttons/SimpleButton/render</code> includes <code>ui/buttons/SimpleButton</code>
+                                as a dependency).
+                            </p>
+                        </docs:section>
+                        <docs:section heading="Client-side Component Rendering">
+                            <p>
+                                After creating the 
+                                <a href="#Renderer">Renderer</a>, 
+                                <a href="#HTMLTemplate">HTML Template</a>,
+                                <a href="#Widget">Widget</a>, 
+                                <a href="#CSS">CSS</a> and
+                                <a href="#Package">package.json</a> we are now
+                                render to try out our UI component in the browser by rendering it using the 
+                                <a href="http://raptorjs.org/api/raptor/component-renderer/">raptor/component-renderer</a> module.
+                                Assuming we have included the code for the <code>ui/buttons/SimpleButton</code> module and the 
+                                <code>raptor/component-renderer</code> module, we can then use the following JavaScript code
+                                to render out our newly created component and add it to the DOM.
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            require('raptor/component-renderer')
+                                .render(
+                                    'ui/buttons/SimpleButton/SimpleButtonRenderer', // The renderer
+                                    {                                               // The input data model
+                                        label: 'Simple Button'
+                                    })
+                                .appendTo(document.body); // Invoke helper method for inserting 
+                                                          // the HTML into the DOM
                             ]]>
                             </docs:code-editor>
                         </docs:section>
+                        <docs:section heading="Custom Tag Definition">
+                            <p>
+                                Being able to use JavaScript code to render a UI component can be very helpful,
+                                but often it is much better to embed a UI component directly in an 
+                                HTML template directly. For example, to embed the <code>ui/buttons/SimpleButton</code>
+                                component in a template we might want to do the following:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <c:template xmlns:c="core" xmlns:app="app">
+                                <div>
+                                    <app:simple-button label="Simple Button"/>
+                                    <app:simple-button label="Another Simple Button"/>
+                                </div>
+                            </c:template>
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                To support this, <a href="${url('/raptor-templates')}">Raptor Templates</a> allows custom
+                                tags to be bound to JavaScript renderers. In addition, the allowed attributes (among other things)
+                                can be declared so that errors can be caught during compilation and it allows the Raptor Templates
+                                compiler to compile HTML templates into very optimized JavaScript functions. A sample
+                                custom tag definition is shown below:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                resource="/samples/ui-components/modules/ui/buttons/SimpleButton/SimpleButton.rtld"
+                                title="/modules/ui/buttons/SimpleButton/SimpleButton.rtld"/>
+                            <p>
+                                For a the custom tag to be used in a template, it must be imported into a namespace. For this
+                                guide we will be adding all UI components to the "app" namespace by creating separate Raptor Taglib Definition 
+                                that imports all of the custom tags into a single namespace as shown in the following sample code:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                resource="/samples/ui-components/rtlds/app.rtld"
+                                title="/rtlds/app.rtld"/>
+                            <docs:message type="info">
+                                <p>
+                                    Raptor Taglib files placed in a "rtlds" directory of a top-level resource search path will
+                                    automatically discovered by the Raptor Templates Compiler.    
+                                </p>
+                            </docs:message>
+                        </docs:section>
+                    </docs:section>
+
+                    <docs:section heading="Referencing Nested Widgets">
+                        <p>
+                            Often it is helpful for a widget to obtain a reference to a nested
+                            widget. The <a href="${url('/widgets')}">RaptorJS Widget Framework</a>
+                            allows a "widget ID" to be assigned to nested widgets inside
+                            a Raptor Template. For example:
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <div w:widget="ui/demo/ComponentsDemo/ComponentsDemoWidget">
+                            <app:button label="Save" variant="success" w:id="saveButton"/>
+                            <app:button label="Delete" variant="danger" w:id="deleteButton"/>
+                        </div>
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            Widgets that are assigned a widget ID can then be referenced
+                            by the containing widget as part of the "widgets" property that
+                            gets added to the containing widget instance by the <a href="${url('/widgets')}">RaptorJS Widget Framework</a>. 
+                            This is illustrated in the sample code:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            title="ui/demo/ComponentsDemo/ComponentsDemoWidget"
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        define(
+                            "ui/demo/ComponentsDemo/ComponentsDemoWidget",
+                            function(require) {
+
+                                var ComponentsDemoWidget = function(config) {
+
+                                    this.widgets.saveButton.on('click', function() {
+                                        alert('You clicked the "Save" button');
+                                    });
+
+                                    this.widgets.deleteButton.on('click', function() {
+                                        alert('You clicked the "Delete" button');
+                                    });
+
+                                };
+                                
+                                ComponentsDemoWidget.prototype = {
+                                    // ...
+                                };
+                                
+                                return ComponentsDemoWidget;
+                            });
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            The <code>on</code> method is used to subscribe
+                            to custom widget events as described in the next section.
+                        </p>
+                        <docs:message type="warning">
+                            <p>
+                                NOTE: Direct widget referencing is only one way for widgets
+                                to communicate, but it is often not the best choice
+                                since it can lead to tightly coupled applications.
+                                For example, if a widget that is directly referenced
+                                is removed from the page then a JavaScript error will
+                                often result. As an alternative, Pub/Sub messaging
+                                can be used as described in the <a href="#PubSub">Pub/Sub Communication</a>
+                                section below.
+                            </p>
+                        </docs:message>
+                    </docs:section>
+
+                    <docs:section heading="Custom Widget Events">
+                        <p>
+                            The <a href="${url('/widgets')}">RaptorJS Widget Framework</a> adds
+                            a small set of mixins to all initialized widgets. The 
+                            <code>publish</code> and <code>subscribe</code>/<code>on</code> mixin methods allow
+                            a widget to publish custom widget events and
+                            for other widgets to subscribe to custom widget events.
+                        </p>
+                        <p>
+                            The supported custom widget events must be declared as a property of the widget
+                            as an <code>Array</code> as shown in the following sample code:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        define(
+                            "ui/buttons/Button/ButtonWidget",
+                            ['raptor'],
+                            function(raptor, require) {
+                                var ButtonWidget = function(config) {
+                                    this.$().click(function() {
+                                        // Publish a custom event named "click"
+                                        this.publish('click', {
+                                            button: this
+                                        });
+                                    }.bind(this));
+                                };
+                                
+                                ButtonWidget.events = ["click"];
+                                
+                                ButtonWidget.prototype = {
+                                    // ...
+                                };
+                                
+                                return ButtonWidget;
+                            });
+                        ]]>
+                        </docs:code-editor>
+                    </docs:section>
+                    <docs:section heading="Pub/Sub Communication" anchor-name="PubSub">
+                        <p>
+                            RaptorJS provides a <code><a href="http://raptorjs.org/api/raptor/pubsub/">raptor/pubsub</a></code> module that can be used
+                            to enable inter-widget communication. The <code><a href="http://raptorjs.org/api/raptor/pubsub/">raptor/pubsub</a></code> module
+                            can be used standalone, but the RaptorJS Widget Framework also
+                            allows custom widget events to be declaratively mapped to Pub/Sub messages.
+
+                        </p>
+                        <p>
+                            The following sample code illustrates how to declaratively map the custom "click" event
+                            to a Pub/Sub message named "sayHello":
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <c:template xmlns:c="core" 
+                            xmlns:app="app" 
+                            xmlns:w="widgets">
+
+                            <app:button label="Say Hello" 
+                                w:event-click="sayHello; message='Hello World'"/>
+
+                        </c:template>
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            When the button above is clicked, the "sayHello" Pub/Sub message will
+                            be published using the <code><a href="http://raptorjs.org/api/raptor/pubsub/">raptor/pubsub</a></code> module.
+                            In addition, the message object will include a property named "message" with a value of "Hello World".
+                            The following code illustrates how this Pub/Sub message can be handled:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        var pubsub = require('raptor/pubsub');
+                        pubsub.subscribe('sayHello', function(eventArgs) {
+                            alert(eventArgs.message); // Will alert 'Hello World'
+                        }, this);
+                        ]]>
+                        </docs:code-editor>
                     </docs:section>
 
 
