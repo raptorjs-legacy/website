@@ -66,6 +66,7 @@
             <module name="components/editors/CodeEditor/mode-htmlmixed" recursive="true"/>
             <module name="components/editors/CodeEditor/mode-xml" recursive="true"/>
             <module name="components/editors/CodeEditor/mode-shell" recursive="true"/>
+            <module name="components/editors/CodeEditor/mode-css" recursive="true"/>
         </bundle>
         
         <bundle name="templating">
