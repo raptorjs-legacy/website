@@ -82,26 +82,42 @@ Publisher.prototype = {
         }
         
         if (this.page) {
-            if (!strings.endsWith(this.page, '/index.rhtml')) {
-                this.page += '/index.rhtml';
+            var pagePath = this.page;
+
+            if (!pagePath.startsWith('/')) {
+                pagePath = '/' + pagePath;
             }
-            
-            if (!strings.startsWith(this.page, '/')) {
-                this.page = '/' + this.page;
+
+            if (!pagePath.startsWith('/pages')) {
+                pagePath = '/pages' + this.page;
             }
-            
-            if (!strings.startsWith(this.page, '/pages')) {
-                this.page = '/pages' + this.page;
+
+            if (pagePath.endsWith('/index.rhtml')) {
+                pagePath = pagePath.slice(0, 0 - '/index.rhtml'.length);
             }
-            
-            var templateFile = new File(__dirname, this.page);
+
+            if (pagePath.endsWith('/')) {
+                pagePath = pagePath.slice(0, -1);
+            }
+
+
+            var pageDir = new File(__dirname, pagePath);
+            var templateFile = new File(pageDir, 'index.rhtml');
+            if (!templateFile.exists()) {
+
+                templateFile = new File(pageDir, 'index-' + pageDir.getName() + '.rhtml');
+                if (!templateFile.exists()) {
+                    throw new Error('Invalid page: ' + pagePath);    
+                }
+            }
+
             handlePage.call(this, templateFile);
         }
         else {
             require('raptor/files/walker').walk(
                 baseDir, 
                 function(file) {
-                    if (file.isFile() && file.getExtension() === "rhtml") {
+                    if (file.isFile() && file.getExtension() === "rhtml" && file.getName().startsWith('index')) {
                         handlePage.call(this, file);
                     }
                 },
