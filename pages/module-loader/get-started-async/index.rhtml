@@ -77,28 +77,90 @@
                     </docs:section>
 
                     <docs:section heading="Demo Source">
-                        For this guide, we will use the following directory structure:
                         <docs:project-dir-structure dir="/async-loader"/>
                     </docs:section>
                     
                     <docs:section heading="HTML Page Template">
                         <p>
-                            Below is the page template ("test-page.rhtml") that we will use for this guide:
+                            Below is the page template that we will use for this guide:
                         </p>
                         <docs:code-editor 
                             mode="xml"
                             readOnly="true" 
-                            resource="/samples/async-loader/pages/index/index.rhtml"/>
+                            resource="/samples/async-loader/pages/index/index.rhtml"
+                            title="/pages/index/index.rhtml"/>
                         <p>
-                            You will notice that "module-b" is marked as asynchronous for the page includes in the above template.
+                            You will notice that "module-b" is marked as "async" in the above template.
+                            The purpose of the "async" attribute is explained in the <a href="#AsyncModules">Asynchronously Loaded Modules</a> section below.
                         </p>
+                    </docs:section>
+
+                    <docs:section heading="HTML Output">
+                        <p>
+                            When the above template is rendered output similar to the following will be produced:
+                        </p>
+                        <docs:code-editor 
+                            mode="htmlmixed"
+                            readOnly="true" 
+                            title="build/index.html"
+                            c:parse-body-text="false">
+
+                        <![CDATA[
+                        <!DOCTYPE html>
+                        <html>
+                            <head>
+                                <title>Async Module Loading Test Page</title>
+                                <link rel="stylesheet" type="text/css" href="static/index-1a51f97d.css">
+                            </head>
+                            <body>
+                                <button type="button" onclick="TestPage.loadModuleBAsync()">Load "module-b" Asynchrously</button>
+                                <script type="text/javascript" src="static/index-04722da0.js"></script>
+                            </body>
+                        </html>
+                        ]]>
+                        </docs:code-editor>
+
+                    </docs:section>
+
+                    <docs:section heading="Asynchronously Loaded Modules" anchor-name="AsyncModules">
+                        <p>
+                            By default, the RaptorJS Optimizer will include the code for a module
+                            as part of the initial page load by generating the appropriate 
+                            &lt;link> and &lt;script> tags that include the optimized bundles. However, when a page dependency is marked
+                            as "async" the RaptorJS Optimizer will instead only include enough
+                            metadata so that the module can be downloaded asynchronously when needed. For
+                            example, because "module-b" is marked as async, the following JavaScript code
+                            will be included as part of JavaScript code included in the initial page load:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+
+                        <![CDATA[
+                        $rloaderMeta = {
+                            "module-b": {
+                                css: ["static/index-async-21cbcb13.css"],
+                                js:  ["static/index-async-f4a3ad20.js"]
+                            }
+                        };
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            The above metadata provides the client-side
+                            asynchronous module loader with the exact URLs that are needed
+                            to load the module asynchronously. There is
+                            no guess work on the client-side and all of the URLs include
+                            exact checksums (by default) and can easily be configured
+                            to use a host name for a Content Distribution Network (CDN).
+                        </p>
+
                     </docs:section>
 
                     <docs:section heading="Downloading Modules Asynchronously">
                         <p>
                             The following code is used to download "module-b" asynchronously and
                             then invoke a method on the loaded module:
-
                         </p>
                         <docs:code-editor 
                             mode="javascript"
@@ -130,7 +192,7 @@
                                 c:parse-body-text="false">
 
                             <![CDATA[
-                            require.load(
+                            require(
                                 ['module-a', 'module-b'], 
                                 function(moduleA, moduleB) {
                                     //Do something with the loaded modules...
@@ -158,52 +220,18 @@
                             </docs:code-editor>
                         </docs:message>
                     </docs:section>
-                    <docs:section heading="Rendering the Page">
+                    <docs:section heading="Building the Sample">
                         <p>
-                            The sample project includes a script named "build.js" that renders the
-                            "test-page.rhtml" template shown above and saves the generated HTML
-                            string to "test-page.html" in the root directory. In the process of
+                            The sample project includes a build script named <code><a href="https://github.com/raptorjs/samples/blob/master/async-loader/build.js">build.js</a></code> that renders the
+                            <code><a href="https://github.com/raptorjs/samples/blob/master/async-loader/pages/index/index.rhtml">pages/index/index.rhtml</a></code> template shown above and saves the generated HTML
+                            string to <code><a href="https://github.com/raptorjs/raptorjs.github.com/blob/master/demos/async-loader/index.html">build/index.html</a></code> . In the process of
                             rendering the page, the RaptorJS Optimizer Taglib will write the optimized
                             resource bundles to disk (along with the metadata required by the 
                             RaptorJS Async Loader).
                         </p>
                         <p>
-                            To run the "publish.js" script, use the following command:
-                        </p>
-                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
-                        $ node publish.js
-                        </pre>
-                        <p>
-                            You should then see output to the following:
-                        </p>
-                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
-                        Generating staticfiles for RaptorJS Async Loader demo...
-                        INFO optimizer.BundlesFileWriter: Writing bundle file to "static/test-page-async-body-45012617.js"...
-                        INFO optimizer.BundlesFileWriter: Writing bundle file to "static/test-page-async-head-981b6ffe.css"...
-                        INFO optimizer.BundlesFileWriter: Writing bundle file to "static/test-page-body-db70adfb.js"...
-                        INFO optimizer.BundlesFileWriter: Writing bundle file to "static/test-page-head-d3ec3774.css"...
-                        Test page written to "test-page.html"
-                        </pre>
-                        <p>
-                            For this sample project, the generated async loader metadata will look like the following:
-                        </p>
-                        <docs:code-editor 
-                            mode="javascript"
-                            readOnly="true" 
-                            c:parse-body-text="false">
-
-                        <![CDATA[
-                        $rloaderMeta = {
-                            "module-b": {
-                                "css": ["static/test-page-async-head-981b6ffe.css"],
-                                "js":  ["static/test-page-async-body-45012617.js"]
-                            }
-                        };
-                        ]]>
-                        </docs:code-editor>
-                        <p>
-                            The above code shows the URLs that will be downloaded
-                            when "module-b" is required asynchrously.
+                            Please see the following documentation for additional information for building the sample project:
+                            <a href="https://github.com/raptorjs/samples/tree/master/async-loader/README.md"></a>
                         </p>
                     </docs:section>
                     
