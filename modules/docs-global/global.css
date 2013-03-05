@@ -27,6 +27,10 @@ PRE, CODE {
     word-spacing: 0;
 }
 
+.highlite {
+    background-color: #FFFF66;
+}
+
 .feature-portal-top {
 }
 
