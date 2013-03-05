@@ -104,9 +104,18 @@ Publisher.prototype = {
             var pageDir = new File(__dirname, pagePath);
             var templateFile = new File(pageDir, 'index.rhtml');
             if (!templateFile.exists()) {
+                templateFile = null;
 
-                templateFile = new File(pageDir, 'index-' + pageDir.getName() + '.rhtml');
-                if (!templateFile.exists()) {
+                var dirFiles = pageDir.listFiles();
+                for (var i=0, len=dirFiles.length; i<len; i++) {
+                    var file = dirFiles[i];
+                    if (file.getName().startsWith('index-') && file.getName().endsWith('.rhtml')) {
+                        templateFile = file;
+                        break;
+                    }
+                }
+
+                if (!templateFile) {
                     throw new Error('Invalid page: ' + pagePath);    
                 }
             }
