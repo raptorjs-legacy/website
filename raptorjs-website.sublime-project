@@ -282,6 +282,25 @@
 			"cmd":
 			[
 				"node",
+				"build.js"
+			],
+			"name": "samples/optimizer-javascript-api",
+			"working_dir": "${project_path}/../samples/optimizer-javascript-api"
+		},
+		{
+			"cmd":
+			[
+				"node",
+				"build.js",
+				"dev"
+			],
+			"name": "samples/optimizer-javascript-api (dev)",
+			"working_dir": "${project_path}/../samples/optimizer-javascript-api"
+		},
+		{
+			"cmd":
+			[
+				"node",
 				"build.js",
 				"dev"
 			],
@@ -413,6 +432,8 @@
 			"samples/async-loader",
 			"samples/optimizer-raptor-templates",
 			"samples/optimizer-raptor-templates (dev)",
+			"samples/optimizer-javascript-api",
+			"samples/optimizer-javascript-api (dev)",
 			"samples/packaging",
 			"samples/todomvc",
 			"samples/ui-components",
