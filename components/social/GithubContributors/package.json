@@ -3,7 +3,7 @@
         "dependencies": [
             { "module": "raptor/widgets" },
             { "module": "raptor/templating" },
-            { "module": "raptor/component-renderer" },
+            { "module": "raptor/renderer" },
             { "module": "github-api" },
             "GithubContributorsWidget.js",
             "GithubContributors.css",

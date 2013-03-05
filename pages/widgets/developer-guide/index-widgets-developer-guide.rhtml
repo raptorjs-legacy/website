@@ -183,7 +183,7 @@
                         </p>
                         <ul>
                             <li>
-                                <a href="http://raptorjs.org/api/raptor/component-renderer/"><nobr><b>raptor/component-renderer</b></nobr></a>:
+                                <a href="http://raptorjs.org/api/raptor/renderer/"><nobr><b>raptor/renderer</b></nobr></a>:
                                 Required for rendering UI components in the browser, inserting the resulting HTML into the DOM and initializing
                                 the widgets associated with the rendered UI components
                             </li>
@@ -207,7 +207,7 @@
                         {
                             "raptor": [
                                 { "module": "raptor/widgets" },
-                                { "module": "raptor/component-renderer" },
+                                { "module": "raptor/renderer" },
                                 { "module": "raptor/templating/taglibs/widgets" },
                                 ...
                             ]
@@ -230,7 +230,7 @@
                                 <dependencies>
                                     <module name="raptor"/>
                                     <module name="raptor/widgets"/>
-                                    <module name="raptor/component-renderer"/>
+                                    <module name="raptor/renderer"/>
                                     <module name="raptor/templating/taglibs/widgets"/>
                                     <!-- Additional Dependencies... -->
                                 </dependencies>
@@ -399,17 +399,17 @@
                                 Initializing widgets associated with UI components rendered on the client is accomplished
                                 by tracking rendered widgets in a custom data attribute of the render <a href="http://raptorjs.org/api/raptor/render-context/Context/">context</a>
                                 object. When the rendered UI components are added to the DOM, the widgets registered in the <code>context</code> object are 
-                                then initialized. The <a href="http://raptorjs.org/api/raptor/component-renderer/"><nobr>raptor/component-renderer</nobr></a>
+                                then initialized. The <a href="http://raptorjs.org/api/raptor/renderer/"><nobr>raptor/renderer</nobr></a>
                                 module should be used to render UI components and then add the rendered HTML to the DOM since it handles
                                 the creation of the <code>context</code> object and provides methods for inserting the resulting HTML
                                 into the DOM. After the
-                                <a href="http://raptorjs.org/api/raptor/component-renderer/"><nobr>raptor/component-renderer</nobr></a> module is used
-                                to insert rendered UI components into the DOM, a Pub/Sub message named <code><nobr>raptor/component-renderer/renderedToDOM</nobr></code>
+                                <a href="http://raptorjs.org/api/raptor/renderer/"><nobr>raptor/renderer</nobr></a> module is used
+                                to insert rendered UI components into the DOM, a Pub/Sub message named <code><nobr>raptor/renderer/renderedToDOM</nobr></code>
                                 is published and the <a href="http://raptorjs.org/api/raptor/widgets/">raptor/widgets</a> module responds
                                 to this message by initializing all of the widgets associated with the <code>context</code> object used to render the UI components.
                             </p>
                             <p>
-                                The following sample code illustrates how to utilize the <a href="http://raptorjs.org/api/raptor/component-renderer/"><nobr>raptor/component-renderer</nobr></a>
+                                The following sample code illustrates how to utilize the <a href="http://raptorjs.org/api/raptor/renderer/"><nobr>raptor/renderer</nobr></a>
                                 module to render a UI component in the browser:
                             </p>
                             <docs:code-editor 
@@ -417,7 +417,7 @@
                                 readOnly="true" 
                                 c:parse-body-text="false">
                             <![CDATA[
-                            require('raptor/component-renderer').render(
+                            require('raptor/renderer').render(
                                 'some/namespace/MyRenderer',            // The renderer
                                 {                                       // The input data model
                                     message: 'Hello World'
@@ -427,7 +427,7 @@
                             ]]>
                             </docs:code-editor>
                             <p>
-                                The <code><nobr>raptor/component-renderer</nobr></code> will first create a render <a href="http://raptorjs.org/api/raptor/render-context/Context/">context</a>
+                                The <code><nobr>raptor/renderer</nobr></code> will first create a render <a href="http://raptorjs.org/api/raptor/render-context/Context/">context</a>
                                 object and then it will invoke the <code>render</code> method of the provided renderer. Two arguments will be passed to the <code>render</code>
                                 method:
                             </p>
@@ -526,7 +526,7 @@
                             </docs:section>
                             <docs:section heading="rerender">
                                 <p>
-                                    <b><code><a href="http://raptorjs.org/api/raptor/component-renderer/RenderResult/">RenderResult</a></code> rerender(input, ?context)</b>: 
+                                    <b><code><a href="http://raptorjs.org/api/raptor/renderer/RenderResult/">RenderResult</a></code> rerender(input, ?context)</b>: 
                                     Re-renders a widget by first destroying the current widget and then re-rendering
                                     the widget and replacing the original DOM node with the newly created DOM node.
                                     The widget class must have a static <code>render(input, context)</code> method

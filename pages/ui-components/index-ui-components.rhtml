@@ -69,7 +69,7 @@
                                         Provides functiionality for initializing widgets associated with rendered UI components.
                                     </li>
                                     <li>
-                                        <a href="http://raptorjs.org/api/raptor/component-renderer/"><b>raptor/component-renderer</b></a>: 
+                                        <a href="http://raptorjs.org/api/raptor/renderer/"><b>raptor/renderer</b></a>: 
                                         Provides functionality for rendering UI components to HTML in the browser, inserting the resulting HTML into the DOM and initializing the widgets associated with the rendered UI components
                                     </li>
                                     <li>
@@ -383,9 +383,9 @@
                                 <a href="#CSS">CSS</a> and
                                 <a href="#Package">package.json</a> we are now
                                 render to try out our UI component in the browser by rendering it using the 
-                                <a href="http://raptorjs.org/api/raptor/component-renderer/">raptor/component-renderer</a> module.
+                                <a href="http://raptorjs.org/api/raptor/renderer/">raptor/renderer</a> module.
                                 Assuming we have included the code for the <code>ui/buttons/SimpleButton</code> module and the 
-                                <code>raptor/component-renderer</code> module, we can then use the following JavaScript code
+                                <code>raptor/renderer</code> module, we can then use the following JavaScript code
                                 to render out our newly created component and add it to the DOM.
                             </p>
                             <docs:code-editor 
@@ -393,7 +393,7 @@
                                 readOnly="true" 
                                 c:parse-body-text="false">
                             <![CDATA[
-                            require('raptor/component-renderer')
+                            require('raptor/renderer')
                                 .render(
                                     'ui/buttons/SimpleButton/SimpleButtonRenderer', // The renderer
                                     {                                               // The input data model

@@ -2,7 +2,7 @@ define.Class(
     "components/social/GithubContributors/GithubContributorsWidget",
     function(require) {
         var templating = require('raptor/templating'),
-            componentRenderer = require('raptor/component-renderer'),
+            renderer = require('raptor/renderer'),
             githubApi = require('github-api');
 
         return {
@@ -23,7 +23,7 @@ define.Class(
                             function(response) {
                                 var contributors = response.data;
                                 if (response.meta.status === 200) {
-                                    componentRenderer
+                                    renderer
                                         .render(function(input, context) {
                                             templating.render(
                                                 'components/social/GithubContributors/contributors',
