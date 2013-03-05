@@ -25,7 +25,10 @@
             <docs:top-nav/>
             <div class="container">
                 <docs:docs heading="RaptorJS Optmizer: Get Started with the Optimizer Taglib" disqus-id="optimizer-get-started-raptor-templates">
-                    <c:include template="/pages/optimizer/shared-content/overview" show-icon="true"/>
+                    <docs:section heading="Overview">
+                        <c:include template="/pages/optimizer/shared-content/overview" show-icon="true"/>
+                    </docs:section>
+                    
 
                     <docs:section heading="View Demo">
                         <docs:view-demo path="/demos/optimizer-raptor-templates"/>
@@ -239,7 +242,7 @@
                                     <a href="${url('/optimizer/get-started-javascript-api')}">RaptorJS Optimizer: Get Started with the JS API</a>
                                 </li>
                                 <li>
-                                    <a href="${url('/optimizer/get-started-clie')}">RaptorJS Optimizer: Get Started using the Command Line Interface</a>
+                                    <a href="${url('/optimizer/get-started-cli')}">RaptorJS Optimizer: Get Started using the Command Line Interface</a>
                                 </li>
                                 <li>
                                     <a href="${url('/raptor-templates')}">Raptor Templates</a>

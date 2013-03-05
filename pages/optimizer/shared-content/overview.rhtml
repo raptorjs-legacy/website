@@ -5,34 +5,31 @@
     xmlns:w="widgets"
     xmlns:docs="docs"
     docs:functions="url">
-
-    <docs:section heading="Overview">
-        <p>
-            <img src="${url('/images/optimized-delivery.png')}" width="128" height="128" class="section-icon" c:if="data.showIcon"/>
-            The RaptorJS Optimizer is a server-side tool that can be
-            be used to build optimized web pages by bundling, compiling
-            and minifying page dependencies. This tool makes managing complex 
-            JavaScript and CSS dependencies almost effortless while helping you
-            produce extremely optimized web pages. 
-        </p>
-        <p>
-            Unlike other optimizers, the RaptorJS Optimizer does not require
-            that you write your code a certain way.  Simply tell the optimizers which modules your
-            page depends on and it will take care of the rest—including
-            writing optimized JavaScript and CSS bundles to disk <i>and</i>
-            generating the HTML that is required to include those bundles. All dependencies
-            are described using rich packaging metadata files that are easy to maintain and
-            allow you to leverage the full power of the <a href="${url('/packaging')}">RaptorJS Packaging</a>
-            system.
-        </p>
-        <p>
-            Every application has different requirements so the RaptorJS Optimizer
-            gives you full control over how resources are combined and where
-            to include resources on your HTML pages. Its ease-of-use and flexibility make it perfect for
-            any size application. Best of all, the RaptorJS Optimizer is designed so
-            that it can easily be used at runtime—freeing you from yet another build tool.
-        </p>
-    </docs:section>
+    <p>
+        <img src="${url('/images/optimized-delivery.png')}" width="128" height="128" class="section-icon" c:if="data.showIcon"/>
+        The RaptorJS Optimizer is a server-side tool that can be
+        be used to build optimized web pages by bundling, compiling
+        and minifying page dependencies. This tool makes managing complex 
+        JavaScript and CSS dependencies almost effortless while helping you
+        produce extremely optimized web pages. 
+    </p>
+    <p>
+        Unlike other optimizers, the RaptorJS Optimizer does not require
+        that you write your code a certain way.  Simply tell the optimizers which modules your
+        page depends on and it will take care of the rest—including
+        writing optimized JavaScript and CSS bundles to disk <i>and</i>
+        generating the HTML that is required to include those bundles. All dependencies
+        are described using rich packaging metadata files that are easy to maintain and
+        allow you to leverage the full power of the <a href="${url('/packaging')}">RaptorJS Packaging</a>
+        system.
+    </p>
+    <p>
+        Every application has different requirements so the RaptorJS Optimizer
+        gives you full control over how resources are combined and where
+        to include resources on your HTML pages. Its ease-of-use and flexibility make it perfect for
+        any size application. Best of all, the RaptorJS Optimizer is designed so
+        that it can easily be used at runtime—freeing you from yet another build tool.
+    </p>
     
 </c:template>
 
