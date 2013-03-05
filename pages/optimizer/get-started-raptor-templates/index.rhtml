@@ -25,57 +25,58 @@
             <docs:top-nav/>
             <div class="container">
                 <docs:docs heading="RaptorJS Optmizer: Get Started with the Optimizer Taglib" disqus-id="optimizer-get-started-raptor-templates">
-                    <docs:message type="warning">
-                        Documentation In-Progress
-                    </docs:message>
-                        
-                    <c:include template="/pages/optimizer/shared-content/get-started-overview" />
+                    <c:include template="/pages/optimizer/shared-content/overview" show-icon="true"/>
 
-                    <docs:section heading="Sample Code">
-                        <p>
-                            The sample code for this guide can be downloaded using the following link:
-                            <a href="${url('/sample-projects/optimizer-get-started-raptor-templates.zip')}">
-                                <nobr>
-                                    RaptorJS Optimizer: Get Started with the Optimizer Taglib - Sample Code
-                                </nobr>
-                            </a>
-                        </p>
-                        <p>
-                            Alternatively, you can view the sample code for this guide on Github using the following link:
-                            <a href="https://github.com/raptorjs/raptorjs.github.com/tree/master/src/sample-projects/optimizer/get-started-raptor-templates">
-                                /src/sample-projects/optimizer/get-started-raptor-templates
-                            </a>
-                        </p>
+                    <docs:section heading="View Demo">
+                        <docs:view-demo path="/demos/optimizer-raptor-templates"/>
+                    </docs:section>
+
+                    <docs:section heading="Demo Source">
+                        <docs:project-dir-structure dir="/optimizer-raptor-templates"/>
                     </docs:section>
 
                     <c:include template="/pages/optimizer/shared-content/creating-a-package" />
 
-                    <docs:section heading="Optimizing a Page using the Optimizer Taglib">
+                    <docs:section heading="Optimizing a Page">
                         <p>
-                            <img src="${url('/images/optimized-delivery.png')}" width="128" height="128" class="section-icon"/>
+                            
                             The RaptorJS Optimizer Taglib can be used in
                             conjunction with 
                             <a href="${url('/raptor-templates')}">
                                 Raptor Templates
                             </a>
-                            to generate optimized bundles and inject the required HTML markup. The default configuration will write all bundles to a "static" directory in the current working directory of the running process.
-                            In addition, the default configuration will use "/static/" as the URL prefix for all
-                            resource URLs. In addition, by default, no minification or other filters are applied
-                            to JavaScript and CSS code. Lastly, the default configuration configures no bundles so
-                            all resources of the same content type (i.e., either CSS or JavaScript) targeted
-                            for the same slot will be automically bundled together.
-                        </p>    
-                        <docs:section heading="Example Setup">
-                            For this guide, we will use the following directory structure:
-                            <docs:project-dir-structure dir="/optimizer-raptor-templates"/>
-                        </docs:section>
-
+                            to generate optimized bundles and to also inject the required HTML markup to
+                            include those optimized bundles in your page. In addition,
+                            the RaptorJS Optimizer Taglib includes custom tags that allow
+                            output slots to be defined which allow the developer to control where
+                            optimized resources are included on the page. By default, all CSS
+                            resources are targeted for the "head" slot and all JavaScript resources
+                            are targeted for the "body" slot.
+                        </p>
                         <docs:section heading="Page Template">
                             <docs:code-editor 
                                 mode="xml"
                                 readOnly="true"
+                                title="/modules/pages/index/index.rhtml"
                                 resource="/samples/optimizer-raptor-templates/modules/pages/index/index.rhtml"
                                 />
+
+                        </docs:section>
+
+                        <docs:section heading="Optimizer Config">
+                            <p>
+                                For this guide will be using the following optimizer configuration:
+                            </p>
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true"
+                                title="/optimizer-config.xml"
+                                resource="/samples/optimizer-raptor-templates/optimizer-config.xml"
+                                />
+                            <p>
+                                For more detailed information on configuring the RaptorJS Optimizer,
+                                please see the following documentation: <a href="${url('/optimizer/configuration')}">RaptorJS Optimizer » Configuration</a>
+                            </p>
 
                         </docs:section>
 
@@ -101,41 +102,113 @@
                             node build.js
                             </pre>
                             <p>
-                                After running the above commands you should see output similar to the following:
-                            </p>
-
-                            <pre class="sh" xml:space="preserve" c:trim-body-indent="true" style="clear: both;">
-                            INFO raptor/optimizer/PageOptimizer: Optimized page bundles for "index" built in 16ms
-                            INFO raptor/optimizer/BundleFileWriter: Writing bundle file to "build/static/index-async-d45d02a6.js"...
-                            INFO raptor/optimizer/BundleWriter: Bundle "index-async" (js) written to disk in 13ms
-                            INFO raptor/optimizer/BundleFileWriter: Writing bundle file to "build/static/index-async-c1c02230.css"...
-                            INFO raptor/optimizer/BundleWriter: Bundle "index-async" (css) written to disk in 1ms
-                            INFO raptor/optimizer/BundleFileWriter: Writing bundle file to "build/static/index-8833d501.js"...
-                            INFO raptor/optimizer/BundleWriter: Bundle "index" (js) written to disk in 4ms
-                            INFO raptor/optimizer/BundleFileWriter: Writing bundle file to "build/static/index-2d2550a1.css"...
-                            INFO raptor/optimizer/BundleWriter: Bundle "index" (css) written to disk in 0ms
-                            INFO raptor/optimizer/PageOptimizer: Optimized page "index" in 45ms
-                            Optimized HTML page written to disk:
-                            build/index.html
-                            </pre>
-                            <p>
-                                The optimized output page HTML is written to <code>build/index.html</code>
+                                After running the above commands the page template will be rendered and in the
+                                process of rendering the page template the optimized resource bundles will be written
+                                to disk. The optimized output page HTML is written to <code>build/index.html</code>
                                 and it should look similar to the following:
                             </p>
                             <docs:code-editor 
-                            mode="htmlmixed"
-                            readOnly="true" 
-                            c:parse-body-text="false">
+                                mode="htmlmixed"
+                                readOnly="true" 
+                                title="/build/index.html"
+                                c:parse-body-text="false">
                             <![CDATA[
                             <html>
                                 <head>
                                     <title>RaptorJS Optimizer Taglib: Hello World</title>
-                                    <link rel="stylesheet" type="text/css" href="static/index-2d2550a1.css">
+                                    <link rel="stylesheet" type="text/css" href="static/bundle1-b07068b5.css">
+                                    <link rel="stylesheet" type="text/css" href="static/bundle2-e2ceaf6a.css">
+                                    <link rel="stylesheet" type="text/css" href="static/index-523bbe25.css">
+                                </head>
+                                <body>
+                                    Hello from the RaptorJS Optimizer Taglib!
+                                    <script type="text/javascript" src="static/index-c4359f7a.js"></script>
+                                    <script type="text/javascript" src="static/bundle1-908f9109.js"></script>
+                                    <script type="text/javascript" src="static/bundle2-8a5c1666.js"></script>
+                                    <script type="text/javascript">
+                                    require('module-a').sayHello(); 
+                                    require('module-b').sayHello();
+                                    require('module-c').sayHello(); 
+                                    require('module-d', function(moduleD) {
+                                        moduleD.sayHello();
+                                    });
+                                    </script>
+                                </body>
+                            </html>
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                In the process of rendering the page, the optimized
+                                resource bundles written to disk into the "build/static" directory.
+                            </p>
+                            <docs:message type="info">
+                                <p>
+                                    NOTE: The optimized resource bundles are only generated when
+                                    the page is rendered for the first time.
+                                </p>                                
+                            </docs:message>
+                            <p>
+                                Bundling resources and minifying CSS and JavaScript are great 
+                                when deploying your application production but those optimizations 
+                                can make your application very difficult to debug during development.
+                                Because of this, the RaptorJS Optimizer supports multiple profiles
+                                so that you can easily disable these optimizations during development.
+                                For example, if we re-run the build script in development mode
+                                using the following command:
+                            </p>
+                            <pre class="sh" xml:space="preserve" c:trim-body-indent="true" style="clear: both;">
+                            node build.js dev
+                            </pre>
+                            <p>
+                                When the "dev" argument is passed, the build script will enable the "development" profile for the optimizer instead
+                                of th "production" profile. The "development" profile disables
+                                bundling and minification and, instead, enables in-place deployment.
+                                With in-place deployment enabled, the optimizer will generate URLs
+                                that point to your original source files on disk instead of
+                                the generated optimized resources. For resources that have to be compiled (e.g. LESS files)
+                                the optimizer will compile those resources and generate a URL
+                                to the individual compiled resource. The output HTML of a development
+                                build will be similar to the following:
+                            </p>
+                            <docs:code-editor 
+                                mode="htmlmixed"
+                                readOnly="true" 
+                                title="/build/index.html"
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <html>
+                                <head>
+                                    <title>RaptorJS Optimizer Taglib: Hello World</title>
+                                    <link rel="stylesheet" type="text/css" href="../modules/module-a/module-a.css">
+                                    <link rel="stylesheet" type="text/css" href="../modules/module-b/module-b.css">
+                                    <link rel="stylesheet" type="text/css" href="../modules/module-c/module-c.css">
+                                    <link rel="stylesheet" type="text/css" href="../modules/pages/index/index.css">
                                 </head>
                                 <body>
                                     Hello from the RaptorJS Optimizer Taglib! 
-                                    <script type="text/javascript" src="static/index-8833d501.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/ecma/es5/es5.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/ecma/es6/es6.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/raptor.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/logging/logging_stubs.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/strings/StringBuilder.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/strings/strings.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/objects/objects.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/stacktraces/stacktraces_browser.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/logging/ConsoleLogger.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/logging/logging.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/listeners/listeners.js"></script>
+                                    <script type="text/javascript" src="static/loader-metadata-30f40c1e.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/loader/require/require.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/loader/loader.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/loader/loader_browser.js"></script>
+                                    <script type="text/javascript" src="../node_modules/raptor/lib/raptor/loader/loader_browser_raptor.js"></script>
+                                    <script type="text/javascript" src="../modules/module-a/module-a.js"></script>
+                                    <script type="text/javascript" src="../modules/module-b/module-b.js"></script>
+                                    <script type="text/javascript" src="../modules/module-c/module-c.js"></script>
+                                    <script type="text/javascript" src="../modules/pages/index/index.js"></script>
                                     <script type="text/javascript">
+                                        require('module-a').sayHello(); 
+                                        require('module-b').sayHello();
                                         require('module-c').sayHello(); 
                                         require('module-d', function(moduleD) {
                                             moduleD.sayHello();
@@ -146,18 +219,34 @@
                             ]]>
                             </docs:code-editor>
                             <p>
-                                In the process of rendering the page, the optimized
-                                resource bundles written to disk into the "build/static" directory.
-                            </p>
-                            <p>
-                                NOTE: The optimized resource bundles are only generated when
-                                the page is rendered for the first time.
+                                When using in-place deployment your application will work exactly
+                                the same when the HTML file is loaded in your web browser (i.e. server-less). However,
+                                if your web application is loaded behind an HTTP server then
+                                the resource URLs will be invalid. To enable in-place 
+                                deployment when using an HTTP server, please
+                                see the <a href="${url('/optimizer/developer-guide')}">RaptorJS Optimizer Developer Guide</a>.
                             </p>
                         </docs:section>
-                
+                        <docs:section heading="Further Reading">
+                            <ul>
+                                <li>
+                                    <a href="${url('/optimizer/developer-guide')}">RaptorJS Optimizer: Developer Guide</a>
+                                </li>
+                                <li>
+                                    <a href="${url('/optimizer/configuration')}">RaptorJS Optimizer: Configuration</a>
+                                </li>
+                                <li>
+                                    <a href="${url('/optimizer/get-started-javascript-api')}">RaptorJS Optimizer: Get Started with the JS API</a>
+                                </li>
+                                <li>
+                                    <a href="${url('/optimizer/get-started-clie')}">RaptorJS Optimizer: Get Started using the Command Line Interface</a>
+                                </li>
+                                <li>
+                                    <a href="${url('/raptor-templates')}">Raptor Templates</a>
+                                </li>
+                            </ul>
+                        </docs:section>
                     </docs:section>
-
-                    <c:include template="/pages/optimizer/shared-content/configuring" />
 
                 </docs:docs>
             </div>

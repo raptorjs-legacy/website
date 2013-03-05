@@ -51,41 +51,8 @@
             <p>
                 At a minimum, a package needs to describe what is included in the package.
                 This is done by adding a "raptor" » "dependencies" property to a package.json file that is
-                an array of resources that should be included as part of the package. 
+                an array of dependecies that should be included as part of the package. 
                 A simple <code>package.json</code> is shown below:
-            </p>
-            <docs:code-editor 
-                mode="javascript"
-                readOnly="true" 
-                c:parse-body-text="false">
-            <![CDATA[
-            {
-                "raptor": {
-                    "dependencies": [
-                        "my-widget.js",
-                        "my-css-stylesheet.css",
-                        "my-less-stylesheet.less",
-                        "my-template.rhtml"
-                    ]
-                }
-            }
-            ]]>
-            </docs:code-editor>
-            <p>
-                The above <code>package.json</code> file includes four resources. The RaptorJS Packaging System
-                is flexible enough to support any type of resource, including resources that need to be compiled
-                into either JavaScript or CSS (such as <a href="http://lesscss.org">LESS</a> CSS and 
-                <a href="${url('/raptor-templates')}">Raptor Template</a> files). Resource paths
-                that are not prefixed with a forward slash ("/") are treated as paths relative to the location
-                of the containing <code>package.json</code> file. Paths that are prefixed with a forward slash
-                are treated as relative to at least one of the resource search path entries 
-                defined for your application.
-            </p>
-            <p>
-                In addition to declaring which resources are included as part of a package, a <code>package.json</code>
-                file can also declare that it depends on another module (i.e., another <code>package.json</code> file).
-                A module dependency can be added using adding <code>{ "module": "&lt;module-name>" }</code>
-                entries as shown in the following example:
             </p>
             <docs:code-editor 
                 mode="javascript"
@@ -106,6 +73,10 @@
             }
             ]]>
             </docs:code-editor>
+            <p>
+                Please see the documentation for <a href="${url('/packaging')}">RaptorJS Packaging</a> for more details on packaging up code.
+            </p>
+
         </docs:section>
     </docs:section>
     
