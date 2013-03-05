@@ -141,7 +141,7 @@ Publisher.prototype = {
         console.error('Writing page "' + (relativePath || "/") + '" to "' + outputFile + '"...');
         this.currentOutputDir = outputFile.getParentFile();
 
-        var controllerFile = new File(templateFile.getParentFile(), templateFile.getNameWithoutExtension() + ".js");
+        var controllerFile = new File(templateFile.getParentFile(), "index.js");
         var viewModel = null;
         if (controllerFile.exists()) {
             viewModel = require(controllerFile.getAbsolutePath()).controller();
