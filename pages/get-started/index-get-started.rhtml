@@ -111,7 +111,8 @@
                             dependencies: [
                                 { module: 'raptor'}, 
                                 { module: 'raptor/pubsub', 
-                                '/test.css']
+                                '/test.css'
+                            ]
                         });
                         ]]>
                         </docs:code-editor>
@@ -138,7 +139,7 @@
                                 <dependencies>
                                     <module name="raptor"/>
                                     <module name="raptor/pubsub"/>
-                                    <module name="test.css"/>
+                                    <css path="test.css"/>
                                 </dependencies>
                             </optimizer:page>
 
@@ -179,8 +180,7 @@
                         <p>
                             The above code barely scratches the surface of what is supported
                             by the <a href="${url('/optimizer')}">RaptorJS Optimizer</a>. Please see the
-                            following documentation for more information on using and configuring the <a href="${url('/optimizer')}">RaptorJS Optimizer</a>:
-                            <a href="${url('/optimizer')}">RaptorJS Optimizer</a>
+                            following documentation for the <a href="${url('/optimizer')}">RaptorJS Optimizer</a> for more information.
                         </p>
 
                     </docs:section>
