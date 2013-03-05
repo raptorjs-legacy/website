@@ -108,8 +108,6 @@
                             Transitive dependencies can be declared by adding another module as a dependency.
                             RaptorJS is extensible and allows dependency handlers to be registered to support any
                             type of dependency—including dependencies that must be compiled to JavaScript and CSS.
-                            For more information on registering dependency handlers, please see
-                            the <a href="#DependencyHandlers">Registering Dependency Handlers</a>
                             section below.
                         </p>
                         <docs:section heading="Declaring Dependency Types">
@@ -130,15 +128,19 @@
                                 "description": "My amazing module.",
                                 "raptor": {
                                     "dependencies": [ 
-                                        { "type": module", "name": "some/namespace/another-module" },
-                                        { "type": "js",    "path": "my-module.js" }, 
-                                        { "type": "css",   "path": "my-module.css" }, 
-                                        { "type": "rhtml", "path": "my-module.rhtml" }
+                                        { "type": "module", "name": "some/namespace/another-module" },
+                                        { "type": "js",     "path": "my-module.js" }, 
+                                        { "type": "css",    "path": "my-module.css" }, 
+                                        { "type": "rhtml",  "path": "my-module.rhtml" }
                                     ]
                                 }   
                             }
                             ]]>
                             </docs:code-editor>
+                            <p>
+                                Please see the <a href="#DependencyTypes">Dependency Types</a> section
+                                below for more information how dependencies of different types are handled.
+                            </p>
                         </docs:section>
                         <docs:section heading="Package Extensions">
                             <p>
@@ -173,6 +175,10 @@
                                     <b>development</b> - Enabled for development (i.e. non-production) environments only
                                 </li>
                             </ul>
+                            <p>
+                                For your own application you might find it beneficial to introduce your own 
+                                extensions such as "mobile" or "desktop" to target specific code for each environment.
+                            </p>
                             <p>
                                 Sample <code>package.json</code> file that declares extensions is 
                                 shown below:
@@ -212,30 +218,32 @@
                             </docs:code-editor>
                         </docs:section>
                     </docs:section>
-                    <docs:section heading="Dependency Types">
+                    <docs:section heading="Dependency Types" anchor-name="DependencyTypes">
                         <p>
                             To support any type of dependency, RaptorJS can easily be extended to
-                            support any type of dependency. The only requirement is that each dependency type 
+                            support any type of dependency. The only requirement is that each dependency 
                             must compile to either JavaScript or CSS. On the server, only JavaScript dependencies will
-                            be loaded and non-JavaScript dependencies will be ignored. For more information
-                            on adding support for new types of dependencies please see the 
-                            <a href="${url('/packaging/developer-guide')}">RaptorJS Packaging Developer Guide</a>
+                            be loaded and non-JavaScript dependencies will be ignored. For more information on registering dependency handlers, please see 
+                            <a href="${url('/packaging/developer-guide')}#RegisteringDependencyTypes"><nobr>RaptorJS Packaging Developer Guide » Registering Dependency Handlers</nobr></a>.
                         </p>
                     </docs:section>
 
                     <docs:section heading="Resolving Module Packages" anchor-name="ResolvingModulePackages">
                         <p>
-                            For a module named "some/namespace/my-module",
-                            the <code>package.json</code> should be placed in one of the following locations:
+                            The name of a module is used by RaptorJS to resolve a module name to its 
+                            corresponding <code>package.json</code>. For a module named "some/namespace/my-module",
+                            the <code>package.json</code> should be placed in either of the following locations:
                         </p>
                         <ol>
-                            <li>&lt;path-to-modules>/some/namespace/my-module/package.json</li>
-                            <li>&lt;path-to-modules>/some/namespace/my-module-package.json</li>
+                            <li>&lt;path-to-modules>/some/namespace/my-module<span class="highlite">/</span>package.json</li>
+                            <li>&lt;path-to-modules>/some/namespace/my-module<span class="highlite">-</span>package.json</li>
                         </ol>
-                        <p>
-                            The second usage (i.e. "my-module-package.json"), allows multiple packages to be placed
-                            in the same directory.
-                        </p>
+                        <docs:message type="info">
+                            <p>
+                                The second usage (i.e. "my-module-package.json"), allows multiple packages to be placed
+                                in the same directory.
+                            </p>
+                        </docs:message>
                     </docs:section>
                     <docs:section heading="Usage">
                         <docs:section heading="Loading Modules on the Server">
@@ -245,12 +253,13 @@
                                 <a href="${url('/module-loader')}">
                                     RaptorJS JavaScript Module Loader
                                 </a>
-                                will read the corresponding <code>package.json</code> file
+                                will resolve the module name to its corresponding <code>package.json</code> file.
+                                The <code>package.json</code> file will then be rea
                                 to determine which resources should be evaluate. The server-side
-                                module loader
-                                will ignore the dependencies that are part of the "browser"
-                                extension since the "browser" extension would not be enabled for
-                                the server-side module loader. The "server"
+                                module loader will only load files that are outside of
+                                an extension or that are part of an enabled extension. 
+                                For the example above, dependencies that are part of the "browser"
+                                extension will be ignored since the "browser" extension would not be enabled on the server. The "server"
                                 extension, however, would be enabled. Therefore, the following dependencies
                                 would be evaluated (in order) on the server when the above module is required:
                             </p>
@@ -265,6 +274,10 @@
                                     my-module-server.js
                                 </li>
                             </ol>
+                            <p>
+                                Also, non-JavaScript dependencies will be ignored by the RaptorJS server-side
+                                module loader.
+                            </p>
                         </docs:section>
                         
                         <docs:section heading="Delivering Modules to the Client">
@@ -281,7 +294,7 @@
                                 extension since the "server" extension would not be enabled for
                                 the optimization process. The "browser"
                                 extension, however, would be enabled since the module is being
-                                optimized for the browser. Therefore, the following dependencies
+                                optimized for the web browser. Therefore, the following dependencies
                                 would be included (in order) in the resulting optimized resource bundles:
                             </p>
                             <ol>
