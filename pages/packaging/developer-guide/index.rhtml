@@ -190,8 +190,8 @@
                                     An extension definition can also include a <code>condition</code>
                                     property that defines a JavaScript expression that is evaluated
                                     at runtime to determine whether or not the dependencies for the
-                                    extension should be included. An example extension with with
-                                    a condition is shown below:
+                                    extension should be included. An example extension with
+                                    a "condition" is shown below:
                                 </p>
                                 <docs:code-editor 
                                     autoResize="true"
@@ -219,14 +219,23 @@
                                 <p>
                                     When using extension conditions, <code>extensions</code> is an object
                                     that represents the list of enabled extensions. For more details, see the API docs for
-                                    <a href="http://raptorjs.org/api/packaging.ExtensionCollection/">
-                                        packaging.ExtensionCollection
+                                    <a href="http://raptorjs.org/api/raptor/packaging/ExtensionCollection/">
+                                        raptor/packaging/ExtensionCollection
                                     </a>.
                                 </p>
                                 <p>
                                     Any valid JavaScript expression is allowed, but the JavaSript expression should only
-                                    make use of the provided <code>extensions</code> object.
+                                    make use of the provided <code>extensions</code> object. A slightly more complex condition is shown below:
                                 </p>
+                                <docs:code-editor 
+                                    autoResize="true"
+                                    indentUnit="4"
+                                    readOnly="true"
+                                    mode="javascript">
+                                <![CDATA[
+                                "condition": "!extensions.contains('jquery') && extensions.contains('mobile')"
+                                ]]>
+                                </docs:code-editor>
                                 <docs:message type="info">
                                     <p>
                                         If an extension condition is provided, then the extension name is not used
@@ -361,6 +370,10 @@
                             require('raptor/packaging').enableExtension('myExtension');
                             ]]>
                             </docs:code-editor>
+                            <p>
+                                Please see the documentation for the <a href="${url('/optimizer')}">RaptorJS Optimizer</a>
+                                for configuring which extensions are enabled during the optimization process.
+                            </p>
                         </docs:section>
                     </docs:section>
 
@@ -372,7 +385,7 @@
                                 Resource Search Path
                             </a>
                             entry. Various modules
-                            that are part of RaptorJS use these packages to discover certain information 
+                            that are part of RaptorJS use top-level packages to discover certain information 
                             at runtime. The RaptorJS <a href="http://raptorjs.org/api/raptor/packaging/">raptor/packaging</a>
                             module provides a helper <code>forEachTopLevelPackageManifest</code> that can be used to iterate over all of the cached top-level
                             packages as shown in the following code:
@@ -408,20 +421,28 @@
                             to determine how to handle dependencies. A dependency can
                             either be a resource dependency (i.e., either a JavaScript or CSS resource
                             or a resource that compiles into either JavaScript or CSS) or a package
-                            dependencncy (i.e., a dependency that resolves into another <code>package.json</code> file).
+                            dependencncy (i.e., a dependency that resolves to another <code>package.json</code> file).
                         </p>
                         <p>
-                            Resource dependency handlers must implement the <code>getContentType</code> method and the
-                            <code>getCode</code> method. If the content type for a resource dependency
-                            is "application/javascript" then the <code>getCode</code> method will be used
-                            to load the dependency into a server-side JavaScript environment if necessary
-                            unless the <code>load</code> method is implemented.
+                            Every dependency handler must implement the <code>getContentType</code> method
+                            and only the two following values are allowed:
+                        </p>
+                        <ul>
+                            <li>application/javascript</li>
+                            <li>text/css</li>
+                        </ul>
+                        <p>
+                            Resource dependency handlers must also implement the
+                            <code>getCode()</code> method. The output of the <code>getCode()</code>
+                            method should be either the JavaScript or CSS code for the resource.
+                            If the dependency must be compiled into either JavaScript or CSS 
+                            (e.g. <a href="http://lesscss.org/">LESS</a> or <a href="${url('/raptor-templates')}">Raptor Templates</a>)
                         </p>
                         <p>
-                            For examples of dependency handlers, please see the API docs for the
-                            <a href="http://raptorjs.org/api/packaging/">
-                                packaging
-                            </a> module.
+                            For examples of dependency handlers, please check out the following source code directory for the <code>raptor/packaging</code>:
+                            <a href="https://github.com/raptorjs/raptorjs/tree/master/lib/raptor/packaging">
+                                /lib/raptor/packaging
+                            </a>
                         </p>
                         <docs:section heading="Registering Dependency Handlers" anchor-name="RegisteringDependencyTypes">
                             <p>
