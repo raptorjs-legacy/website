@@ -254,11 +254,29 @@
 			"cmd":
 			[
 				"node",
-				"build.js",
-				"dev"
+				"build.js"
 			],
 			"name": "samples/async-loader",
 			"working_dir": "${project_path}/../samples/async-loader"
+		},
+		{
+			"cmd":
+			[
+				"node",
+				"build.js"
+			],
+			"name": "samples/optimizer-raptor-templates",
+			"working_dir": "${project_path}/../samples/optimizer-raptor-templates"
+		},
+		{
+			"cmd":
+			[
+				"node",
+				"build.js",
+				"dev"
+			],
+			"name": "samples/optimizer-raptor-templates (dev)",
+			"working_dir": "${project_path}/../samples/optimizer-raptor-templates"
 		},
 		{
 			"cmd":
@@ -393,6 +411,8 @@
 			"Build (dev) - widgets/get-started",
 			"Publish to Github",
 			"samples/async-loader",
+			"samples/optimizer-raptor-templates",
+			"samples/optimizer-raptor-templates (dev)",
 			"samples/packaging",
 			"samples/todomvc",
 			"samples/ui-components",
