@@ -48,12 +48,10 @@ define(
                     function() {
                         input.invokeBody();
 
-                        if (disqusId) {
-                            require('raptor/templating').render('components/docs/Docs/Docs_discussion-section', {
-                                heading: input.heading,
-                                disqusId: disqusId
-                            }, context);
-                        }
+                        require('raptor/templating').render('components/docs/Docs/Docs_footer', {
+                              heading: input.heading,
+                              disqusId: disqusId
+                          }, context);
                     });
                 
                 var rootSection = sectionStack[0];
