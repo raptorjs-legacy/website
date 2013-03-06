@@ -4,7 +4,7 @@
     xmlns:docs="docs"
     params="heading,disqusId">
 
-    <docs:section heading="Discussion">
+    <docs:section heading="Discussion" c:if="disqusId">
         <docs:disqus id="$disqusId" title="$heading" short-name="raptor-js"/>
     </docs:section>
 
