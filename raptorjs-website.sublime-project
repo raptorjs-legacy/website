@@ -120,6 +120,15 @@
 			"cmd":
 			[
 				"${project_path}/build-page-dev",
+				"/raptor-templates/language-guide"
+			],
+			"name": "Build (dev) - raptor-templates-language-guide",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-page-dev",
 				"/raptor-templates/try-online"
 			],
 			"name": "Build (dev) - raptor-templates-try-online",
@@ -423,6 +432,7 @@
 			"Build (dev) - packaging/get-started",
 			"Build (dev) - raptor-templates",
 			"Build (dev) - raptor-templates-developer-guide",
+			"Build (dev) - raptor-templates-language-guide",
 			"Build (dev) - raptor-templates-try-online",
 			"Build (dev) - ui-components",
 			"Build (dev) - widgets",
