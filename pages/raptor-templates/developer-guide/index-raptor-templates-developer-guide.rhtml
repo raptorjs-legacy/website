@@ -314,68 +314,77 @@ var jsSource = compiler.compile('<c:template \
                             performance constraints.   
                         </p>
                         <docs:section heading="Sample Compiled Template">
-<docs:code-editor 
-    title="Input Template"
-    mode="xml"
-    readOnly="true" 
-    c:parse-body-text="false"
-><![CDATA[<c:template 
-    xmlns:c="core" 
-    params="name,colors">
-    
-    Hello $name!
+                            <docs:code-editor 
+                                title="Input Template"
+                                mode="xml"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <c:template 
+                                xmlns:c="core" 
+                                params="name,colors">
+                                
+                                Hello $name!
 
-    <c:choose>
-        <ul c:when="notEmpty(colors)">
-            <li c:for="color in colors">
-                $color
-            </li>
-        </ul>
-        <div c:otherwise="">
-            No colors!
-        </div>
-    </c:choose>
-    
-</c:template>]]></docs:code-editor>
-<docs:code-editor 
-    title="Unminified Compiled Output"
-    mode="javascript"
-    readOnly="true" 
-    c:parse-body-text="false"
-><![CDATA[$rset("rhtml", "test", function(helpers){
-  var empty=helpers.e,
-      notEmpty=helpers.ne,
-      escapeXml=helpers.x,
-      forEach=helpers.f;
+                                <c:choose>
+                                    <ul c:when="notEmpty(colors)">
+                                        <li c:for="color in colors">
+                                            $color
+                                        </li>
+                                    </ul>
+                                    <div c:otherwise="">
+                                        No colors!
+                                    </div>
+                                </c:choose>
+                                
+                            </c:template>
+                            ]]>
+                            </docs:code-editor>
+                            <docs:code-editor 
+                                title="Unminified Compiled Output"
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            $rset("rhtml", "test", function(helpers){
+                              var empty=helpers.e,
+                                  notEmpty=helpers.ne,
+                                  escapeXml=helpers.x,
+                                  forEach=helpers.f;
 
-  return function(data, context){
-    var name=data.name,
-        colors=data.colors;
+                              return function(data, context){
+                                var name=data.name,
+                                    colors=data.colors;
 
-    context.w('Hello ')
-      .w(escapeXml(name))
-      .w('!');
-    if (notEmpty(colors)) {
-      context.w('<ul>');
-      forEach(colors, function(color) {
-        context.w('<li>')
-          .w(escapeXml(color))
-          .w('</li>');
-      });
+                                context.w('Hello ')
+                                  .w(escapeXml(name))
+                                  .w('!');
+                                if (notEmpty(colors)) {
+                                  context.w('<ul>');
+                                  forEach(colors, function(color) {
+                                    context.w('<li>')
+                                      .w(escapeXml(color))
+                                      .w('</li>');
+                                  });
 
-      context.w('</ul>');
-    } else {
-      context.w('<div>No colors!</div>');
-    }
+                                  context.w('</ul>');
+                                } else {
+                                  context.w('<div>No colors!</div>');
+                                }
 
-  }
-});]]></docs:code-editor>
-<docs:code-editor 
-    title="Minified Compiled Output"
-    mode="javascript"
-    readOnly="true" 
-    c:parse-body-text="false"
-><![CDATA[$rset("rhtml","test",function(a){var e=a.ne,c=a.x,f=a.f;return function(a,b){var g=a.name,d=a.colors;b.w("Hello ").w(c(g)).w("!");e(d)?(b.w("<ul>"),f(d,function(a){b.w("<li>").w(c(a)).w("</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}});]]></docs:code-editor>
+                              }
+                            });
+                            ]]>
+                            </docs:code-editor>
+                            <docs:code-editor 
+                                title="Minified Compiled Output"
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            $rset("rhtml","test",function(a){var e=a.ne,c=a.x,f=a.f;return function(a,b){var g=a.name,d=a.colors;b.w("Hello ").w(c(g)).w("!");e(d)?(b.w("<ul>"),f(d,function(a){b.w("<li>").w(c(a)).w("</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}});
+                            ]]>
+                            </docs:code-editor>
                             <table class="sizes table table-bordered">
                                 <thead>
                                     <tr>

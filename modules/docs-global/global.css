@@ -1,3 +1,9 @@
+* {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
 BODY > .container > H1 {
     padding-top: 20px;
 }
@@ -272,8 +278,14 @@ BODY > .container > .content {
     }
 }
 
+
+
 @media (max-width: 480px) {
     BODY {
+    }
+
+    .table-compare > thead{
+
     }
     
     BODY > .container > .content {

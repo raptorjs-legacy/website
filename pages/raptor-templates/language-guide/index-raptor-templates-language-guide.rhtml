@@ -143,82 +143,77 @@
                                 rewritten to apply template directives as elements instead of as
                                 attributes to produce the equivalent output. For example:
                             </p>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Applying directives using attributes
-                                        </th>
-                                        <th>
-                                            Applying directives using elements
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 50%">
-                                            <docs:code-editor 
-                                                mode="xml"
-                                                readOnly="true" 
-                                                c:parse-body-text="false">
-                                            <![CDATA[
-                                            <c:template
-                                                xmlns:c="core"
-                                                name="demo"
-                                                params="colors">
+
+                            <div class="compare-table compare-table-2">
+                                <div class="compare-section">
+                                    <h1>Applying directives using attributes</h1>
+                                    <div>
+                                        <docs:code-editor 
+                                            mode="xml"
+                                            readOnly="true" 
+                                            c:parse-body-text="false">
+                                        <![CDATA[
+                                        <c:template
+                                            xmlns:c="core"
+                                            name="demo"
+                                            params="colors">
+                                         
+                                            <!-- Colors available -->
+                                            <ul c:if="notEmpty(colors)">
+                                                <li c:for="color in colors">
+                                                    $color
+                                                </li>
+                                            </ul>
                                              
-                                                <!-- Colors available -->
-                                                <ul c:if="notEmpty(colors)">
-                                                    <li c:for="color in colors">
-                                                        $color
-                                                    </li>
+                                            <!-- No colors available -->
+                                            <div c:if="empty(colors)">
+                                                No colors!
+                                            </div>
+                                             
+                                        </c:template>
+                                        ]]>
+                                        </docs:code-editor>
+                                    </div>
+                                </div>
+                                <div class="compare-section">
+                                    <h1>Applying directives using elements</h1>
+                                    <div>
+                                        <docs:code-editor 
+                                            mode="xml"
+                                            readOnly="true" 
+                                            c:parse-body-text="false">
+                                        <![CDATA[
+                                        <c:template
+                                            xmlns:c="core"
+                                            name="demo"
+                                            params="colors">
+                                          
+                                            <!-- Colors available -->
+                                            <c:if test="notEmpty(colors)">
+                                                <ul>
+                                                    <c:for each="color in colors">
+                                                        <li>
+                                                            $color
+                                                        </li>
+                                                    </c:for>
                                                 </ul>
-                                                 
-                                                <!-- No colors available -->
-                                                <div c:if="empty(colors)">
+                                            </c:if>
+                                              
+                                            <!-- No colors available -->
+                                            <c:if test="empty(colors)">
+                                                <div>
                                                     No colors!
                                                 </div>
-                                                 
-                                            </c:template>
-                                            ]]>
-                                            </docs:code-editor>
-                                        </td>
-                                        <td style="width: 50%">
-                                            <docs:code-editor 
-                                                mode="xml"
-                                                readOnly="true" 
-                                                c:parse-body-text="false">
-                                            <![CDATA[
-                                            <c:template
-                                                xmlns:c="core"
-                                                name="demo"
-                                                params="colors">
-                                              
-                                                <!-- Colors available -->
-                                                <c:if test="notEmpty(colors)">
-                                                    <ul>
-                                                        <c:for each="color in colors">
-                                                            <li>
-                                                                $color
-                                                            </li>
-                                                        </c:for>
-                                                    </ul>
-                                                </c:if>
-                                                  
-                                                <!-- No colors available -->
-                                                <c:if test="empty(colors)">
-                                                    <div>
-                                                        No colors!
-                                                    </div>
-                                                </c:if>
-                                                 
-                                            </c:template>
-                                            ]]>
-                                            </docs:code-editor>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            </c:if>
+                                             
+                                        </c:template>
+                                        ]]>
+                                        </docs:code-editor>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear: both;"/>
                             
                             <p>
                                 The disadvantage of using elements to control structural logic is
@@ -403,56 +398,51 @@
                                         properties of the data object can be accessed directly. The
                                         following are equivalent:
                                     </p>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    With params
-                                                </th>
-                                                <th>
-                                                    Without params
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 50%">
-                                                    <docs:code-editor 
-                                                        mode="xml"
-                                                        readOnly="true" 
-                                                        c:parse-body-text="false">
-                                                        <![CDATA[
-                                                        <c:template
-                                                        xmlns:c="core"
-                                                        name="greeting"
-                                                        params="name,count">
-                                                      
-                                                        Hello $name! 
-                                                        You have $count new messages.
-                                                      
-                                                    </c:template>
-                                                    ]]>
-                                                    </docs:code-editor>
-                                                </td>
-                                                <td style="width: 50%">
-                                                    <docs:code-editor 
-                                                        mode="xml"
-                                                        readOnly="true" 
-                                                        c:parse-body-text="false">
+                                    <div class="compare-table compare-table-2">
+                                        <div class="compare-section">
+                                            <h1>With params</h1>
+                                            <div>
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
                                                     <![CDATA[
                                                     <c:template
-                                                        xmlns:c="core"
-                                                        name="greeting">
-                                                      
-                                                        Hello ${data.name}! 
-                                                        You have ${data.count} new messages.
-                                                      
-                                                    </c:template>
-                                                    ]]></docs:code-editor>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                    xmlns:c="core"
+                                                    name="greeting"
+                                                    params="name,count">
+                                                  
+                                                    Hello $name! 
+                                                    You have $count new messages.
+                                                  
+                                                </c:template>
+                                                ]]>
+                                                </docs:code-editor>
+                                            </div>
+                                        </div>
+                                        <div class="compare-section">
+                                            <h1>Without params</h1>
+                                            <div>
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
+                                                <![CDATA[
+                                                <c:template
+                                                    xmlns:c="core"
+                                                    name="greeting">
+                                                  
+                                                    Hello ${data.name}! 
+                                                    You have ${data.count} new messages.
+                                                  
+                                                </c:template>
+                                                ]]>
+                                                </docs:code-editor>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="clear: both;"/>
                                     <p>
                                         The benefit of declaring parameters is that the local variables will
                                         be minified which can reduce the size of the compiled output if the
@@ -580,86 +570,79 @@
                                 <p>
                                     Any element or fragment of HTML can be made conditional using the c:if, c:else-if or c:else directive.
                                 </p>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Applied as an attribute
-                                            </th>
-                                            <th>
-                                                Applied as an element
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 50%">
-                                                <docs:code-editor 
-                                                    mode="xml"
-                                                    readOnly="true" 
-                                                    c:parse-body-text="false">
-                                                <![CDATA[
-                                                <!--Simple if-->
-                                                <div c:if="someCondition">
+                                <div class="compare-table compare-table-2">
+                                    <div class="compare-section">
+                                        <h1>Applied as an attribute</h1>
+                                        <div>
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <!--Simple if-->
+                                            <div c:if="someCondition">
+                                                Hello World
+                                            </div>
+
+                                            <!--Complex if-->
+                                            <div c:if="test === 'a'">
+                                                A
+                                            </div>
+                                            <div c:else-if="test === 'b'">
+                                                B
+                                            </div>
+                                            <div c:else-if="test === 'c'">
+                                                c
+                                            </div>
+                                            <div c:else="">
+                                                Something else
+                                            </div>
+                                            ]]>
+                                            </docs:code-editor>
+                                        </div>
+                                    </div>
+                                    <div class="compare-section">
+                                        <h1>Applied as an element</h1>
+                                        <div>
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <!--Simple if-->
+                                            <c:if test="someCondition">
+                                                <div>
                                                     Hello World
                                                 </div>
+                                            </c:if>
 
-                                                <!--Complex if-->
-                                                <div c:if="test === 'a'">
+                                            <!--Complex if-->
+                                            <c:if test="test === 'a'">
+                                                <div>
                                                     A
                                                 </div>
-                                                <div c:else-if="test === 'b'">
+                                            </c:if>
+                                            <c:else-if test="test === 'b'">
+                                                <div>
                                                     B
                                                 </div>
-                                                <div c:else-if="test === 'c'">
-                                                    c
+                                            </c:else-if>
+                                            <c:else-if test="test === 'c'">
+                                                <div>
+                                                    C
                                                 </div>
-                                                <div c:else="">
+                                            </c:else-if>
+                                            <c:else>
+                                                <div>
                                                     Something else
                                                 </div>
-                                                ]]>
-                                                </docs:code-editor>
-                                            </td>
-                                            <td style="width: 50%">
-                                                <docs:code-editor 
-                                                    mode="xml"
-                                                    readOnly="true" 
-                                                    c:parse-body-text="false">
-                                                <![CDATA[
-                                                <!--Simple if-->
-                                                <c:if test="someCondition">
-                                                    <div>
-                                                        Hello World
-                                                    </div>
-                                                </c:if>
-
-                                                <!--Complex if-->
-                                                <c:if test="test === 'a'">
-                                                    <div>
-                                                        A
-                                                    </div>
-                                                </c:if>
-                                                <c:else-if test="test === 'b'">
-                                                    <div>
-                                                        B
-                                                    </div>
-                                                </c:else-if>
-                                                <c:else-if test="test === 'c'">
-                                                    <div>
-                                                        C
-                                                    </div>
-                                                </c:else-if>
-                                                <c:else>
-                                                    <div>
-                                                        Something else
-                                                    </div>
-                                                </c:else>
-                                                ]]>
-                                                </docs:code-editor>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                            </c:else>
+                                            ]]>
+                                            </docs:code-editor>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"/>
                             </docs:section>
                             
                             <docs:section
@@ -672,62 +655,55 @@
                                     branch is rendered, or, if no c:when branch matches, the c:otherwise
                                     branch is rendered.
                                 </p>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Applied as an attribute
-                                            </th>
-                                            <th>
-                                                Applied as an element
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 50%">
-                                                <docs:code-editor 
-                                                    mode="xml"
-                                                    readOnly="true" 
-                                                    c:parse-body-text="false">
-                                                <![CDATA[
-                                                <c:choose>
-                                                    <c:when test="myVar === 'A'">
-                                                        <div>A</div>
-                                                    </c:when>
-                                                    <c:when test="myVar === 'B'">
-                                                        <div>B</div>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <div>Something else</div>
-                                                    </c:otherwise>
-                                                <c:choose>
-                                                ]]>
-                                                </docs:code-editor>
-                                            </td>
-                                            <td style="width: 50%">
-                                                <docs:code-editor 
-                                                    mode="xml"
-                                                    readOnly="true" 
-                                                    c:parse-body-text="false">
-                                                <![CDATA[
-                                                <c:choose>
-                                                    <div c:when="myVar === 'A'">
-                                                        A
-                                                    </div>
-                                                    <div c:when="myVar === 'B'">
-                                                        B
-                                                    </div>
-                                                    <div c:otherwise="">
-                                                        Something else
-                                                    </div>
-                                                <c:choose>
-                                                ]]>
-                                                </docs:code-editor>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="compare-table compare-table-2">
+                                    <div class="compare-section">
+                                        <h1>Applied as an attribute</h1>
+                                        <div>
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <c:choose>
+                                                <c:when test="myVar === 'A'">
+                                                    <div>A</div>
+                                                </c:when>
+                                                <c:when test="myVar === 'B'">
+                                                    <div>B</div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div>Something else</div>
+                                                </c:otherwise>
+                                            <c:choose>
+                                            ]]>
+                                            </docs:code-editor>
+                                        </div>
+                                    </div>
+                                    <div class="compare-section">
+                                        <h1>Applied as an element</h1>
+                                        <div>
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <c:choose>
+                                                <div c:when="myVar === 'A'">
+                                                    A
+                                                </div>
+                                                <div c:when="myVar === 'B'">
+                                                    B
+                                                </div>
+                                                <div c:otherwise="">
+                                                    Something else
+                                                </div>
+                                            <c:choose>
+                                            ]]>
+                                            </docs:code-editor>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"/>
                                 <p>
                                     Given a value of "A" for "myVar", the output would be the following:
                                 </p>
@@ -835,63 +811,57 @@
                                     c:for directive. The directive can be applied as an element or as an
                                     attribute.
                                 </p>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Applied as an attribute
-                                                </th>
-                                                <th>
-                                                    Applied as an element
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 50%">
-                                                    <docs:code-editor 
-                                                        mode="xml"
-                                                        readOnly="true" 
-                                                        c:parse-body-text="false">
-                                                    <![CDATA[
-                                                    <ul>
-                                                        <li c:for="item in items">${item}</li>
-                                                    </ul>
-                                                    ]]>
-                                                    </docs:code-editor>
-                                                </td>
-                                                <td style="width: 50%">
-                                                    <docs:code-editor 
-                                                        mode="xml"
-                                                        readOnly="true" 
-                                                        c:parse-body-text="false">
-                                                    <![CDATA[
-                                                    <ul>
-                                                        <c:for each="item in items">
-                                                            <li>${item}</li>
-                                                        </c:for>
-                                                    </ul>
-                                                    ]]>
-                                                    </docs:code-editor>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <p>
-                                        Given a value of <code>["red", "green", "blue"]</code> for 
-                                        <code>items</code>, the output would be the following:
-                                    </p>
-                                    <docs:code-editor 
-                                        mode="xml"
-                                        readOnly="true" 
-                                        c:parse-body-text="false">
-                                    <![CDATA[
-                                    <ul>
-                                        <li>red</li>
-                                        <li>green</li>
-                                        <li>blue</li>
-                                    </ul>
-                                    ]]>
+                                <div class="compare-table compare-table-2">
+                                    <div class="compare-section">
+                                        <h1>Applied as an attribute</h1>
+                                        <div>
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <ul>
+                                                <li c:for="item in items">${item}</li>
+                                            </ul>
+                                            ]]>
+                                            </docs:code-editor>
+                                        </div>
+                                    </div>
+                                    <div class="compare-section">
+                                        <h1>Applied as an element</h1>
+                                        <div>
+                                            <docs:code-editor 
+                                                mode="xml"
+                                                readOnly="true" 
+                                                c:parse-body-text="false">
+                                            <![CDATA[
+                                            <ul>
+                                                <c:for each="item in items">
+                                                    <li>${item}</li>
+                                                </c:for>
+                                            </ul>
+                                            ]]>
+                                            </docs:code-editor>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"/>
+                                <p>
+                                    Given a value of <code>["red", "green", "blue"]</code> for 
+                                    <code>items</code>, the output would be the following:
+                                </p>
+                                <docs:code-editor 
+                                    mode="xml"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                <ul>
+                                    <li>red</li>
+                                    <li>green</li>
+                                    <li>blue</li>
+                                </ul>
+                                ]]>
                                 </docs:code-editor>
                                 
                                 <docs:section heading="Loop status variable">
@@ -907,51 +877,46 @@
                                         <li>isFirst()</li>
                                         <li>getIndex()</li>
                                     </ul>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Applied as an attribute
-                                                </th>
-                                                <th>
-                                                    Applied as an element
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 50%">
-                                                    <docs:code-editor 
-                                                        mode="xml"
-                                                        readOnly="true" 
-                                                        c:parse-body-text="false">
-                                                    <![CDATA[
-                                                    <ul>
-                                                        <li c:for="item in items; status-var=loopStatus">
+                                    <div class="compare-table compare-table-2">
+                                        <div class="compare-section">
+                                            <h1>Applied as an attribute</h1>
+                                            <div>
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
+                                                <![CDATA[
+                                                <ul>
+                                                    <li c:for="item in items; status-var=loopStatus">
+                                                        ${loopStatus.getIndex()+1}) ${item}
+                                                    </li>
+                                                </ul>
+                                                ]]>
+                                                </docs:code-editor>
+                                            </div>
+                                        </div>
+                                        <div class="compare-section">
+                                            <h1>Applied as an element</h1>
+                                            <div>
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
+                                                <![CDATA[
+                                                <ul>
+                                                    <c:for each="item in items" status-var="loopStatus">
+                                                        <li>
                                                             ${loopStatus.getIndex()+1}) ${item}
                                                         </li>
-                                                    </ul>
-                                                    ]]></docs:code-editor>
-                                                </td>
-                                                <td style="width: 50%">
-                                                    <docs:code-editor 
-                                                        mode="xml"
-                                                        readOnly="true" 
-                                                        c:parse-body-text="false">
-                                                    <![CDATA[
-                                                    <ul>
-                                                        <c:for each="item in items" status-var="loopStatus">
-                                                            <li>
-                                                                ${loopStatus.getIndex()+1}) ${item}
-                                                            </li>
-                                                        </c:for>
-                                                    </ul>
-                                                    ]]>
-                                                    </docs:code-editor>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                    </c:for>
+                                                </ul>
+                                                ]]>
+                                                </docs:code-editor>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="clear: both;"/>
                                     <p>
                                         Given a value of <code>["red", "green", "blue"]</code> for 
                                         items, the output would be the following:
@@ -981,48 +946,41 @@
                                         separator will automatically be written to the output after each
                                         iteration.
                                     </p>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Applied as an attribute
-                                                </th>
-                                                <th>
-                                                    Applied as an element
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="width: 50%">
-                                                    <docs:code-editor 
-                                                        mode="xml"
-                                                        readOnly="true" 
-                                                        c:parse-body-text="false">
-                                                    <![CDATA[
-                                                    <span c:for="item in items; separator=', '">
-                                                       ${item}
+                                    <div class="compare-table compare-table-2">
+                                        <div class="compare-section">
+                                            <h1>Applied as an attribute</h1>
+                                            <div>
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
+                                                <![CDATA[
+                                                <span c:for="item in items; separator=', '">
+                                                   ${item}
+                                                </span>
+                                                ]]>
+                                                </docs:code-editor>
+                                            </div>
+                                        </div>
+                                        <div class="compare-section">
+                                            <h1>Applied as an element</h1>
+                                            <div>
+                                                <docs:code-editor 
+                                                    mode="xml"
+                                                    readOnly="true" 
+                                                    c:parse-body-text="false">
+                                                <![CDATA[
+                                                <c:for each="item in items" separator=", ">
+                                                    <span>
+                                                        ${item}
                                                     </span>
-                                                    ]]>
-                                                    </docs:code-editor>
-                                                </td>
-                                                <td style="width: 50%">
-                                                    <docs:code-editor 
-                                                        mode="xml"
-                                                        readOnly="true" 
-                                                        c:parse-body-text="false">
-                                                    <![CDATA[
-                                                    <c:for each="item in items" separator=", ">
-                                                        <span>
-                                                            ${item}
-                                                        </span>
-                                                    </c:for>
-                                                    ]]>
-                                                    </docs:code-editor>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                </c:for>
+                                                ]]>
+                                                </docs:code-editor>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="clear: both;"/>
                                     <p>
                                         Given a value of <code>["red", "green", "blue"]</code> for 
                                         items, the output would be the following:

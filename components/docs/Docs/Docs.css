@@ -169,6 +169,32 @@ H2.discussion {
     border-top: 2px solid Black;
 }
 
+.compare-table > .compare-section {
+    float: left;
+}
+
+.compare-table > .compare-section > h1 {
+    font-size: 14px;
+}
+
+.compare-table-2 > .compare-section {
+    width: 50%;
+}
+
+.compare-table-2 > .compare-section:first-child {
+    padding-right: 5px;
+}
+
+.compare-table-2 > .compare-section:last-child {
+    padding-left: 5px;
+}
+
+@media (max-width: 1099px) {
+    .compare-table > .compare-section {
+        float: none;
+        width: auto !important;
+    }
+}
 
 @media (max-width: 979px) {
     #docsNav {
@@ -220,9 +246,9 @@ H2.discussion {
     }
 }
 
-@media (min-width: 920px) {
+@media (min-width: 1150px) {
     .docs-content {
-        width: 920px;
+        width: 800px;
     }
 }
 
