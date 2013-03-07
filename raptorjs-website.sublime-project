@@ -237,18 +237,18 @@
 			"cmd":
 			[
 				"${project_path}/build-page-dev",
-				"/ui-components"
+				"/widgets/get-started"
 			],
-			"name": "Build (dev) - ui-components",
+			"name": "Build (dev) - widgets/get-started",
 			"working_dir": "${project_path}"
 		},
 		{
 			"cmd":
 			[
 				"${project_path}/build-page-dev",
-				"/widgets/get-started"
+				"/ui-components"
 			],
-			"name": "Build (dev) - widgets/get-started",
+			"name": "Build (dev) - ui-components",
 			"working_dir": "${project_path}"
 		},
 		{
