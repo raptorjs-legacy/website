@@ -30,38 +30,9 @@
             <div class="container">
                 
                 <docs:docs heading="RaptorJS Widget Framework Developer Guide" disqus-id="widgets-developer-guide">
-                    <docs:message type="warning">
-                        Documentation In-Progress.
-                    </docs:message>
 
                     <docs:section heading="Overview">
-                        <p>
-                            The RaptorJS Widget Framework is a lightweight framework that 
-                            simplifies the creation of web applications built using UI components. 
-                            The RaptorJS Widget Framework provides a mechanism for automatically attaching
-                            behavior to DOM sub-trees associated with rendered UI components—regardless 
-                            of whether or not the UI components were rendered on the server
-                            or in the web browser. Examples of UI components with attached behavior include
-                            overlays, tab panels, accordion containers, buttons, etc.
-                            The RaptorJS Widget Framework simplifies the initialization
-                            of JavaScript applications by managing the lifecycle of widgets rendered to the page.
-                            In addition, the Widget Framework provides
-                            support for inter-widget communication via custom events and Pub/Sub messaging and
-                            it allows for widgets to directly reference nested named widgets.
-                        </p>
-                        <p>
-                            The RaptorJS Widget Framework does not dictate how a client-side
-                            widget be implemented and there is no complex class inheritance
-                            hierarchy (only a few mixins that get applied to all initialized widgets).
-                        </p>
-                        <p>
-                            UI components that use <a href="${url('/raptor-templates')}">Raptor Templates</a> to render their view
-                            will benefit from the bindings that allow widgets to be attached to rendered HTML elements. 
-                            During the rendering of an HTML template,
-                            the Widget Framework keeps track of which widgets have been rendered and which HTML element
-                            each widget is bound to. This allows all of the widgets to be automatically and efficiently be initialized 
-                            without having to rely the CPU intensive task of scanning the final DOM tree to discover rendered widgets.
-                        </p>
+                        <c:include template="/pages/widgets/shared-content/overview"/>
                     </docs:section>
 
                     <docs:section heading="Features">
@@ -887,48 +858,42 @@
                                 be used to initialize a widget and have it be bound to a rendered DOM element as shown
                                 in the following sample code:
                             </p>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <code>w:widget</code> attribute
-                                        </th>
-                                        <th>
-                                            <code>&lt;w:widget></code> tag
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 50%">
-                                            <docs:code-editor 
-                                                mode="xml"
-                                                readOnly="true" 
-                                                c:parse-body-text="false">
-                                            <![CDATA[
-                                            <div w:widget="demo/MyWidget">
+                            <div class="compare-table compare-table-2">
+                                <div class="compare-section">
+                                    <h1>w:widget attribute</h1>
+                                    <div>
+                                        <docs:code-editor 
+                                            mode="xml"
+                                            readOnly="true" 
+                                            c:parse-body-text="false">
+                                        <![CDATA[
+                                        <div w:widget="demo/MyWidget">
+                                            My Widget
+                                        </div>
+                                        ]]>
+                                        </docs:code-editor>
+                                    </div>
+                                </div>
+                                <div class="compare-section">
+                                    <h1>&lt;w:widget> tag</h1>
+                                    <div>
+                                        <docs:code-editor 
+                                            mode="xml"
+                                            readOnly="true" 
+                                            c:parse-body-text="false">
+                                        <![CDATA[
+                                        <w:widget js-class="demo/MyWidget">
+                                            <div id="${widget.elId()}">
                                                 My Widget
                                             </div>
-                                            ]]>
-                                            </docs:code-editor>
-                                        </td>
-                                        <td style="width: 50%">
-                                            <docs:code-editor 
-                                                mode="xml"
-                                                readOnly="true" 
-                                                c:parse-body-text="false">
-                                            <![CDATA[
-                                            <w:widget js-class="demo/MyWidget">
-                                                <div id="${widget.elId()}">
-                                                    My Widget
-                                                </div>
-                                            </w:widget>
-                                            ]]>
-                                            </docs:code-editor>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </w:widget>
+                                        ]]>
+                                        </docs:code-editor>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear: both;"/>
                             <p>
                                 The custom <code>w:widget</code> attribute can be applied to an HTML tag to bind
                                 a widget to a rendered HTML element. The value of the <code>w:widget</code> attribute

@@ -1,0 +1,38 @@
+<c:template
+    xmlns:c="core"
+    xmlns:html="html"
+    xmlns:w="widgets"
+    xmlns:docs="docs"
+    params=""
+    docs:functions="url">
+
+    <p>
+        The RaptorJS Widget Framework is a lightweight framework that 
+        simplifies the creation of web applications built using UI components. 
+        The RaptorJS Widget Framework provides a mechanism for automatically attaching
+        behavior to DOM sub-trees associated with rendered UI components—regardless 
+        of whether or not the UI components were rendered on the server
+        or in the web browser. Examples of UI components with attached behavior include
+        overlays, tab panels, accordion containers, buttons, etc.
+        The RaptorJS Widget Framework simplifies the initialization
+        of JavaScript applications by managing the lifecycle of widgets rendered to the page.
+        In addition, the Widget Framework provides
+        support for inter-widget communication via custom events and Pub/Sub messaging and
+        it allows for widgets to directly reference nested named widgets.
+    </p>
+    <p>
+        The RaptorJS Widget Framework does not dictate how a client-side
+        widget be implemented and there is no complex class inheritance
+        hierarchy (only a few mixins that get applied to all initialized widgets).
+    </p>
+    <p>
+        UI components that use <a href="${url('/raptor-templates')}">Raptor Templates</a> to render their view
+        will benefit from the bindings that allow widgets to be attached to rendered HTML elements. 
+        During the rendering of an HTML template,
+        the Widget Framework keeps track of which widgets have been rendered and which HTML element
+        each widget is bound to. This allows all of the widgets to be automatically and efficiently be initialized 
+        without having to rely the CPU intensive task of scanning the final DOM tree to discover rendered widgets.
+    </p>
+</c:template>
+
+    
