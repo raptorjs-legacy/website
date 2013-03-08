@@ -76,7 +76,7 @@
 
                         <p>
                             The behavior for <code>SimpleWidget</code> is
-                            implemented as part of aJavaScript class as shown in the 
+                            implemented as part of a JavaScript class as shown in the 
                             following sample code:
                         </p>
 
@@ -89,7 +89,7 @@
                         <p>
                             When a Raptor Template is rendered, the Widget Taglib
                             keeps track of which widgets were rendered
-                            and which HTML elements they were attached. This information
+                            and which HTML elements they were attached to. This information
                             is used to initialize widgets as described in the next section.
                         </p>
                     </docs:section>
@@ -104,7 +104,7 @@
                             <p>
                                 The 
                                 <code><nobr><a href="${url('/widgets/developer-guide')}#InitWidgetsTag">&lt;w:init-widgets></a></nobr></code> 
-                                tag should be used to render
+                                tag should be used to generate
                                 the JavaScript code that is used to initialized widgets rendered
                                 on the server. The <code><nobr>&lt;w:init-widgets></nobr></code> tag uses
                                 information stored in the rendering <code>context</code> object
@@ -130,6 +130,14 @@
                                 it is executed by the web browser after all of the 
                                 page's JavaScript and CSS has fully loaded.
                             </p>
+                            <docs:message type="info">
+                                <p>
+                                    NOTE: The <code>\$rwidgets</code> variable is global function
+                                    introduced by the <a href="http://raptorjs.org/api/raptor/widgets/">raptor/widgets</a> module
+                                    that handles the initialization of widgets rendered on the server. It should not be
+                                    used directly by application code.
+                                </p>
+                            </docs:message>
                         </docs:section>
                         <docs:section heading="Initializing Client-rendered Widgets">
                             <p>
@@ -148,18 +156,105 @@
                             <![CDATA[
                             require('raptor/renderer')
                                 .renderTemplate('widgets-test')
-                                .appendTo(this.getEl('renderTarget'));
+                                .appendTo(targetEl);
                             ]]>
                             </docs:code-editor>
+                            <docs:message type="info">
+                                <p>
+                                    NOTE: The <code>targetEl</code> variable
+                                    above is a reference to a DOM node that the resulting
+                                    HTML should be appended to.
+                                </p>
+                            </docs:message>
                         </docs:section>    
+                    </docs:section>
+
+                    <docs:section heading="Widget DOM Elements">
+                        <p>
+                            When using the <code><a href="${url('/widgets/developer-guide')}#WidgetAttribute">w:widget</a></code>
+                            attribute, a unique ID will be assigned to the rendered HTML element that the widget
+                            is bound to (if the element already has an <code>id</code> attribute in the template then that ID will be used instead). 
+                            The ID assigned to the HTML element is also passed to the corresponding widget when it is instantiated
+                            so that the widget will know which rendered DOM node it is associated with.
+                            The <a href="${url('/widgets/developer-guide')}#getEl">getEl()</a> method of a widget can be used to get a reference to the root
+                            DOM element of a widget.
+                        </p>
+                        <p>
+                            The RaptorJS Widget Framework also provides a mechanism for assigning unique IDs to a widget's nested 
+                            DOM elements using the custom <a href="${url('/widgets/developer-guide')}#elIdAttribute">w:el-id</a> attribute.
+                            The IDs assigned to nested widget elements will be made unique even if the widget is rendered multiple times on
+                            the page. The nested widget element IDs are made unique by prefixing the assigned widget element ID with
+                            the unique widget ID. The usage of the <a href="${url('/widgets/developer-guide')}#elIdAttribute">w:el-id</a> attribute
+                            is shown below:
+                        </p>
+                        <docs:code-editor 
+                            mode="xml"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <div w:widget="demo/MyWidget">
+                            <button type="button" w:el-id="submitButton">
+                                Submit
+                            </button>
+                        </div>
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            Once rendered, the HTML for the above template will be similar to the following:
+                        </p>
+                        <docs:code-editor 
+                            mode="htmlmixed"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        <div id="w123">
+                            <button type="button" id="w123-submitButton">
+                                Submit
+                            </button>
+                        </div>
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            The nested widget elements can be accessed using the 
+                            as shown in the following code:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        define.Class(
+                            'demo/MyWidget',
+                            function(require) {
+                                return {
+                                    init: function() {
+                                        // Obtain a reference to the DOM node for the submit <button>:
+                                        var submitButtonEl = this.getEl('submitButton');
+
+                                        // Wrap the DOM node as a jQuery object:
+                                        var $submitButton = $(submitButtonEl);
+                                        // ...
+                                    }
+                                }
+                            })
+                        ]]>
+                        </docs:code-editor>
                     </docs:section>
 
                     <docs:section heading="Widget Communication">
                         <docs:section heading="Widget IDs" anchor-name="WidgetId">
                             <p>
                                 The <code>w:id</code> attribute can be used to assign a widget ID
-                                to a nested widget. The containing ancestor widget can use the assigned
-                                widget ID to get a reference to the instance of nested widget. For example:
+                                to a nested widget. The <code>w:id</code> attribute is used to register
+                                a nested widget with the enclosing widget so that the enclosing
+                                widget can obtain a reference to the nested widget based on the
+                                assigned ID. The assigned
+                                widget ID is <i>not</i> used as the ID for the DOM element. In addition,
+                                the assigned widget ID needs to only be unique amongst all nested
+                                widgets for the enclosing widget.
+                                The enclosing ancestor widget can use the assigned
+                                widget ID to get a reference to the instance of nested widget as shown in the
+                                following sample code:
                             </p>
                             <docs:code-editor 
                                 mode="xml"
@@ -205,7 +300,7 @@
                         <docs:section heading="Observable Widgets">
                             <p>
                                 Every widget instantiated by the RaptorJS Widget Framework
-                                will have mixins that applied to make all instances observable
+                                will have mixins applied to make all instances observable
                                 via the <code>subscribe</code> and <code>publish</code> methods.
                             </p>
                             <p>
@@ -327,22 +422,32 @@
                             ]]>
                             </docs:code-editor>
                         </docs:section>
-                        <docs:section heading="Further Reading">
-                            <ul>
-                                <li>
-                                    <a href="${url('/widgets/developer-guide')}">RaptorJS Widget Framework Developer Guide</a>
-                                </li> 
-                                <li>
-                                    <a href="${url('/raptor-templates')}">Raptor Templates</a>
-                                </li>
-                                <li>
-                                    <a href="${url('/ui-components')}">Building UI Components</a>
-                                </li>
-                            </ul>
-                        </docs:section>
+                        
 
                     </docs:section>
-
+                    <docs:section heading="Widget Mixins">
+                        <p>
+                            The prototype of every instantiated widget will
+                            are given a small set of mixins to provide common methods and functionality
+                            across all widgets. One such mixin is the <code>getEl()</code>
+                            mixin described earlier. For the complete list of mixins
+                            applied to mixins, please see the <a href="${url('/widgets/developer-guide')}#WidgetMixins">Widget Mixins</a>
+                            section in the <a href="${url('/widgets/developer-guide')}">RaptorJS Widget Framework Developer Guide</a>.
+                        </p>
+                    </docs:section>
+                    <docs:section heading="Further Reading">
+                        <ul>
+                            <li>
+                                <a href="${url('/widgets/developer-guide')}">RaptorJS Widget Framework Developer Guide</a>
+                            </li> 
+                            <li>
+                                <a href="${url('/raptor-templates')}">Raptor Templates</a>
+                            </li>
+                            <li>
+                                <a href="${url('/ui-components')}">Building UI Components</a>
+                            </li>
+                        </ul>
+                    </docs:section>
                     
 
                 </docs:docs>
