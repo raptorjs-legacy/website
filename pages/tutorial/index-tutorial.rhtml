@@ -33,8 +33,211 @@
                         
                     <docs:section heading="Overview">
                         <p>
-                            
+                            This guide will walk you through building a real-world
+                            application that uses back-end API services to retrieve
+                            listings from the eBay website and display the matching
+                            items.
                         </p>
+                        <p>
+                            For this guide we will be using the following technologies:
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="http://jquery.com/"><b>jQuery</b></a>: Client-side DOM management and DOM event handling
+                            </li>
+                            <li>
+                                <b><a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a></b>: Underlying UI component implementations
+                            </li>
+                            <li>
+                                <a href="${url('/widgets')}"><b>RaptorJS Widget Framework</b></a>: Client-side widget initialization and widget communication
+                            </li>
+                            <li>
+                                <a href="${url('/raptor-templates')}"><b>Raptor Templates</b></a>: HTML templating language for rendering UI component views
+                            </li>
+                            <li>
+                                <a href="${url('/packaging')}"><b>RaptorJS Packaging</b></a>: Declaring UI component dependencies
+                            </li>
+                            <li>
+                                <a href="${url('/optimizer')}"><b>RaptorJS Optimizer</b></a>: Delivering JavaScript and CSS code to the browser
+                            </li>
+                            <li>
+                                <a href="${url('/modules-classes')}"><b>RaptorJS AMD</b></a>: Defining modules, classes and mixins
+                            </li>
+                        </ul>
+                    </docs:section>
+
+                    <docs:section heading="View Demo">
+                        <docs:view-demo path="/demos/tutorial"/>
+                    </docs:section>
+
+                    <docs:section heading="Demo Source">
+                        <docs:project-dir-structure dir="/tutorial"/>
+                    </docs:section>
+
+                    <docs:section heading="Design Overview">
+                        <docs:section heading="HTML Templating">
+                            <p>
+                                For this tutorial we will be using <a href="${url('/raptor-templates')}">Raptor Templates</a>
+                                to produce the HTML markup for UI components. Raptor Templates includes support for custom
+                                tags that allow UI components to be embedded in templates.
+                                In addition, Raptor Templates includes support for the
+                                Widgets Taglib that allows behavior to be attached to DOM nodes.
+                            </p>
+                        </docs:section>
+                        <docs:section heading="UI Components">
+                            <p>
+                                UI components are independent visual elements of the page with attached behavior.
+                                For this guide we will be creating a simple UI component that consists of the following:
+                            </p>
+                            
+                            <ul>
+                                <li><b>Renderer:</b> A JavaScript class that controls the rendering of the view for the UI component</li>
+                                <li><b>HTML Template:</b> A Raptor Template that is used to render the HTML</li>
+                                <li><b>Widget:</b> A JavaScript class that provides the client-side functionality including the following:
+                                    <ul>
+                                        <li>DOM Event Handling</li>
+                                        <li>Widget API Methods</li>
+                                        <li>Event-based Communication</li>
+                                    </ul>
+                                </li>
+                                <li><b>CSS:</b> A CSS file to control the appearance of the rendered component</li>
+                                <li><b>Custom Tag Definition:</b> A Raptor Taglib Definition (RTLD) file that declares what attributes are allowed when the UI component is embedded in a Raptor Template</li>
+                                <li><b>package.json:</b> A pacakge file to control how the UI component is packaged up for delivery to the web browser</li>
+                            </ul>
+                            <p>
+                                For a more in-depth look at build UI components, please take a look at the 
+                                <a href="${url('/ui-components')}">Building UI Components Guide</a>
+                            </p>
+                        </docs:section>
+                        <docs:section heading="Page Decomposition">
+                            <p>
+                                To build this simple application we will be building
+                                the following UI components:
+                            </p>
+                            <ul>
+                                <li>
+                                    <b><a href="https://github.com/raptorjs/samples/tree/master/tutorial/modules/ui/buttons/Button">ui/buttons/Button</a></b>: A simple button with Bootstrap styling
+                                </li>
+                                <li>
+                                    <b><a href="https://github.com/raptorjs/samples/tree/master/tutorial/modules/ui/search/SearchForm">ui/search/SearchForm</a></b>: Provides input fields for search keywords
+                                </li>
+                                <li>
+                                    <b><a href="https://github.com/raptorjs/samples/tree/master/tutorial/modules/ui/search/SearchResultsContainer">ui/search/SearchResultsContainer</a></b>: A container to manage showing and updating search results
+                                </li>
+                                <li>
+                                    <b><a href="https://github.com/raptorjs/samples/tree/master/tutorial/modules/ui/search/SearchResults">ui/search/SearchResults</a></b>: Responsible for rendering listing tiles associated with search results
+                                </li>
+                            </ul>
+                        </docs:section>
+                        <docs:section heading="JavaScript Modules">
+                            <p>
+                                To build this simple application we will be building
+                                the following JavaScript module:
+                            </p>
+                            <ul>
+                                <li>
+                                    <b><a href="https://github.com/raptorjs/samples/tree/master/tutorial/modules/ebay-api/finding">ebay-api/finding</a></b>: A lightweight interface to
+                                    the following backend REST API service:<br/>
+                                    <a href="http://raptorjs-samples-api.herokuapp.com/ebay/finding/keywords/nike" target="_blank">http://raptorjs-samples-api.herokuapp.com/ebay/finding/keywords/nike</a>
+                                </li>
+                            </ul>
+                        </docs:section>
+                        <docs:section heading="Pub/Sub Communication">
+                            <p>
+                                To improve the maintainability of our simple application we will be 
+                                utilizing Pub/Sub communication for inter-widget communication. Pub/Sub
+                                communication allows for a more de-coupled design because
+                                each widget on the page does not have to be directly aware of other
+                                widgets on the page. Pub/Sub messages relies on communication
+                                over named topics. For more information on Pub/Sub communication,
+                                please take a look at the <a href="http://raptorjs.org/api/raptor/pubsub/">API docs for the raptor/pubsub module</a>.
+                            </p>
+                        </docs:section>
+                        <docs:section heading="Resource Optimization">
+                            <p>
+                                The <a href="${url('/optimizer')}">RaptorJS Optimizer</a> provides support
+                                for optimizing the JavaScript and CSS resources required by an
+                                application. It handles minification, bundling, compilation, checksums and CDN integration
+                                for optimal delivery of web resources to the browser.
+                            </p>
+                        </docs:section>
+                    </docs:section>
+
+                    <docs:section heading="Building the Sample App">
+                        <p>
+                            The sample app for this tutorial can be built
+                            by changing to the <code>tutorial</code> directory
+                            for the <a href="https://github.com/raptorjs/samples">https://github.com/raptorjs/samples</a> Git repository:
+                        </p>
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ npm install
+                        $ node build.js
+                        </pre>
+                        <p>
+                            The above build script will render the page template
+                            to produce the static HTML that we can then run in a
+                            web browser. The page using the Optimizer Taglib
+                            to define page dependencies so that the <a href="${url('/optimizer')}">RaptorJS Optimizer</a>
+                            can generate the optimized JavaScript and CSS resources required
+                            for the page <i>and</i> also generate the required HTML markup
+                            to include the page dependencies.
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="Handle Search Keyword Input">
+                        <p>
+                            The <a href="https://github.com/raptorjs/samples/blob/master/tutorial/modules/ui/search/SearchForm/SearchFormWidget.js">SearchForm widget</a> 
+                            that is part of the <code>ui/search/SearchForm</code> UI component
+                            uses jQuery to subscribe to the <code>submit</code> event for
+                            the HTML form as shown in the following code:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        $(this.getEl()).submit(function() {
+                            // Handle for submission...
+                        });
+                        ]]>
+                        </docs:code-editor>
+                        <p>
+                            Upon form submission the keywords are read
+                            from the text input control and the search criteria
+                            are passed to the <a href="https://github.com/raptorjs/samples/tree/master/tutorial/modules/ebay-api/finding">ebay-api/finding</a>
+                            module to perform the search. When the search
+                            results come back from the server, a Pub/Sub
+                            message named <code>"searchResults"</code> is published. It is up
+                            to another UI component on the page to handle the search results.
+                            For this tutorial, the UI component that handles the search results
+                            will be the <a href="https://github.com/raptorjs/samples/tree/master/tutorial/modules/ui/search/SearchResultsContainer">ui/search/SearchResultsContainer</a>
+                            UI component.
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="Displaying Search Results">
+                        <p>
+                            The <a href="https://github.com/raptorjs/samples/blob/master/tutorial/modules/ui/search/SearchResultsContainer/SearchResultsContainerWidget.js">SearchResultsContainer widget</a> for the 
+                            <a href="https://github.com/raptorjs/samples/tree/master/tutorial/modules/ui/search/SearchResultsContainer">ui/search/SearchResultsContainer</a> UI component
+                            subscribes to the <code>"searchResults"</code> Pub/Sub message. When
+                            this message is received it will use the search results data
+                            associated with that message to render the 
+                            <a href="https://github.com/raptorjs/samples/tree/master/tutorial/modules/ui/search/SearchResults">ui/search/SearchResults</a>
+                            UI component using code similar to the following:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false">
+                        <![CDATA[
+                        renderer.render(
+                            "ui/search/SearchResults/SearchResultsRenderer", 
+                            {
+                                searchResultItems: searchResultItems
+                            })
+                            .replaceChildrenOf(this.getEl('resultsTarget'));
+                        ]]>
+                        </docs:code-editor>
                     </docs:section>
                     
                 </docs:docs>
