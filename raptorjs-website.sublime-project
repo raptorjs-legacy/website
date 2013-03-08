@@ -165,6 +165,15 @@
 			"cmd":
 			[
 				"${project_path}/build-page-dev",
+				"/logging"
+			],
+			"name": "Build (dev) - logging",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-page-dev",
 				"/module-loader"
 			],
 			"name": "Build (dev) - module-loader",
@@ -427,6 +436,7 @@
 			"Build (dev) - faq",
 			"Build (dev) - get-started",
 			"Build (dev) - index",
+			"Build (dev) - logging",
 			"Build (dev) - module-loader",
 			"Build (dev) - module-loader-get-started-async",
 			"Build (dev) - modules-classes",
