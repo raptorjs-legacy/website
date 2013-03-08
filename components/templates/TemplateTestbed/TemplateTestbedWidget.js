@@ -136,7 +136,9 @@ define(
                 this.update();
                 
                 if (sample.showCompilerOptions) {
-                    this.toggleCompilerOptions(true);
+                    if (!this.optionsVisible) {
+                        widgets.showOptionsToggleButton.toggle();
+                    }
                 }
             },
             
