@@ -66,6 +66,15 @@
 			"cmd":
 			[
 				"${project_path}/build-page-dev",
+				"/tutorial"
+			],
+			"name": "Build (dev) - tutorial",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-page-dev",
 				"/optimizer/get-started-cli"
 			],
 			"name": "Build (dev) - optimizer-get-started-cli",
@@ -434,6 +443,7 @@
 			"Build (dev) - raptor-templates-developer-guide",
 			"Build (dev) - raptor-templates-language-guide",
 			"Build (dev) - raptor-templates-try-online",
+			"Build (dev) - tutorial",
 			"Build (dev) - ui-components",
 			"Build (dev) - widgets",
 			"Build (dev) - widgets/developer-guide",

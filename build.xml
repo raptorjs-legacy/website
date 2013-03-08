@@ -73,6 +73,10 @@
         <antcall target="copy-demo">
             <param name="demoPath" value="widgets"/>
         </antcall>
+
+<!--         <antcall target="copy-demo">
+            <param name="demoPath" value="todomvc"/>
+        </antcall> -->
     </target>
 	
 	
