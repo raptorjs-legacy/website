@@ -451,7 +451,7 @@
                             <p>
                                 The following mixin methods provide access to a widget's DOM nodes:
                             </p>
-                            <docs:section heading="getEl">
+                            <docs:section heading="getEl" anchor-name="getEl">
                                 <p>
                                     <b><code>Node</code> getEl(?widgetElId)</b>: 
                                     Returns a raw DOM element for the given widget element ID. If no widget element ID is provided then the root DOM node that the widget is bound to is returned.
@@ -716,7 +716,7 @@
                                         c:parse-body-text="false">
                                     <![CDATA[
                                     <div w:widget="demo/JQueryWidget">
-                                        <ul id="${widget.elId('colorsUL')}">
+                                        <ul w:el-id="colorsUL">
                                             <li data-color="red">Click Me!</li>
                                             <li data-color="green">Click Me!</li>
                                             <li data-color="blue">Click Me!</li>
@@ -732,7 +732,7 @@
                                         resource="/demo/JQueryWidget.js"/>
 
                                     <div w:widget="demo/JQueryWidget">
-                                        <ul id="${widget.elId('colorsUL')}">
+                                        <ul w:el-id="colorsUL">
                                             <li data-color="red">Click Me!</li>
                                             <li data-color="green">Click Me!</li>
                                             <li data-color="blue">Click Me!</li>
@@ -1006,6 +1006,46 @@
                                 ]]>
                                 </docs:code-editor>
                             </docs:section>
+                        </docs:section>
+
+                        <docs:section heading="w:el-id" anchor-name="elIdAttribute">
+                            <p>
+                                As a short-hand for <code>widget.elId(...)</code>The custom <code>w:el-id</code> attribute can be used to assign
+                                a unique ID to an HTML element. The following are equivalent:
+                            </p>
+                            <div class="compare-table compare-table-2">
+                                <div class="compare-section">
+                                    <h1>w:el-id</h1>
+                                    <div>
+                                        <docs:code-editor 
+                                            mode="xml"
+                                            readOnly="true" 
+                                            c:parse-body-text="false">
+                                        <![CDATA[
+                                        <button w:el-id="submitButton" type="button">
+                                            Submit
+                                        </button>
+                                        ]]>
+                                        </docs:code-editor>
+                                    </div>
+                                </div>
+                                <div class="compare-section">
+                                    <h1>widget.elId(...)</h1>
+                                    <div>
+                                        <docs:code-editor 
+                                            mode="xml"
+                                            readOnly="true" 
+                                            c:parse-body-text="false">
+                                        <![CDATA[
+                                        <button id="${widget.elId('submitButton')}" type="button">
+                                            Submit
+                                        </button>
+                                        ]]>
+                                        </docs:code-editor>
+
+                                    </div>
+                                </div>
+                            </div>
                         </docs:section>
 
                         <docs:section heading="Widget Config" anchor-name="WidgetConfig">
