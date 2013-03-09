@@ -27,15 +27,99 @@
             
             <div class="container">
                 <docs:docs heading="Resource Search Path" disqus-id="resource-search-path">
-                    <docs:message type="warning">
-                        Documentation In-Progress
-                    </docs:message>
                         
                     <docs:section heading="Overview">
                         <p>
-                            
+                            RaptorJS offers a configurable server-side resource loading system. At the heart
+                            of the resource system is a resource search path. The resource search
+                            path allows the application developer to tell the resource loader
+                            where to find modules and other types of resources.
                         </p>
                     </docs:section>
+
+                    <docs:section heading="Adding Search Path Entries">
+                        <p>
+                            The following code illustrates how resource search path entries
+                            can be added to the RaptorJS resource loader:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false"
+                            title="/modules/ui/buttons/SimpleButton/SimpleButtonRenderer.js">
+                        <![CDATA[
+
+                        // Add the current directory to the search path:
+                        resources.addSearchPathDir(__dirname);
+                        ]]>
+                        </docs:code-editor>
+                    </docs:section>
+
+                    <docs:section heading="Usage">
+                        <p>
+                            The following code illustrates how the resource
+                            search path can be used to read a resource:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false"
+                            title="/modules/ui/buttons/SimpleButton/SimpleButtonRenderer.js">
+                        <![CDATA[
+
+                        var resources = require('raptor/resources');
+                        var resource = resources.findResource('/css/index.css');
+
+                        if (resource.exists()) {
+                            var cssCode = resource.readAsString();
+                            // ...
+                        }
+                        ]]>
+                        </docs:code-editor>
+                    </docs:section>
+
+                    <docs:section heading="Server-side Module Loader">
+                        <p>
+                            The RaptorJS server-side module loader uses the 
+                            resource search path to find the resources associated with a module.
+                            The base directory in your application that contains
+                            modules should be added to the resource search path.
+                            For example:
+                        </p>
+                        <docs:code-editor 
+                            mode="javascript"
+                            readOnly="true" 
+                            c:parse-body-text="false"
+                            title="/modules/ui/buttons/SimpleButton/SimpleButtonRenderer.js">
+                        <![CDATA[
+                        // Added the "modules" sub-directory to the search path:
+                        resources.addSearchPathDir(require('path').join(__dirname, 'modules'));
+                        ]]>
+                        </docs:code-editor>
+                    </docs:section>
+                    
+                    <docs:section heading="Implementation">
+                        <p>
+                            The resource
+                            search path is just an array resource search path entries. Each
+                            resource search path entry is an instance of the abstract
+                            <a href="http://raptorjs.org/api/raptor/resources/SearchPathEntry/">raptor/resources/SearchPathEntry</a> class
+                            that has a single <a href="http://raptorjs.org/api/raptor/resources/SearchPathEntry/#prototype.findResource">findResource(path)</a> method.
+                            <a href="http://raptorjs.org/api/raptor/resources/DirSearchPathEntry/">raptor/resources/DirSearchPathEntry</a> is a concrete implementation of <a href="http://raptorjs.org/api/raptor/resources/SearchPathEntry/">raptor/resources/SearchPathEntry</a>. The 
+                            <a href="http://raptorjs.org/api/raptor/resources/DirSearchPathEntry/">raptor/resources/DirSearchPathEntry</a>
+                            class allows for loading file resources relative to directories on the file system.
+                        </p>
+                        <p>
+                            The return value of the <a href="http://raptorjs.org/api/raptor/resources/SearchPathEntry/#prototype.findResource">findResource(path)</a> 
+                            method is an instance of <a href="http://raptorjs.org/api/raptor/resources/Resource/">raptor/resources/Resource</a>
+                            or <code>null</code> if the resource is not found. Each <a href="http://raptorjs.org/api/raptor/resources/Resource/">raptor/resources/Resource</a>
+                            instance offers additional methods to allow for reading and writing to the resource, listing child resources, obtaining a unique URL for the resource, etc.
+                            Please take a look at <a href="http://raptorjs.org/api/raptor/resources/FileResource/">raptor/resources/FileResource</a> for a concrete
+                            implementation of a <a href="http://raptorjs.org/api/raptor/resources/Resource/">raptor/resources/Resource</a>.
+                        </p>
+                    </docs:section>
+
+                        
                     
                 </docs:docs>
             </div>
