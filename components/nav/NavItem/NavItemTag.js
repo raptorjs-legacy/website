@@ -38,11 +38,14 @@ define(
                     input.attrs["class"] = liClassParts.join(" ");
                 }
                 
+                input.anchorAttrs = {};
+
                 if (input.dynamicAttributes) {
-                    raptor.extend(input.attrs, input.dynamicAttributes);
+
+                    raptor.extend(input.anchorAttrs, input.dynamicAttributes);
                 }
                 
-                input.anchorAttrs = {};
+                
                 
                 if (isDropdownMenu) {
                     nav = input;
@@ -61,7 +64,7 @@ define(
                         input.anchorAttrs["href"] = input.href ? input.href : "#";
                     }    
                 }
-                
+
                 require('raptor/templating').render('components/nav/NavItem', {
                         nav: nav,
                         navItem: input,

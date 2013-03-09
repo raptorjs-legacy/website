@@ -147,6 +147,15 @@
 			"cmd":
 			[
 				"${project_path}/build-page-dev",
+				"/resource-search-path"
+			],
+			"name": "Build (dev) - resource-search-path",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-page-dev",
 				"/"
 			],
 			"name": "Build (dev) - index",
@@ -168,6 +177,15 @@
 				"/logging"
 			],
 			"name": "Build (dev) - logging",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-page-dev",
+				"/license"
+			],
+			"name": "Build (dev) - license",
 			"working_dir": "${project_path}"
 		},
 		{
@@ -436,6 +454,7 @@
 			"Build (dev) - faq",
 			"Build (dev) - get-started",
 			"Build (dev) - index",
+			"Build (dev) - license",
 			"Build (dev) - logging",
 			"Build (dev) - module-loader",
 			"Build (dev) - module-loader-get-started-async",
@@ -453,6 +472,7 @@
 			"Build (dev) - raptor-templates-developer-guide",
 			"Build (dev) - raptor-templates-language-guide",
 			"Build (dev) - raptor-templates-try-online",
+			"Build (dev) - resource-search-path",
 			"Build (dev) - tutorial",
 			"Build (dev) - ui-components",
 			"Build (dev) - widgets",

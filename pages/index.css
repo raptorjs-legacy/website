@@ -62,6 +62,9 @@
     font-weight: normal;
     line-height: 28px;
     vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
 }
 
 .hero {
@@ -320,8 +323,6 @@ H1.intro {
     text-align: center;
 }
 
-
-
 @media (max-width: 979px) {
     #header {
         margin-top: -18px;
@@ -433,6 +434,12 @@ H1.intro {
 @media (max-width: 540px) {
     H1.intro {
         width: 90%;
+    }
+
+    .hero > H2 {
+        margin-left: auto;
+        margin-right: auto;
+        width: auto;
     }
 
     .feature-section, .feature-section.why, .feature-section.packaging {
