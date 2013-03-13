@@ -129,6 +129,15 @@
 			"cmd":
 			[
 				"${project_path}/build-page-dev",
+				"/raptor-templates/get-started"
+			],
+			"name": "Build (dev) - raptor-templates-get-started",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-page-dev",
 				"/raptor-templates/language-guide"
 			],
 			"name": "Build (dev) - raptor-templates-language-guide",
@@ -379,6 +388,16 @@
 				"build.js",
 				"dev"
 			],
+			"name": "samples/raptor-templates",
+			"working_dir": "${project_path}/../samples/raptor-templates"
+		},
+		{
+			"cmd":
+			[
+				"node",
+				"build.js",
+				"dev"
+			],
 			"name": "samples/todomvc",
 			"working_dir": "${project_path}/../samples/todomvc"
 		},
@@ -470,7 +489,9 @@
 			"Build (dev) - packaging/get-started",
 			"Build (dev) - raptor-templates",
 			"Build (dev) - raptor-templates-developer-guide",
+			"Build (dev) - raptor-templates-get-started",
 			"Build (dev) - raptor-templates-language-guide",
+
 			"Build (dev) - raptor-templates-try-online",
 			"Build (dev) - resource-search-path",
 			"Build (dev) - tutorial",
@@ -485,6 +506,7 @@
 			"samples/optimizer-javascript-api",
 			"samples/optimizer-javascript-api (dev)",
 			"samples/packaging",
+			"samples/raptor-templates",
 			"samples/todomvc",
 			"samples/ui-components",
 			"samples/widgets",
