@@ -61,6 +61,10 @@
 		<antcall target="copy-demo">
             <param name="demoPath" value="optimizer-raptor-templates"/>
         </antcall>
+
+        <antcall target="copy-demo">
+            <param name="demoPath" value="raptor-templates"/>
+        </antcall>
 		
         <antcall target="copy-demo">
             <param name="demoPath" value="tutorial"/>
