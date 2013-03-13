@@ -9,7 +9,8 @@ define(
             defaultExcludes = ['/.gitignore', 
                                '/npm-debug.log',
                                '/build/',
-                               '/node_modules/'];
+                               '/node_modules/',
+                               '/work/'];
         
 
         var FileNode = function(file, projectDir, repoRootDir) {
