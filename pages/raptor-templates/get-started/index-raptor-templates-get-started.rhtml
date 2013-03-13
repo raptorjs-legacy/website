@@ -28,8 +28,205 @@
                     <docs:message type="warning">
                         Documentation In-Progress
                     </docs:message>
-                    
+
                     <docs:section heading="Overview">
+                        <c:include template="/pages/raptor-templates/shared-content/overview"/>
+                        <p>
+                            This guide will walk you through rendering templates on the server
+                            and in the browser. In addition, it will illustrate how to
+                            create a custom taglib that consists of custom tags
+                            and helper functions.
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="View Demo">
+                        <docs:view-demo path="/demos/raptor-templates"/>
+                    </docs:section>
+
+                    <docs:section heading="Demo Source">
+                        <docs:project-dir-structure dir="/raptor-templates"/>
+                    </docs:section>
+
+                    <docs:section heading="Sample Template">
+                        <docs:section heading="Input Template">
+                            <docs:code-editor 
+                                mode="xml"
+                                readOnly="true"
+                                title="templates/colors.rhtml"
+                                resource="/samples/raptor-templates/templates/colors.rhtml"
+                                />
+                        </docs:section>
+                        <docs:section heading="Compiled Output">
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="Unminified">
+                            <![CDATA[
+                            $rset("rhtml", "colors", function(helpers) {
+                              var empty = helpers.e,
+                                  notEmpty = helpers.ne,
+                                  forEach = helpers.f,
+                                  escapeXmlAttr = helpers.xa,
+                                  escapeXml = helpers.x;
+
+                              return function(data, context) {
+                                var colors = data.colors;
+
+                                if (notEmpty(colors)) {
+                                  context.w('<ul>');
+
+                                  forEach(colors, function(color) {
+                                    context.w('<li style="color: ')
+                                      .w(escapeXmlAttr(color))
+                                      .w('">')
+                                      .w(escapeXml(color))
+                                      .w('</li>');
+                                  });
+
+                                  context.w('</ul>');
+                                }
+                                else {
+                                  context.w('<div>No colors!</div>');
+                                }
+                              }
+                            });
+                            ]]>
+                            </docs:code-editor>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false"
+                                title="Minified (188 bytes gzipped)">
+                            <![CDATA[
+                            $rset("rhtml","/templates/colors.rhtml",function(a){var d=a.ne,e=a.f,f=a.xa,g=a.x;return function(a,b){var c=a.colors;d(c)?(b.w("<ul>"),e(c,function(a){b.w('<li style="color: ').w(f(a)).w('">').w(g(a)).w("</li>")}),b.w("</ul>")):b.w("<div>No colors!</div>")}});
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+
+                        <docs:section heading="HTML Output">
+                            <p>
+                                Given the following input data:
+                            </p>
+                            <docs:code-editor 
+                                mode="htmlmixed"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            {
+                                colors: ['red', 'green', 'blue']
+                            }
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                The output will be then be the following:
+                            </p>
+                            <docs:code-editor 
+                                mode="htmlmixed"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            <ul>
+                                <li style="color: red">red</li>
+                                <li style="color: green">green</li>
+                                <li style="color: blue">blue</li>
+                            </ul>
+                            ]]>
+                            </docs:code-editor>
+                        </docs:section>
+                    </docs:section>
+
+                        
+
+                    <docs:section heading="Rendering a Raptor Template">
+                        <p>
+                            The <a href="http://raptorjs.org/api/raptor/templating/">raptor/templating</a>
+                            provides the Raptor Templates runtime API that can be used to
+                            render templates. On the server, templates will be compiled to JavaScript and loaded
+                            automatically if the template has not already been compiled and loaded. To render templates on the client, the required templates
+                            must be included as page dependencies so that the <a href="${url('/optimizer')}">RaptorJS Optimizer</a>
+                            will pre-compile the required templates to JavaScript on the server so that they
+                            can be easily rendered in the browser.
+                        </p>
+                        <docs:section heading="Server-side Rendering">
+                            <p>
+                                In order to render templates on the server, the Raptor Templates runtime needs
+                                to be able to find the templates. This means that the Raptor Template files
+                                need to be available on the RaptorJS <a href="${url('/resource-search-path')}">resource search path</a>.
+                                A root directory containing templates can be added to the resource search path as shown
+                                in the following sample code:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            require('raptor/resources').addSearchPathDir(__dirname);
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                After the RaptorJS resource search path has been updated
+                                to include the base directory for a template, the
+                                relative template path can be used to render a template
+                                using the <a href="http://raptorjs.org/api/raptor/templating/#renderToString">renderToString</a>
+                                method of the <a href="http://raptorjs.org/api/raptor/templating/">raptor/templating</a>
+                                module as shown in the following code:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            var templating = require('raptor/templating');
+                            var html = templating.renderToString(
+                                '/templates/colors.rhtml', //OR: 'templates/colors'
+                                {
+                                    colors: ['red', 'green', 'blue']
+                                });
+                            // Do something with the rendered HTML...
+                            ]]>
+                            </docs:code-editor>
+                            
+                        </docs:section>
+                        <docs:section heading="Client-side Rendering">
+                            <p>
+                                In order to render templates on the client, the JavaScript code for the compiled 
+                                template and the code for the <a href="http://raptorjs.org/api/raptor/templating/">raptor/templating</a>
+                                must be included on the page.
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            require('raptor/resources').addSearchPathDir(__dirname);
+                            ]]>
+                            </docs:code-editor>
+                            <p>
+                                The name defined in the template's <code>rhtml</code> file can then be used
+                                to render the template by calling the 
+                                The template can then be compiled by passing the template name (defined in the <code>rhtml</code> file)
+                                and the template data as arguments to the
+                                <a href="http://raptorjs.org/api/raptor/templating/#renderToString">renderToString</a>
+                                method of the <a href="http://raptorjs.org/api/raptor/templating/">raptor/templating</a>
+                                module as shown in the following code:
+                            </p>
+                            <docs:code-editor 
+                                mode="javascript"
+                                readOnly="true" 
+                                c:parse-body-text="false">
+                            <![CDATA[
+                            var templating = require('raptor/templating');
+                            var html = templating.renderToString(
+                                'colors', //OR: 'templates/colors'
+                                {
+                                    colors: ['red', 'green', 'blue']
+                                });
+                            // Do something with the rendered HTML...
+                            ]]>
+                            </docs:code-editor>
+                            
+                        </docs:section>
                     </docs:section>
                     
                 </docs:docs>

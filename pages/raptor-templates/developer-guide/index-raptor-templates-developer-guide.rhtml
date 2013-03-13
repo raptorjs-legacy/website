@@ -172,12 +172,19 @@
                                     The <code>template.renderToString(templateName, template-data)</code> 
                                     method can be used to render a template to a string.
                                 </p>
-<docs:code-editor 
-    mode="javascript"
-    readOnly="true" 
-    c:parse-body-text="false"
-><![CDATA[var templating = require('raptor/templating');
-var output = templating.renderToString("test/Person", {person: person});]]></docs:code-editor>
+                                <docs:code-editor 
+                                    mode="javascript"
+                                    readOnly="true" 
+                                    c:parse-body-text="false">
+                                <![CDATA[
+                                var templating = require('raptor/templating');
+                                var output = templating.renderToString(
+                                    "test/Person", 
+                                    {
+                                        person: person
+                                    });
+                                ]]>
+                                </docs:code-editor>
                                 <docs:message type="info">
                                     <p>
                                         NOTE: On the server, if the template cannot be found then the templating
