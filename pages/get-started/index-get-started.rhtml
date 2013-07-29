@@ -29,28 +29,46 @@
         
                     <docs:section heading="Overview">
                         <p>
-                            This guide will help you quickly get started with using
-                            RaptorJS to build an HTML app, as well as use RaptorJS in a Node app running on the server.
+                            This guide will help you quickly (less than 10 minutes) get started building
+                            a production-ready web application using RaptorJS, Node.js, Express and
+                            various other open source modules for Node.js.
+                        </p>
+                        <p>
+                            RaptorJS includes a powerful command line interface that supports
+                            scaffolding so that you can quickly generate applications,
+                            pages, UI components and shareable libraries. For this guide we will
+                            be using this RaptorJS command line interface to build
+                            a web application from scratch. The basic commands are the following:
+                        </p>
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ npm install raptor --global
+                        $ mkdir my-app
+                        $ cd my-app
+                        $ raptor create webapp
+                        $ npm install
+                        $ raptor create page test
+                        $ raptor create component test/MyComponent
+                        $ node server.js
+                        </pre>
+                        <p>
+                            Each of these commands and additional
+                            setup tasks are described in more detail in the sections below.
                         </p>
                     </docs:section>
                         
-                    <docs:section heading="Installing Node">
-                        
+                    <docs:section heading="Installing Node.js">
                         <p>
-                            The easiest way to start using RaptorJS is to install
-                            the "raptor" module using <a href="https://npmjs.org/">npm</a>,
-                            the package manager for Node. npm is installed as part of Node so if you
-                            have not yet installed node then head over to the 
-                            <a href="http://nodejs.org/">Node website</a> and download and install the appropriate
-                            version of Node.
+                            The first step to using RaptorJS is to install the latest version of Node.js. 
+                            If you have not yet installed Node.js then head over to the 
+                            <a href="http://nodejs.org/">Node.js website</a> and download and install the appropriate
+                            version of Node.js for your operating system.
                         </p>
                     </docs:section>
 
-                    <docs:section heading="Installing the RaptorJS Node Module">
+                    <docs:section heading="Installing the RaptorJS CLI">
                         <p>
-                            The RaptorJS Node module should be installed globally
-                            since it includes command line utilities. The following command
-                            should be used to install RaptorJS via <code>npm</code>:
+                            To install the command line interface for RaptorJS
+                            run the following command in your terminal:
                         </p>
                         <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
                         $ npm install raptor --global
@@ -66,211 +84,327 @@
                             </pre>
                         </docs:message>
                     </docs:section>
-                    <docs:section heading="Using RaptorJS in an HTML App">
+
+                    <docs:section heading="Generating a Webapp">
                         <p>
-                            RaptorJS includes an implementation of the 
-                            <a href="https://github.com/amdjs/amdjs-api/wiki/AMD">Asynchronous Module Definition (AMD)</a>
-                            specification and a collection of modules and tools that are helpful in
-                            building web applications. The core <code><a href="http://raptorjs.org/api/raptor/">raptor</a></code> module 
-                            provides the AMD implementation.  RaptorJS includes a powerful and easy to use
-                            resource optimizer that can be used to generated optimized JavaScript
-                            and CSS resources so that RaptorJS modules can easily be included in your web application.
-                            For example, to generate an optimized build of the core 
-                            <code><a href="http://raptorjs.org/api/raptor/">raptor</a></code> JavaScript module and the <code><a href="http://raptorjs.org/api/raptor/pubsub">raptor/pubsub</a></code> JavaScript module
-                            which provides a Pub/Sub implementation, the following command can be executed at the command line:
+                            Now that the RaptorJS command line interface has been install
+                            via the Node.js package manager (npm), you can now use
+                            the <code>raptor</code> command to create a new webapp
+                            as shown in the following command line code:
                         </p>
                         <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
-                        $ raptor-optimizer raptor raptor/pubsub ./test.css --name test-page --minify 
+                        $ mkdir my-app
+                        $ cd my-app
+                        $ raptor create webapp
                         </pre>
                         <p>
-                            After running the above command, files named "test-page.js" and "test-page.css" will be written to the current
-                            directory that consists of all of the code required for the <code>raptor</code>
-                            and <code>raptor/pubsub</code> modules to work, as well as the CSS code contained in "./test.css".
+                            You will see output similar to the following in your console:
                         </p>
-                        <p>
-                            The <a href="${url('/optimizer')}">RaptorJS Optimizer</a> is
-                            extremely flexible and, in addition to a command line interface, a
-                            JavaScript API is provided, as well as a custom Taglib for <a href="${url('/raptor-templates')}">Raptor Templates</a>.
-                        </p>
-                        <p>
-                            For example, the sample JavaScript code below illustrates how easy it is to optimize a page that includes
-                            the the <code><a href="http://raptorjs.org/api/raptor/">raptor</a></code> and <code><a href="http://raptorjs.org/api/raptor/pubsub/">raptor/pubsub</a></code> modules as dependencies:
-                        </p>
-                        <docs:code-editor 
-                            mode="javascript"
-                            readOnly="true" 
-                            c:parse-body-text="false">
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true" c:escape-xml="false"
+                            style="height: 200px; overflow-y: auto;">
                         <![CDATA[
+                        Running command "create webapp" (stack: raptorjs)...
+                        <span style="color: green;">[create]</span> .gitignore
+                        <span style="color: green;">[create]</span> .jshintignore
+                        <span style="color: green;">[create]</span> .jshintrc
+                        <span style="color: green;">[create]</span> README.md
+                        <span style="color: green;">[create]</span> my-app.sublime-project
+                        <span style="color: green;">[create]</span> config/config.json
+                        <span style="color: green;">[create]</span> config/optimizer-config.xml
+                        <span style="color: green;">[create]</span> package.json
+                        <span style="color: green;">[create]</span> rapido.json
+                        <span style="color: green;">[create]</span> routes.js
+                        <span style="color: green;">[create]</span> server.js
+                        <span style="color: green;">[create]</span> src/app.rtld
+                        <span style="color: green;">[create]</span> src/ebay-api/finding/finding.js
+                        <span style="color: green;">[create]</span> src/ebay-api/finding/finding_jquery.js
+                        <span style="color: green;">[create]</span> src/ebay-api/finding/finding_node.js
+                        <span style="color: green;">[create]</span> src/ebay-api/finding/package.json
+                        <span style="color: green;">[create]</span> src/ui/components/buttons/SimpleButton/SimpleButton.css
+                        <span style="color: green;">[create]</span> src/ui/components/buttons/SimpleButton/SimpleButton.rhtml
+                        <span style="color: green;">[create]</span> src/ui/components/buttons/SimpleButton/SimpleButton.rtld
+                        <span style="color: green;">[create]</span> src/ui/components/buttons/SimpleButton/SimpleButtonRenderer.js
+                        <span style="color: green;">[create]</span> src/ui/components/buttons/SimpleButton/SimpleButtonWidget.js
+                        <span style="color: green;">[create]</span> src/ui/components/buttons/SimpleButton/package.json
+                        <span style="color: green;">[create]</span> src/ui/components/demo/Simple/Simple.css
+                        <span style="color: green;">[create]</span> src/ui/components/demo/Simple/Simple.rhtml
+                        <span style="color: green;">[create]</span> src/ui/components/demo/Simple/Simple.rtld
+                        <span style="color: green;">[create]</span> src/ui/components/demo/Simple/SimpleRenderer.js
+                        <span style="color: green;">[create]</span> src/ui/components/demo/Simple/SimpleWidget.js
+                        <span style="color: green;">[create]</span> src/ui/components/demo/Simple/package.json
+                        <span style="color: green;">[create]</span> src/ui/components/demo/Simple/render-package.json
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResults/SearchResults.css
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResults/SearchResults.rhtml
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResults/SearchResults.rtld
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResults/SearchResultsRenderer.js
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResults/SearchResultsWidget.js
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResults/package.json
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResultsContainer/SearchResultsContainer.css
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResultsContainer/SearchResultsContainer.rhtml
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResultsContainer/SearchResultsContainer.rtld
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResultsContainer/SearchResultsContainerRenderer.js
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResultsContainer/SearchResultsContainerWidget.js
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResultsContainer/package.json
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResultsContainer/sample-data.json
+                        <span style="color: green;">[create]</span> src/ui/components/ebay/search/SearchResultsContainer/wait-indicator.gif
+                        <span style="color: green;">[create]</span> src/ui/components/nav/TopNav/TopNav.css
+                        <span style="color: green;">[create]</span> src/ui/components/nav/TopNav/TopNav.rhtml
+                        <span style="color: green;">[create]</span> src/ui/components/nav/TopNav/TopNav.rtld
+                        <span style="color: green;">[create]</span> src/ui/components/nav/TopNav/TopNavRenderer.js
+                        <span style="color: green;">[create]</span> src/ui/components/nav/TopNav/package.json
+                        <span style="color: green;">[create]</span> src/ui/components/nav/TopNav/render-package.json
+                        <span style="color: green;">[create]</span> src/ui/components/style/variables.less
+                        <span style="color: green;">[create]</span> src/ui/pages/async-fragments/async-fragment.css
+                        <span style="color: green;">[create]</span> src/ui/pages/async-fragments/async-fragments.rhtml
+                        <span style="color: green;">[create]</span> src/ui/pages/async-fragments/index.js
+                        <span style="color: green;">[create]</span> src/ui/pages/hello/index.js
+                        <span style="color: green;">[create]</span> src/ui/pages/index/index.js
+                        <span style="color: green;">[create]</span> src/ui/pages/index/index.less
+                        <span style="color: green;">[create]</span> src/ui/pages/index/index.rhtml
+                        <span style="color: green;">[create]</span> src/ui/pages/search-results/index.js
+                        <span style="color: green;">[create]</span> src/ui/pages/search-results/search-results.css
+                        <span style="color: green;">[create]</span> src/ui/pages/search-results/search-results.rhtml
+                        <span style="color: green;">[create]</span> src/ui/pages/ui-components/index.js
+                        <span style="color: green;">[create]</span> src/ui/pages/ui-components/ui-components.css
+                        <span style="color: green;">[create]</span> src/ui/pages/ui-components/ui-components.rhtml
+                        <span style="color: green;">[create]</span> src/ui/style/global/global.less
+                        <span style="color: green;">[create]</span> src/ui/style/global/package.json
+                        <span style="color: green;">[create]</span> src/ui/style/variables.less
+                        [finished] Webapp written to "/Users/psteeleidem/temp/my-app"
+                        All that is left is to run the following command:
+                        <span style="color: cyan;">npm install</span>
 
-                        require('raptor'); //Initialize RaptorJS on the server and enable AMD
-
-                        var optimizer = require('raptor/optimizer');
-
-                        var optimizedPage = optimizer.optimizePage({
-                            name: 'test-page',
-                            dependencies: [
-                                { module: 'raptor'}, 
-                                { module: 'raptor/pubsub', 
-                                '/test.css'
-                            ]
-                        });
+                        Use the following command to start the server:
+                        <span style="color: cyan;">node server.js --dev</span>
                         ]]>
-                        </docs:code-editor>
+                        </pre>
                         <p>
-                            In the above sample code, <code>samplePage</code> will
-                            be an instance of <a href="http://raptorjs.org/api/raptor/optimizer/OptimizedPage/">raptor/optimizer/OptimizedPage</a>,
-                            which contains information about the optimized page.
+                            After running the above command a project with a structure similar to the following
+                            will be generated:
+                        </p>
+                        <ul>
+                            <li>
+                                <b>config</b> - Configuration files directory
+                                <ul>
+                                    <li>optimizer-config.xml - Web resource optimization configuration (minification, bundling, etc.)</li>
+                                    <li>config.json - Application-specific configuration options</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <b>src</b> - Source code and application modules directory
+                                <ul>
+                                    <li>
+                                        <b>my-module</b> - A module directory
+                                    </li>
+                                    <li>
+                                        <b>ui</b> - UI modules directory (UI components and pages)
+                                        <ul>
+                                            <li>
+                                                <b>components</b> - UI components directory
+                                                <ul>
+                                                    <li>
+                                                        <b>MyComponent</b>
+                                                        <ul>
+                                                            <li>MyComponentRenderer.js - HTML renderer</li>
+                                                            <li>MyComponentWidget.js - Client-side behavior</li>
+                                                            <li>MyComponent.css - StyleSheet</li>
+                                                            <li>MyComponent.rhtml - HTML template (used by the renderer)</li>
+                                                            <li>MyComponent.rtld - Custom tag definition</li>
+                                                            <li>package.json - UI component dependencies</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>pages</b> - Pages directory
+                                                <ul>
+                                                    <li>
+                                                        <b>my-page</b>
+                                                        <ul>
+                                                            <li>index.js - Page module (exports controller)</li>
+                                                            <li>my-page.css - Page-specific CSS</li>
+                                                            <li>my-page.rhtml - Page template</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>style</b>
+                                                <ul>
+                                                    <li>
+                                                        <b>global</b> - global style module
+                                                    </li>
+                                                    <li>variables.less - Variables used to define the Twitter Bootstrap theme</li>
+
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>app.rtld - Application-spcific custom tags for Raptor Templates</li>
+                                </ul>
+                            </li>
+                            <li><b>work</b> - Temporary directory for compiled templates and optimized resources (can safely be deleted)</li>
+                            <li>package.json- Node.js module dependencies for application (used by [npm](https://npmjs.org/))</li>
+                            <li>rapido.json- Configuration file used by `raptor` (built on top of [Rápido](https://github.com/raptorjs/rapido))</li>
+                            <li>routes.js - Registers all application routes (i.e. URL patterns)</li>
+                            <li>server.js - Starts the Express HTTP server (or cluster)</li>
+                        </ul>
+                    </docs:section>
+
+                    <docs:section heading="Installing Node Modules">
+                        <p>
+                            The generated web application depends on other open source modules
+                            to function correctly. These dependencies must be downloaded
+                            and installed using <code>npm</code> as shown in the following 
+                            command line code:
+                        </p>
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ npm install
+                        </pre>
+                        <p>
+                            After less than a minute all of the dependencies will be downloaded
+                            and installed to the <code>node_modules</code> directory.
+                        </p>
+                    </docs:section>
+                    
+                    <docs:section heading="Starting the Server">
+                        <p>
+                            Now that all of the Node module dependencies have been
+                            downloaded and installed, the HTTP server for the generated
+                            web application can be started using the following command:
+                        </p>
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ node server.js
+                        </pre>
+                    </docs:section>
+
+                    <docs:section heading="Testing the Server">
+                        <p>
+                            Now that the server has been started, we can test it
+                            out by loading the following URL in your web browser:
+                            <a href="http://localhost:8080/"><nobr>http://localhost:8080/</nobr></a>
+                        </p>
+                        <docs:section heading="Live Coding">
+                            <p>
+                                Without restarting the server and with the
+                                index page still loaded in your web browser, 
+                                open up the following file
+                                in the editor of your choice:<br/>
+                                <code><nobr>src/ui/pages/index/index.rhtml</nobr></code>
+                            </p>
+                            <p>
+                                Make some changes to the "index" page by adding
+                                some additional text into the body of the page.
+                                After saving your changes, go back to your web
+                                browser and you will notice that the changes you
+                                made are <i>already</i> reflected on the previously
+                                loaded page.
+                            </p>
+                            <p>
+                                Out-of-the-box, the generated RaptorJS application
+                                includes support for watching project source directories
+                                for changes. When a file modification is detected
+                                (via an instant notification from the operating system),
+                                the server-side environment is refreshed by unloading
+                                all previously loaded modules. In addition, a push
+                                notification is immediately sent down to any connected
+                                clients to let them know that files on the server were
+                                modified and that the page should be reloaded.
+                                The end result is <i>live coding</i>, regardless of which
+                                editor/IDE or web browser you choose to use (awesome!).
+                            </p>
+                        </docs:section>
+                    </docs:section>
+
+                    
+
+                    <docs:section heading="Adding a New Page">
+                        <p>
+                            A new page and the associated URL route can be added
+                            to the generated application by running the following command:
+                        </p>
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ raptor create page test
+                        </pre>
+                        <p>
+                            Running the above command will result in a new page directory
+                            named "test" being added to the <code>src/ui/pages</code>
+                            directory. In addition, a new route for path "/test" will be added to
+                            the <code>routes.js</code> file.
                         </p>
                         <p>
-                            The <a href="${url('/optimizer/get-started-raptor-templates')}">Optimizer Taglib</a> makes it even easier
-                            to build optimized pages by automatically optimizing resource bundles and generating the HTML
-                            to include those optimized resources as shown in the following sample code:
+                            To test the new page load the following URL in your browser:
+                            <a href="http://localhost:8080/test"><nobr>http://localhost:8080/test</nobr></a>
+                        </p>
+                        <p>
+                            NOTE: Because the generated web application includes code that watches
+                            for changes in the source directories for the application.
+                            Therefore, a restart of the server is <i>not</i> required
+                            in order to test the newly added page.
+                        </p>
+                    </docs:section>
+
+                    <docs:section heading="Adding a New Component">
+                        <p>
+                            A new UI component can easily be added
+                            to the generated application by running the following command:
+                        </p>
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        $ raptor create component test/MyComponent
+                        </pre>
+                        <p>
+                            Running the above command will result in a new UI component directory
+                            being added to the following location:
+                            <code><nobr>src/ui/components/test/MyComponent</nobr></code>.
+                        </p>
+                        <p>
+                            The newly created UI component can be tested by embedding
+                            the UI component in an existing page. Raptor Templates
+                            supports "custom tags" and every generated UI component
+                            will also include a custom tag definition. To embed
+                            the newly created component in the previously created
+                            page named "test", add the following code into the 
+                            <code><nobr>src/ui/pages/test/test.rhtml</nobr></code> file:
                         </p>
                         <docs:code-editor 
                             mode="xml"
                             readOnly="true" 
                             c:parse-body-text="false">
                         <![CDATA[
-                        <c:template
-                            xmlns:c="core"
-                            xmlns:optimizer="optimizer">
-
-                            <optimizer:page name="test-page">
-                                <dependencies>
-                                    <module name="raptor"/>
-                                    <module name="raptor/pubsub"/>
-                                    <css path="test.css"/>
-                                </dependencies>
-                            </optimizer:page>
-
-                            <html>
-                                <head>
-                                    <title>Test Page</title>
-                                    <optimizer:slot name="head"/>
-                                </head>
-                                <body>
-                                    <h1>Test Page</h1>
-                                    <optimizer:slot name="body"/>
-                                </body>
-                            </html>
-
-                        </c:template>
+                        <app:my-component name="Frank" count="30"/>
                         ]]>
                         </docs:code-editor>
                         <p>
-                            The output of rendering the above template will be similar to the following:
+                            In addition,
+                            the newly created UI component also includes a <code>package.json</code>
+                            that describes the dependencies for the UI component (i.e., CSS and JavaScript files
+                            and other resources that are required for the UI component to function correctly in the web browser).
+                            For the required resources for the UI component to be included on the page
+                            you must add the module associated with the newly created UI component into
+                            the &lt;optimizer:dependencies> section of the page as shown in teh following
+                            code:
                         </p>
                         <docs:code-editor 
-                            mode="htmlmixed"
+                            mode="xml"
                             readOnly="true" 
                             c:parse-body-text="false">
                         <![CDATA[
-                        <html>
-                            <head>
-                                <title>Test Page</title>
-                                <link rel="stylesheet" type="text/css" href="test-page-414fff80.css">
-                            </head>
-                            <body>
-                                <h1>Test Page</h1>
-                                <script type="text/javascript" src="test-page-a4cceb8e.js"></script>
-                            </body>
-                        </html>
+                        <optimizer:page ...>
+                            <dependencies>
+                                ...
+                                <module name="ui/components/test/MyComponent"/>
+                            </dependencies>
+                        </optimizer:page> 
                         ]]>
                         </docs:code-editor>
-                        <p>
-                            The above code barely scratches the surface of what is supported
-                            by the <a href="${url('/optimizer')}">RaptorJS Optimizer</a>. Please see the
-                            following documentation for the <a href="${url('/optimizer')}">RaptorJS Optimizer</a> for more information.
-                        </p>
-
                     </docs:section>
-                    
-                    <docs:section heading="Using RaptorJS in a Node App">
-                        <a href="https://npmjs.org/">npm</a> makes it easy to create a Node project that includes the module for RaptorJS.
-                        Follow the steps below to start using RaptorJS in a Node application:
-                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
-                        $ mkdir hello-world              
-                        </pre>
-                        In the newly created directory, you will need to create a <code>package.json</code> file. This file
-                        will be used describe dependencies and additional metadata. To initialize
-                        a new package.json file use the following command and follow the prompts (use <code>index.js</code> as the main script):
-                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
-                        $ npm init
-                        </pre>
 
-                        Now the <code>raptor</code> module can be added as a project dependency using the following command:
-                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
-                        $ npm install raptor --save
-                        </pre>
-                        <p>
-                            Now create a simple <code>index.js</code> file with the following contents:    
-                        </p>
-                        <docs:code-editor
-                            readOnly="true"
-                            mode="javascript">
-                        <![CDATA[
-                        require("raptor"); // Initialize RaptorJS on the server and enable AMD
-                                           // so that other AMD modules can be discovered and
-                                           // loaded on the server
-                                           
-                        require("raptor/logging").configure({ //Configure the loggers to control the logging output
-                                'ROOT': {level: 'WARN'},
-                                'hello': {level: 'DEBUG'}
-                            });
-                        
-                        /*
-                         * Tell RaptorJS where it can find modules
-                         * and other resources by adding the current
-                         * directory to the resource search path.
-                         */
-                        require('raptor/resources').addSearchPathDir(__dirname);
 
-                        require("hello").greet("World"); //Load the RaptorJS "hello" module
-                                                         //and invoke the "greet" method
-                        ]]>
-                        </docs:code-editor>
-                        <p>
-                            Now create the <code>hello.js</code> file which will contain the definition for the <code>hello</code> module:            
-                        </p>
-                        <docs:code-editor
-                            readOnly="true"
-                            mode="javascript">
-                        <![CDATA[
-                        define(
-                            "hello",
-                            function(require, module, exports) { //This function will be invoked only once
-                                         //when the module is first required
-                                
-                                var logger = module.logger(); //Obtaining a logger for the module being defined
-                                
-                                return { //The return value of the factory function will be
-                                         //registered as the implementation for the module
-                                          
-                                    greet: function(name) {
-                                        logger.debug("Hello " + name + "!");
-                                    }
-                                }
-                            });
-                        ]]>
-                        </docs:code-editor>
-                        Test out the application!:
-                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
-                        $ node index.js
-                        </pre>
-                        
-                        You should see the following in the console:
-                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
-                        DEBUG hello: Hello World!
-                        </pre>
-
-                        Not very exciting, but at least we know that RaptorJS is
-                        working in a Node environment.
-                    </docs:section>
                     <docs:section heading="Further Reading">
                         <p>
-                            Now that you have Node configured and RaptorJS running in server-side environment,
-                            you are now more ready to start learning about the other libraries and tools
-                            provided by RaptorJS. To continue learning about RaptorJS, please
+                            Now that you have Node configured and a working web application built
+                            using RaptorJS,
+                            you are now more ready to start learning about the features of RaptorJS. To continue learning about RaptorJS, please
                             use the following links:
                         </p>
                         <ul>

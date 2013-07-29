@@ -2,9 +2,9 @@ var raptor = require('raptor');
 require('raptor/logging').configure({
     loggers: {
         'ROOT': {level: 'WARN'},
-        'oop-server': {level: 'WARN'},
-        'resources': {level: 'WARN'},
-        'optimizer': {level: 'WARN'}
+        'raptor/resources': {level: 'WARN'},
+        'raptor/optimizer': {level: 'DEBUG'},
+        'publish': {level: 'INFO'}
     }
 });
 
@@ -58,12 +58,12 @@ var Publisher = function(config) {
     this.outputDir = new File(files.joinPaths(__dirname, "../raptorjs.github.com"));
     this.currentOutputDir = null;
     this.srcDir = new File(__dirname);
-    this.templateContext = templating.createContext();
+    this.promises = [];
 };
 
 Publisher.prototype = {
     publish: function() {
-
+        logger.info("Publishing website...");
         require('docs-util').publisher = this;
 
         var baseDir = files.joinPaths(__dirname, "pages"); 
@@ -135,10 +135,11 @@ Publisher.prototype = {
             require('docs-util').publisher = null;
         }
         
+        return require('raptor/promises').all(this.promises);
     },
 
     writePage: function(templateFile, outputFile, name, relativePath) {
-        console.error('Writing page "' + (relativePath || "/") + '" to "' + outputFile + '"...');
+        
         this.currentOutputDir = outputFile.getParentFile();
 
         var controllerFile = new File(templateFile.getParentFile(), "index.js");
@@ -151,12 +152,32 @@ Publisher.prototype = {
         viewModel.pageName = name;
         viewModel.pageOutputDir = outputFile.getParent();
 
-        var output = templating.renderToString(templateFile.getAbsolutePath(), viewModel, this.templateContext);
-        outputFile.writeAsString(output);
+        function onError(e) {
+            logger.error(e);
+        }
+        var templateContext = templating.createContext();
+
+        var promise = templating.renderToFile(
+                templateFile.getAbsolutePath(), 
+                viewModel, 
+                outputFile,
+                templateContext
+            )
+            .then(
+                function() {
+                    console.log('Page written: ' + outputFile);
+                },
+                onError);
+        
+        this.promises.push(promise);
 
         this.currentOutputDir = null;
     }
 };
+
+function onError(e) {
+    logger.error('Unable to publish website. Exception: ' + e, e);
+}
 
 try
 {
@@ -165,11 +186,17 @@ try
     });
     
     
+    
     var publisher = new Publisher(args);
     var start = new Date().getTime();
-    publisher.publish();
-    console.log("Publish time: " + (new Date().getTime() - start) + 'ms');
+    publisher.publish()
+        .then(
+            function() {
+                console.log("Publish time: " + (new Date().getTime() - start) + 'ms');
+            },
+            onError);
+
 }
 catch(e) {
-    logger.error("Unable to publish docs. Exception: " + e, e);
+    onError(e);
 }

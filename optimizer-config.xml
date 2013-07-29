@@ -57,6 +57,10 @@
             <module name="raptor/widgets" recursive="true"/>
         </bundle>
 
+        <bundle name="font-awesome">
+            <module name="FontAwesome"/>
+        </bundle>
+
         <bundle name="docs">
             <module name="docs-global"/>
         </bundle>

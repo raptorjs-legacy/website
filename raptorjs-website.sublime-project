@@ -14,7 +14,7 @@
 			[
 				"${project_path}/build"
 			],
-			"name": "Build",
+			"name": "Build (prod)",
 			"working_dir": "${project_path}"
 		},
 		{
@@ -23,7 +23,7 @@
 				"${project_path}/build-page-page",
 				"widgets"
 			],
-			"name": "Build - widgets",
+			"name": "Build (prod) - widgets",
 			"working_dir": "${project_path}"
 		},
 		{
@@ -32,7 +32,16 @@
 				"${project_path}/build-page",
 				"/"
 			],
-			"name": "Build - index",
+			"name": "Build (prod) - index",
+			"working_dir": "${project_path}"
+		},
+		{
+			"cmd":
+			[
+				"${project_path}/build-page",
+				"/raptor-templates/try-online"
+			],
+			"name": "Build (prod) - raptor-templates-try-online",
 			"working_dir": "${project_path}"
 		},
 		{
@@ -465,9 +474,10 @@
 		[
 			"jsdoc",
 			"jsdoc (dev)",
-			"Build",
-			"Build - index",
-			"Build - widgets",
+			"Build (prod)",
+			"Build (prod) - index",
+			"Build (prod) - widgets",
+			"Build (prod) - raptor-templates-try-online",
 			"Build (dev)",
 			"Build (dev) - contributors",
 			"Build (dev) - faq",
@@ -491,7 +501,6 @@
 			"Build (dev) - raptor-templates-developer-guide",
 			"Build (dev) - raptor-templates-get-started",
 			"Build (dev) - raptor-templates-language-guide",
-
 			"Build (dev) - raptor-templates-try-online",
 			"Build (dev) - resource-search-path",
 			"Build (dev) - tutorial",

@@ -98,13 +98,31 @@
 
     <target name="raptor-jsdoc-dev">
         <exec executable="raptor-jsdoc">
-            <arg value="src=../raptorjs/raptor/lib"/>
+            <arg value="src=../raptorjs/lib"/>
             <arg value="output-dir=${output.dir}/"/>
             <arg value="profile=development"/>
             <arg value="include-filename=true"/>
             <arg value="publish=true"/>
             <arg value="props=../raptorjs/package.json,../raptorjs/jsdoc-props.json"/>
             <arg value="clean=api"/>
+        </exec>
+    </target>
+
+    <target name="raptor-dist">
+        <exec executable="raptor-optimizer">
+            <arg value="raptor"/>
+            <arg value="-o"/>
+            <arg value="../raptorjs.github.com/dist"/>
+            <arg value="-n"/>
+            <arg value="raptor"/>
+        </exec>
+        <exec executable="raptor-optimizer">
+            <arg value="raptor"/>
+            <arg value="-o"/>
+            <arg value="../raptorjs.github.com/dist"/>
+            <arg value="-n"/>
+            <arg value="raptor.min"/>
+            <arg value="--minify"/>
         </exec>
     </target>
 	
@@ -139,6 +157,7 @@
                  build-prod,
                  copy-demos,
                  raptor-jsdoc,
+                 raptor-dist,
                  start-server"/>
 	
 	<target name="publish-to-github" 
@@ -146,6 +165,7 @@
                  build-prod,
                  copy-demos,
                  raptor-jsdoc,
+                 raptor-dist,
                  git-push"/>
 
     <target name="clean">
@@ -155,7 +175,7 @@
         </delete>
 
         <delete includeEmptyDirs="true" removeNotFollowedSymlinks="true" failonerror="false">
-            <fileset dir="node_modules" followsymlinks="false" defaultexcludes="false"/>
+            <!-- <fileset dir="node_modules" followsymlinks="false" defaultexcludes="false"/> -->
             <fileset dir="work"/>
         </delete>
     </target>
