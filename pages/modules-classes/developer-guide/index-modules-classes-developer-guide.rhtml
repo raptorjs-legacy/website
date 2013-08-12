@@ -50,7 +50,7 @@
                             alternate language.
                         </p>
                         <p>
-                            The RaptorJS AMD implementation can be loaded on the server (under Node and Rhino)
+                            The RaptorJS AMD implementation can be loaded on the server (under Node.js and Rhino)
                             or in the browser
                             <nobr>(<docs:popover>
                                  <docs:popover-content>
@@ -59,9 +59,38 @@
                                      required for older web browsers.
                                  </docs:popover-content>
                                   ~1.8k gzipped
-                             </docs:popover>)</nobr>.
+                             </docs:popover>)</nobr>. 
+                             To generate a build for the browser you can use the following command
+                             after installing Node.js and the "raptor" module (see 
+                             <a href="${url('/get-started')}">Get Started</a>
+                             guide):
                         </p>
-                        
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        raptor-optimizer raptor --name raptor --out build --minify
+                        </pre>
+                        <p>
+                            The above command will generate a file named "raptor.js" in 
+                            a nested "build" directory. The core "raptor" module includes the core
+                            module system for RaptorJS which supports
+                            AMD, class inheritance, mixins and enums. The generated file also includes optional polyfills
+                            for <a href="https://github.com/raptorjs/raptorjs/tree/master/lib/raptor/ecma/es5">EcmaScript 5</a> and
+                            <a href="https://github.com/raptorjs/raptorjs/tree/master/lib/raptor/ecma/es6">EcmaScript 6</a> which are only needed on older browsers. These
+                            polyfills can be excluded in the generated file by using the following command instead:
+                        </p>
+                        <pre class="sh" xml:space="preserve" c:trim-body-indent="true">
+                        raptor-optimizer raptor --name raptor --out build --minify --extensions no-es5,no-es6
+                        </pre>
+                        <p>
+                            The "--extensions" switch is used to enable one or more extensions that is used
+                            to control how resources are packaged and optimized. See the following package.json file for an example:
+                            <a href="https://github.com/raptorjs/raptorjs/blob/master/lib/raptor/ecma/es5/package.json">raptor/ecma/es5/package.json</a>
+                        </p>
+                        <p>
+                            RaptorJS includes a <a href="http://raptorjs.org/packaging/">very flexible packaging system</a> that is used by the 
+                            <a href="http://raptorjs.org/optimizer/">RaptorJS Optimizer</a>
+                            to give developers full
+                            control over what code gets included on a particular web page.
+                        </p>
                     </docs:section>
                     <docs:section heading="Basic Usage">
                         <p>
