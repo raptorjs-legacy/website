@@ -90,7 +90,7 @@
                             <c:var name="widgetConfig" value="{colors: ['red', 'green', 'blue']}"/>
 
                             <button type="button" 
-                                w:widget="demo/ColorChangeWidget; config=widgetConfig">
+                                w:widget="demo/ColorChangeWidget" w:config="widgetConfig">
                                 Click Me!
                             </button>
 
@@ -101,7 +101,7 @@
                             <h4>Demo</h4>
                             <c:var name="widgetConfig" value="{colors: ['red', 'green', 'blue']}"/> 
                             <button type="button" 
-                                w:widget="demo/ColorChangeWidget; config=widgetConfig">
+                                w:widget="demo/ColorChangeWidget" w:config="widgetConfig">
                                 Click Me!
                             </button>
                         </p>
@@ -1055,18 +1055,24 @@
                             </p>
                             <ol>
                                 <li>
-                                    <b>As part of <code>w:widget</code> attribute:</b>
+                                    <b>Using the <code>w:config</code> attribute:</b>
                                     <docs:code-editor 
                                         mode="xml"
                                         readOnly="true" 
                                         c:parse-body-text="false">
                                     <![CDATA[
-                                    <div w:widget="demo/MyWidget; config={message: 'Hello World'}" 
+                                    <div w:widget="demo/MyWidget" w:config="{message: 'Hello World'}" 
                                          class="my-widget">
                                         ...
                                     </div>
                                     ]]>
                                     </docs:code-editor>
+                                    <p>
+                                        NOTE: The value of <code>w:config</code> should be a valid JavaScript expression
+                                        that resolves to a JavaScript object. Therefore, the value can be an object
+                                        in JavaScript notation, a variable reference or a more complex expression
+                                        that evaluates to a JavaScript object at render time.
+                                    </p>
                                 </li>
                                 <li>
                                     <b>As the value of the <code>config</code> attribute for the <code>&lt;w:widget></code> tag:</b>
