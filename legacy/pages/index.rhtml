@@ -6,7 +6,7 @@
     xmlns:docs="docs"
     params="samples"
     docs:functions="url">
-    
+
     <optimizer:page name="index" base-path="${data.pageOutputDir}">
         <dependencies>
             <module name="docs-global"/>
@@ -21,7 +21,7 @@
             <css path="index.css"/>
         </dependencies>
     </optimizer:page>
-    
+
     <c:def function="learnMore(href)">
         <div class="learn-more">
             <a href="${url(href)}">Learn more ${entity:raquo}</a>
@@ -30,65 +30,65 @@
 
     <html html:doctype="html" itemscope="${null}" itemtype="http://schema.org/Product">
         <docs:head title="RaptorJS — A JavaScript Toolkit from eBay">
-            <meta itemprop="description" name="Description" 
+            <meta itemprop="description" name="Description"
                 content="RaptorJS ia an End-to-End JavaScript Toolkit for Building Adaptive Modules and UI Components." />
         </docs:head>
         <body>
             <docs:top-nav activeItem="home"/>
-            
+
             <div id="header">
                 <div id="notification">
                     RaptorJS now provides scaffolding! Check out the updated <a href="${url('/get-started')}">Get Started</a> guide.
                 </div>
-                
+
                 <div class="container main-content">
                     <!-- <div class="hiring">
                         Are you an expert JS developer? Want to be part of a team dedicated to making webapp development better? Great, because
                         <a href="http://rfer.us/EBRu47Vff">
                             we are hiring
                         </a>!
-                    </div> -->  
-                    
+                    </div> -->
+
                     <div class="hero">
                         <div class="logo-line">
-                            <img itemprop="image" src="${url('images/raptorjs-logo.png')}" width="346" height="240" alt="RaptorJS Logo" id="raptorJSLogo"/>
+                            <img itemprop="image" src="${url('/images/raptorjs-logo.png')}" width="346" height="240" alt="RaptorJS Logo" id="raptorJSLogo"/>
                             <nobr>
                                 from <img src="images/ebay-logo.png" alt="eBay" width="79" height="30"/>
                             </nobr>
                         </div>
                         <h2>
                             An End-to-End JavaScript Toolkit for Building Adaptive Modules and UI Components
-                            
+
                         </h2>
 
                         <div class="main-buttons">
                             <docs:button size="large" class="github-button" href="https://github.com/raptorjs/raptorjs">
-                                <docs:icon name="github" size="large"/> 
+                                <docs:icon name="github" size="large"/>
                                 View project on GitHub
                             </docs:button>
                             <docs:button size="large" class="demos-button" href="https://github.com/raptorjs/samples" target="_blank">
-                                <docs:icon name="play" size="large"/> 
+                                <docs:icon name="play" size="large"/>
                                 View Demos
                             </docs:button>
                             <docs:button size="large" class="get-started-button" href="${url('/get-started')}">
-                                Get Started <docs:icon name="arrow-right" size="large"/> 
+                                Get Started <docs:icon name="arrow-right" size="large"/>
                             </docs:button>
 
                             <div class="version-container">
-                                <span class="lbl">Current Version:</span> 
+                                <span class="lbl">Current Version:</span>
                                 <span class="version">${data.raptorJSVersion}</span>
                             </div>
                             </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="container" id="bodyContent">
                 <div class="social-container">
                     <div class="social social-g-badge">
                         <docs:g-badge title="RaptorJS" href="https://plus.google.com/111493691067944627473/"/>
                     </div>
-                    
+
                     <div class="social social-twitter-tweet">
                         <docs:twitter-tweet via="raptorjs" text="An End-to-End JavaScript Toolkit for Building Adaptive Modules and UI Components" url="http://raptorjs.org/" size="large"/>
                     </div>
@@ -97,22 +97,22 @@
                         <docs:twitter-follow username="raptorjs" showCount="true" size="large"/>
                     </div>
 
-                    
+
                 </div>
 
                 <div class="overview">
-                    
+
                     <div class="feature-section small-tile drop-shadow">
                         <div class="content">
-                            <img src="${url('images/objects.png')}" width="48" height="48"/>
+                            <img src="${url('/images/objects.png')}" width="48" height="48"/>
                             <h3><a href="${url('/modules-classes')}">Modules &amp; Classes</a></h3>
                             <div class="bd">
                                 <div class="padding">
                                     <p>
-                                        RaptorJS provides an optimized and lightweight AMD implementation 
+                                        RaptorJS provides an optimized and lightweight AMD implementation
                                         <nobr>(<docs:popover>
                                                  <docs:popover-content>
-                                                     Not including a 
+                                                     Not including a
                                                      partial EcmaScript 5 shim
                                                      required for older web browsers.
                                                  </docs:popover-content>
@@ -128,7 +128,7 @@
                     </div>
                     <div class="feature-section small-tile drop-shadow">
                         <div class="content">
-                            <img src="${url('images/package-empty.png')}" width="48" height="48"/>
+                            <img src="${url('/images/package-empty.png')}" width="48" height="48"/>
                             <h3><a href="${url('/packaging')}">Packaging &amp; Extensions</a></h3>
                             <div class="bd">
                                 <div class="padding">
@@ -136,7 +136,7 @@
 
                                         Package up your modules using RaptorJS package files
                                         so that dependencies are explicit—allowing modules
-                                        to be shared, optimized and be made 
+                                        to be shared, optimized and be made
                                         <docs:popover title="Adaptive Packaging">
                                              <docs:popover-content>
                                                 RaptorJS packages support extensions. Package
@@ -144,7 +144,7 @@
                                                 included based on which extensions have been enabled
                                                 or disabled. This makes it possible to package
                                                 up code differently for different environments for
-                                                the ultimate in flexibility. 
+                                                the ultimate in flexibility.
                                                 Adapative packaging also allows modules to be
                                                 created in such a way that they are not coupled to a single framework
                                                 or JavaScript runtime environment
@@ -152,7 +152,7 @@
                                              adaptive
                                         </docs:popover>.
                                     </p>
-                                </div>                
+                                </div>
 
                                 <c:invoke function="learnMore" href="/packaging"/>
                             </div>
@@ -161,7 +161,7 @@
 
                     <div class="feature-section small-tile drop-shadow">
                         <div class="content">
-                            <img src="${url('images/load-package.png')}" width="48" height="48"/>
+                            <img src="${url('/images/load-package.png')}" width="48" height="48"/>
                             <h3><a href="${url('/module-loader')}">Module Loader</a></h3>
                             <div class="bd">
                                 <div class="padding">
@@ -179,7 +179,7 @@
 
                     <div class="feature-section small-tile drop-shadow">
                         <div class="content">
-                            <img src="${url('images/lightning.png')}" width="48" height="48"/>
+                            <img src="${url('/images/lightning.png')}" width="48" height="48"/>
                             <h3><a href="${url('/optimizer')}">Optimizer</a></h3>
                             <div class="bd">
                                 <div class="padding">
@@ -196,7 +196,7 @@
 
                     <div class="feature-section small-tile drop-shadow">
                         <div class="content">
-                            <img src="${url('images/templates.png')}" width="48" height="48"/>
+                            <img src="${url('/images/templates.png')}" width="48" height="48"/>
                             <h3><a href="${url('/raptor-templates')}">Raptor Templates</a></h3>
                             <div class="bd">
                                 <div class="padding">
@@ -211,7 +211,7 @@
                     </div>
                     <div class="feature-section small-tile drop-shadow">
                         <div class="content">
-                            <img src="${url('images/widgets2.png')}" width="48" height="48"/>
+                            <img src="${url('/images/widgets2.png')}" width="48" height="48"/>
                             <h3><a href="${url('/widgets')}">Widget Framework</a></h3>
                             <div class="bd">
                                 <div class="padding">
@@ -268,13 +268,13 @@
                         <div class="bd">
                             <div class="padding">
                                 <p>
-                                    A feature that is unique to RaptorJS is <b>adaptive packaging</b>. 
-                                    This feature allows developers to easily target specific code for 
+                                    A feature that is unique to RaptorJS is <b>adaptive packaging</b>.
+                                    This feature allows developers to easily target specific code for
                                     different browsers, devices, frameworks, JavaScript runtime environments, etc.
                                 </p>
                                 <p>
                                     By simply separating out environment-specific code into individual files and creating RaptorJS
-                                    package files that 
+                                    package files that
                                     <docs:popover title="Describing Dependencies">
                                          <docs:popover-content>
                                             Describing dependencies for JavaScript modules and UI components is extremely beneficial
@@ -286,11 +286,11 @@
                                         </docs:popover-content>
                                          describe dependencies
                                     </docs:popover>
-                                    (including which dependencies are specific to a particular environment), 
+                                    (including which dependencies are specific to a particular environment),
                                     developers can create JavaScript modules and UI components that
-                                    function correctly in multiple environments. 
-                                    Adaptive packaging has allowed the RaptorJS toolset to be portable across multiple platforms 
-                                    (including <a href="http://nodejs.org/">Node</a>, <a href="https://developer.mozilla.org/en-US/docs/Rhino">Rhino</a> and all web browsers). 
+                                    function correctly in multiple environments.
+                                    Adaptive packaging has allowed the RaptorJS toolset to be portable across multiple platforms
+                                    (including <a href="http://nodejs.org/">Node</a>, <a href="https://developer.mozilla.org/en-US/docs/Rhino">Rhino</a> and all web browsers).
                                 </p>
                             </div>
                             <c:invoke function="learnMore" href="/packaging"/>
@@ -300,16 +300,16 @@
 
                 <div class="overview-footer">
                     <docs:button size="large" class="get-started-button" href="${url('/get-started')}">
-                        Get Started <docs:icon name="arrow-right" size="large"/> 
+                        Get Started <docs:icon name="arrow-right" size="large"/>
                     </docs:button>
                 </div>
             </div>
-            
-            
+
+
             <docs:footer/>
-            
+
             <optimizer:slot name="body"/>
-            
+
             <w:init-widgets/>
         </body>
     </html>

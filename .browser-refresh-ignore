@@ -2,4 +2,4 @@
 /.cache
 *.marko.js
 /node_modules
-/build
+/legacy

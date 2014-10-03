@@ -1,0 +1,16 @@
+build-dev
+build-prod
+clean
+copy-demo
+copy-demos
+copy-images
+git-add
+git-commit
+git-push
+npm-install
+publish-to-github
+publish-to-github-dry-run
+raptor-dist
+raptor-jsdoc
+raptor-jsdoc-dev
+start-server

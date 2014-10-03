@@ -3,13 +3,13 @@ define(
     function() {
         return {
             publisher: null,
-            
+
             url: function(url) {
-                
+
                 var isIndexHtml = url.lastIndexOf('.') === -1 || url.charAt(url.length-1) === '/';
 
-                var basePath = this.publisher.currentOutputDir.getAbsolutePath();
-                url = require('path').relative(basePath, this.publisher.outputDir.getAbsolutePath()) + url;
+                var pageOutputDir = this.publisher.currentOutputDir.getAbsolutePath();
+                url = '/legacy' + url;
 
                 if (isIndexHtml) {
                     //The URL is a page
@@ -21,25 +21,20 @@ define(
                     }
                 }
 
-                if (url.charAt(0) === '/') {
-                    url = '.' + url;
-                }
-
-
-                return url;           
+                return url;
             },
-            
+
             imageUrl: function(url) {
-                return this.url(url);      
+                return this.url(url);
             },
 
             getSrcDir: function() {
                 return this.publisher.srcDir;
             },
-            
+
             getRaptorJSVersion: function() {
                 return this.publisher.raptorJSVersion;
             }
 
-        }
+        };
     });

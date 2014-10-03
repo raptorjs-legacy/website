@@ -1,13 +1,15 @@
 <optimizer-config>
-    
+
     <params file="local-properties.json"/>
-    
+
     <params>
         <profile>production</profile>
     </params>
-    
+
     <enable-profile>${profile}</enable-profile>
-    
+
+    <url-prefix>/legacy/static/</url-prefix>
+
     <profile name="development">
         <raptor-config>
         {
@@ -19,21 +21,21 @@
         }
         </raptor-config>
         <enabled-extensions>jquery,browser,raptor/logging/console,development</enabled-extensions>
-        <bundling-enabled>false</bundling-enabled>
-        <in-place-deployment-enabled>true</in-place-deployment-enabled>
+        <bundling-enabled>true</bundling-enabled>
+        <in-place-deployment-enabled>false</in-place-deployment-enabled>
         <minify-js>false</minify-js>
         <minify-css>false</minify-css>
-        <checksums-enabled>false</checksums-enabled>        
+        <checksums-enabled>false</checksums-enabled>
         <resolve-css-urls>true</resolve-css-urls>
     </profile>
-    
+
     <profile name="production">
         <checksums-enabled>true</checksums-enabled>
         <enabled-extensions>jquery,browser,production</enabled-extensions>
         <bundling-enabled>true</bundling-enabled>
         <resolve-css-urls>true</resolve-css-urls>
         <in-place-deployment-enabled>false</in-place-deployment-enabled>
-        <!-- <url-prefix>/static/</url-prefix> -->
+
         <minify-js>true</minify-js>
         <minify-css>true</minify-css>
         <raptor-config>
@@ -42,7 +44,7 @@
         </raptor-config>
     </profile>
 
-    <output-dir>../raptorjs.github.com/static</output-dir>
+    <output-dir>../../raptorjs.github.com/legacy/static</output-dir>
 
     <bundles name="default">
 
@@ -72,14 +74,14 @@
             <module name="components/editors/CodeEditor/mode-shell" recursive="true"/>
             <module name="components/editors/CodeEditor/mode-css" recursive="true"/>
         </bundle>
-        
+
         <bundle name="templating">
             <module name="raptor/templating" recursive="true"/>
         </bundle>
-        
+
         <bundle name="templating-compiler">
             <module name="raptor/templating/compiler" recursive="true"/>
         </bundle>
     </bundles>
-    
+
 </optimizer-config>
