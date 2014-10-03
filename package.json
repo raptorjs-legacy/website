@@ -1,31 +1,30 @@
 {
-  "name": "website",
+  "type": "raptor-library",
+  "name": "raptorjs-website",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Library for demo applications",
+  "homepage": "http://wiki2.arch.ebay.com/display/RAPTOR/Home",
+  "authors": [
+    {
+      "name": "Patrick Steele-Idem",
+      "email": "psteeleidem@ebay.com"
+    }
+  ],
+  "raptor": {
+    "search-path": [
+      {
+        "dir": "modules"
+      }
+    ],
+    "taglibs": [
+      "taglibs/docs/docs.rtld",
+      "taglibs/templates/templates.rtld",
+      "taglibs/test/test.rtld"
+    ]
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/raptorjs/website.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/raptorjs/website/issues"
-  },
-  "homepage": "https://github.com/raptorjs/website",
   "dependencies": {
-    "app-module-path": "^1.0.0",
-    "async-config": "^1.1.0",
-    "express": "^4.9.5",
-    "marko": "^1.2.14",
-    "marko-widgets": "^1.1.1",
-    "mkdirp": "^0.5.0",
-    "optimizer": "^1.1.15",
-    "raptor-args": "^1.0.0",
-    "raptor-async": "^1.0.0",
-    "serve-static": "^1.6.3"
+    "express": "~3.1.0",
+    "raptor": "~2.6",
+    "optimist": "~0.3.5"
   }
 }

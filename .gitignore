@@ -1,5 +1,6 @@
-/static
-/.cache
-*.marko.js
+/dist
+/local-properties.json
 /node_modules
-/build
+/work
+*.sublime-workspace
+npm-debug.log
