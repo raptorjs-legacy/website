@@ -52,6 +52,6 @@ ant publish-to-github-dry-run
 ```
 Running the above command will go through all of the steps of generating http://raptorjs.org, but it will not
 commit the changes, nor will it push the changes to the remote Github repository for the website 
-(i.e. https://github.com/raptorjs/raptorjs.github.com). In addition, the above command will start
+(i.e. https://github.com/raptorjs/raptorjs-legacy.github.io). In addition, the above command will start
 a local HTTP server that can be used to test the site by visiting the following URL:
 http://localhost:8090/

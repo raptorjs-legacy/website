@@ -8,7 +8,7 @@
 
     <enable-profile>${profile}</enable-profile>
 
-    <url-prefix>/legacy/static/</url-prefix>
+    <url-prefix>/static/</url-prefix>
 
     <profile name="development">
         <raptor-config>
@@ -44,7 +44,7 @@
         </raptor-config>
     </profile>
 
-    <output-dir>../../raptorjs.github.com/legacy/static</output-dir>
+    <output-dir>../raptorjs-legacy.github.io/static</output-dir>
 
     <bundles name="default">
 

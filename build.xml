@@ -2,7 +2,7 @@
 
 	<property name="cmd.build"  location="build"/>
 	<property name="cmd.build-dev"  location="build-dev"/>
-    <property name="output.dir" location="../../raptorjs.github.com/legacy"/>
+    <property name="output.dir" location="../raptorjs-legacy.github.io/"/>
     <property name="cmd.git-add"  location="git-add"/>
 
     <target name="npm-install">
@@ -36,15 +36,15 @@
 
 	<target name="copy-demo">
 		<copy todir="${output.dir}/demos/${demoPath}">
-            <fileset dir="../../samples/${demoPath}/build"/>
+            <fileset dir="../samples/${demoPath}/build"/>
         </copy>
 	</target>
 
 	<target name="copy-demos">
 		<delete dir="demos"/>
 
-        <ant dir="../../samples" target="clean"/>
-	    <ant dir="../../samples"/>
+        <ant dir="../samples" target="clean"/>
+	    <ant dir="../samples"/>
 
 		<antcall target="copy-demo">
 		    <param name="demoPath" value="async-loader"/>
@@ -86,24 +86,24 @@
 
 	<target name="raptor-jsdoc">
         <exec executable="raptor-jsdoc">
-            <arg value="src=../../raptorjs/lib"/>
+            <arg value="src=../raptorjs/lib"/>
             <arg value="output-dir=${output.dir}/api"/>
             <arg value="profile=production"/>
         	<arg value="include-filename=false"/>
         	<arg value="publish=true"/>
-        	<arg value="props=../../raptorjs/package.json,../../raptorjs/jsdoc-props.json"/>
+        	<arg value="props=../raptorjs/package.json,../raptorjs/jsdoc-props.json"/>
         	<arg value="clean=api"/>
         </exec>
     </target>
 
     <target name="raptor-jsdoc-dev">
         <exec executable="raptor-jsdoc">
-            <arg value="src=../../raptorjs/lib"/>
+            <arg value="src=../raptorjs/lib"/>
             <arg value="output-dir=${output.dir}/"/>
             <arg value="profile=development"/>
             <arg value="include-filename=true"/>
             <arg value="publish=true"/>
-            <arg value="props=../../raptorjs/package.json,../../raptorjs/jsdoc-props.json"/>
+            <arg value="props=../raptorjs/package.json,../raptorjs/jsdoc-props.json"/>
             <arg value="clean=api"/>
         </exec>
     </target>
@@ -112,14 +112,14 @@
         <exec executable="raptor-optimizer">
             <arg value="raptor"/>
             <arg value="-o"/>
-            <arg value="../../raptorjs.github.com/dist"/>
+            <arg value="../raptorjs-legacy.github.io/dist"/>
             <arg value="-n"/>
             <arg value="raptor"/>
         </exec>
         <exec executable="raptor-optimizer">
             <arg value="raptor"/>
             <arg value="-o"/>
-            <arg value="../../raptorjs.github.com/dist"/>
+            <arg value="../raptorjs-legacy.github.io/dist"/>
             <arg value="-n"/>
             <arg value="raptor.min"/>
             <arg value="--minify"/>
@@ -170,8 +170,8 @@
 
     <target name="clean">
         <echo message="Cleaning ${output.dir}..."/>
-        <delete includeemptydirs="true" failonerror="false">
-            <fileset dir="${output.dir}" defaultexcludes="false"/>
+        <delete includeemptydirs="true">
+            <fileset dir="${output.dir}" includes="**/* .DS_Store" excludes=".git/** .gitignore CNAME .nojekyll README.md" defaultexcludes="false"/>
         </delete>
 
         <delete includeEmptyDirs="true" removeNotFollowedSymlinks="true" failonerror="false">

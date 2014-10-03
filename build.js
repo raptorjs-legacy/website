@@ -40,12 +40,12 @@ var Publisher = function(config) {
     this.appendPageFilename = config.dev === true;
     this.page = config.page;
 
-    var raptorJSPackageFile = new File(__dirname, "../../raptorjs/package.json");
+    var raptorJSPackageFile = new File(__dirname, "../raptorjs/package.json");
     var raptorJSPackage = JSON.parse(raptorJSPackageFile.readAsString());
 
     this.raptorJSVersion = raptorJSPackage.version;
 
-    this.outputDir = new File(files.joinPaths(__dirname, "../../raptorjs.github.com/legacy"));
+    this.outputDir = new File(files.joinPaths(__dirname, "../raptorjs-legacy.github.io"));
     this.currentOutputDir = null;
     this.srcDir = new File(__dirname);
     this.promises = [];
